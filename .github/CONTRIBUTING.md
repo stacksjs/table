@@ -50,7 +50,7 @@ pull requests from the forked branch.
 
 ```bash
 # Add the original repository as a "remote" called "upstream".
-$: git remote add upstream git@github.com:meemalabs/web3-vue.git
+$: git remote add upstream git@github.com:openweblabs/table-vue.git
 
 # Fetch the git information from the remote.
 $: git fetch upstream

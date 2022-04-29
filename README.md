@@ -1,85 +1,71 @@
-# Vue Component Library Starter Kit
+# Table Elements
 
-This is an opinionated Vue Component Library Starter kit to help kick-start development of your next component library.
+The easiest way to integrate Meilisearch (Algolia coming soon) into your frontend. These components will allow you to kick-start the development of your next beautiful table UIs, including a blazing-fast UX.
 
-## 💡 Get Started
+## 🐙 Features
 
-It's incredibly easy to get your component library started with this slightly opinionated starter kit. The only prerequisite is a basic understanding of how to design/develop Vue Single File Components (SFCs). In other words, HTML with sprinkled JavaScript will get you really far!
+This cross-framework compatible (React, Vue, Svelte, Angular, HTML, etc.) web component library comes with the following features & "improvements" to the table element:
 
-```bash
-# you may use this GitHub template or the following command:
-npx degit meemalabs/vue-component-library-starter my-awesome-vue-component-lib
-cd my-awesome-vue-component-lib
+- `<table-v2 />`
+  - quickly & simply develop a highly-configurable table UI without worrying about the backend
+  - "facet filtering" & "table head sorting" natively built in
+  - Meilisearch & Laravel Scout API compatible
 
-# ensure you also now update your vite.config.ts with your library name
+- `<table-configure />`
+  - simple way to configure the table in a HTML semantic fashion
 
- # if you don't have pnpm installed, run `npm i -g pnpm`
-pnpm i # install all deps
-pnpm dev # starts the local server at http://localhost:3333 & watches for changes
-pnpm build # builds the library for production-ready use
+Read more about these features in their respective [docs](https://meema.xyz/docs).
+
+## 💡 Usage
+
+It's incredibly easy to use a Web Components within your own project. Check out the `index.html` to get an idea how it can be done.
+
+```html
+<!-- the following props are required to be set either on this `table-configure` or `table-v2 element` -->
+<table-configure
+  source="127.0.0.1:7700"
+  index="collections"
+  cols="name, collection_published_at, created_at"
+/>
+
+<table-v2 />
+
+<!-- optional props -->
+<table-v2
+  searchable="true"
+  sorts="name, price, created_at"
+  filters="traits_Head, traits_Body, traits_Background"
+  actionable="true"
+  per-page="20"
+  use-pagination="true"
+/>
 ```
 
-Additionally, the `package.json` contains some useful snippets you likely want to be aware of.
+## 🖥️ Browsers
 
-## 🤖 Usage
+Meema Elements is built for the modern web and avoids bloated polyfills and outdated environments as much as possible. Currently, it supports all browsers that fully implement the [Custom Elements V1][caniuse-custom-el-v1].
 
-```vue
-<script setup lang="ts">
-import { HelloWorld } from 'my-awesome-vue-component-lib'
-</script>
+- Edge 79+
+- Firefox 63+
+- Chrome 67+
+- Safari 13.1+
+- Opera 64+
+- iOS Safari 13.7+
+- Android Browser 81+
+- Opera Mobile 59+
+- Chrome for Android 88+
 
-<template>
-  <HelloWorld />
-</template>
-```
-
-### 👩🏽‍💻 Dev Tools
-
-- [TypeScript 4.6](https://www.typescriptlang.org/)
-- [Vue 3.2](https://vuejs.org/) - Write Web Components the same way you would write SFCs
-- [Commitizen & commitlint](https://www.npmjs.com/package/@commitlint/cz-commitlint) - Automate git commits, versioning, and CHANGELOG generation
-- [Tailwind CSS](https://tailwindcss.com/) - Create your own style guide with ease
-- [Vitest](https://github.com/vitest-dev/vitest) - Unit testing powered by Vite
-- [Cypress](https://cypress.io/) - E2E testing
-- [Renovate](https://renovatebot.com/) - Automatically PR dependency updates
-- [GitHub Actions](https://github.com/features/actions) - Commit code style fixes automatically, tag releases, and run the test suite
-- [VS Code Extensions](./.vscode/extensions.json)
-  - [Vite](https://marketplace.visualstudio.com/items?itemName=antfu.vite) - Fire up Vite server automatically
-  - [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) - Vue 3 `<script setup>` IDE support _(ensure Vetur is turned off)_
-
-### 🧩 Plugins
-
-- [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components) - components auto import
-- [`unplugin-auto-import`](https://github.com/antfu/unplugin-auto-import) - Directly use Vue Composition API and others without importing
-- [VueUse](https://github.com/antfu/vueuse) - Collection of useful composition APIs
-
-### 🥰 Coding Style
-
-- Use Composition API with [`<script setup>` SFC syntax](https://github.com/vuejs/rfcs/pull/227)
-  - [Reactivity Transform](https://vuejs.org/guide/extras/reactivity-transform.html) enabled
-- [ESLint](https://eslint.org/) - statically analyzes your code to quickly find problems
-- [Prettier](https://prettier.io/) - required for Tailwind class name sorting
-
-### How to manage your library?
-
-```bash
-# how to create a git commit?
-git add . # select the changes you want to commit
-pnpm run commit # and now simply answer the questions
-
-# after you have successfully committed, you may create a "release"
-pnpm run release # automates git commits, versioning, and CHANGELOG generation
-```
+[caniuse-custom-el-v1]: https://caniuse.com/custom-elementsv1
 
 ## 🧪 Testing
 
 ```bash
-pnpm test
+yarn test
 ```
 
 ## 📈 Changelog
 
-Please see our [releases](https://github.com/meemalabs/web-components-library-starter/releases) page for more information on what has changed recently.
+Please see our [releases](https://github.com/openweblabs/table-vue/releases) page for more information on what has changed recently.
 
 ## 💪🏼 Contributing
 
@@ -89,7 +75,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-[Discussions on GitHub](https://github.com/meemalabs/web-components-library-starter/discussions)
+[Table Elements on GitHub](https://github.com/meemalabs/table-vue/discussions)
 
 For casual chit-chat with others using this package:
 
@@ -99,4 +85,4 @@ For casual chit-chat with others using this package:
 
 The MIT License (MIT). Please see [LICENSE](LICENSE.md) for more information.
 
-Made with ❤️ by Meema Labs. And many thanks to [antfu](https://github.com/antfu)!
+Made with ❤️ by Open Web Labs.
