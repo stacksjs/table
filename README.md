@@ -17,43 +17,59 @@ This cross-framework compatible (React, Vue, Svelte, Angular, HTML, etc.) web co
 
 Read more about these features in their respective [docs](https://ow3.org/docs).
 
+## 💡 Get Started
+
+It's incredibly easy to use a Web Components within your own project. Simply require the dependency:
+
+```bash
+npm install @openweb/table-vue
+```
+
 ## 💡 Usage
 
-It's incredibly easy to use a Web Components within your own project. Check out the `index.html` to get an idea how it can be done.
+Next, simply import the components and start using them:
 
-```html
-<!-- the following props are required to be set either on this `table-configure` or `table-v2` element -->
-<table-configure
-  source="127.0.0.1:7700"
-  index="movies"
-  title="Award Winning Movies"
-  sub-title="Check out the list of these movies."
-/>
+```vue
+<script setup>
+import { TableConfigure, TableV2 } from 'table-vue'
+</script>
 
-<table-v2 />
+<template>
+  <!-- the following props are required to be set either on this `table-configure` or `table-v2` element -->
+  <table-configure
+    source="127.0.0.1:7700"
+    index="movies"
+    title="Award Winning Movies"
+    sub-title="Check out the list of these movies."
+  />
 
-<!-- these are the default properties (all of them are optional)  -->
-<table-v2
-  cols="*"
-  :searchable="true"
-  :filterable="true"
-  :sortable="true"
-  :actionable="true"
-  :per-page="20"
-/>
+  <table-v2 />
 
-<!-- alternatively, you may configure your table more specifically -->
-<table-v2
-  source="127.0.0.1:7700"
-  index="movies"
-  cols="id, title, poster, overview, release_date"
-  searchable="title, overview"
-  filterable="genre, director"
-  sortable="release_date"
-  actionable="Edit"
-  per-page="20"
-/>
+  <!-- these are the default properties (all of them are optional)  -->
+  <table-v2
+    cols="*"
+    :searchable="true"
+    :filterable="true"
+    :sortable="true"
+    :actionable="true"
+    :per-page="20"
+  />
+
+  <!-- alternatively, you may configure your table more specifically -->
+  <table-v2
+    source="127.0.0.1:7700"
+    index="movies"
+    cols="id, title, poster, overview, release_date"
+    searchable="title, overview"
+    filterable="genre, director"
+    sortable="release_date"
+    actionable="Edit"
+    per-page="20"
+  />
+</template>
 ```
+
+Check out the `index.html` to get an idea how it can be done in a "working environment".
 
 ## 🧪 Testing
 
