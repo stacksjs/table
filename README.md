@@ -75,7 +75,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-[Table Elements on GitHub](https://github.com/meemalabs/table-vue/discussions)
+[Table Elements on GitHub](https://github.com/openweblabs/table-vue/discussions)
 
 For casual chit-chat with others using this package:
 

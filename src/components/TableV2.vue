@@ -143,6 +143,4 @@ function isColSortable(col: string): Boolean {
   </div>
 </template>
 
-<style>
-@import "../styles/index.css";
-</style>
+<style scoped></style>

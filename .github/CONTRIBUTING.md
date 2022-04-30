@@ -32,14 +32,14 @@ Please view the README and the instructions below on how to install the project 
 **Working on your first Pull Request?** You can learn how from this free series
 [How to Contribute to an Open Source Project on GitHub][pr-beginner-series].
 
-Head over to the [repository][web3-vue] on GitHub and click the Fork button in the top
+Head over to the [repository][table-vue] on GitHub and click the Fork button in the top
 right corner. After the project has been forked, run the following commands in your terminal:
 
 ```bash
 # Replace {github-username} with your GitHub username.
-$: git clone https://github.com/{github-username}/web3-vue --depth=1
+$: git clone https://github.com/{github-username}/table-vue --depth=1
 
-$: cd web3-vue
+$: cd table-vue
 
 # Create a branch for your PR, replace {issue-no} with the GitHub issue number.
 $: git checkout -b issue-{issue-no}
@@ -93,7 +93,7 @@ $: git push
 
 ## 🎉 Pull Request
 
-When you're all done head over to the [repository][web3-vue], and click the big green
+When you're all done head over to the [repository][table-vue], and click the big green
 `Compare & Pull Request` button that should appear after you've pushed changes to your fork.
 
 Don't expect your PR to be accepted immediately or even accepted at all. Give the community time to
@@ -104,6 +104,6 @@ contribution is appreciated more than you can imagine, and even a failed PR can 
 [vitebook]: https://vitebook.dev/
 [vue]: https://v3.vuejs.org/
 [vue-components]: https://vuejs.org/v2/guide/components.html
-[web3-vue]: https://github.com/meemalabs/web3-vue
+[table-vue]: https://github.com/openweblabs/table-vue
 [semantic-commit-style]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
 [pr-beginner-series]: https://app.egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github

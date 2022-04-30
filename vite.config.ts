@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
+import Unocss from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 
@@ -18,10 +19,15 @@ const config = {
       reactivityTransform: true, // https://vuejs.org/guide/extras/reactivity-transform.html
     }),
 
+    Unocss({
+      mode: 'vue-scoped',
+    }),
+
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
       imports: ['vue', '@vueuse/core', {
         '~/composables/dark': ['isDark', 'toggleDark'],
+        '~/composables/search': ['search', 'getSearchClient'],
       }],
       dts: 'src/auto-imports.d.ts',
       eslintrc: {
