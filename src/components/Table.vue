@@ -1,6 +1,5 @@
 <script setup lang="ts">
 // import { MeiliSearch } from 'meilisearch'
-import { Table } from '../components'
 import { state } from '~/composables/storage'
 import { getSearchClient, search } from '~/composables/search'
 
@@ -16,7 +15,6 @@ const {
   title = null,
   subTitle = null,
   perPage = 20,
-  usePagination = true,
 } = defineProps<{
   source?: string // TODO: should make sure at least one of these three is required to be set
   host?: string // alias of `source`
@@ -30,7 +28,6 @@ const {
   title?: string // -> TODO: defaults to capitalized $indexName. Alias: useTitle, defaults to `true`
   subTitle?: string // -> TODO: defaults to "A list of all the $pluralVersionOfIndexName in your database including their $columns[0], $columns[1], $columns[2] and $columns[3]." - based on amount of cols
   perPage?: number
-  usePagination?: boolean // -> TODO: determines whether to display/use the pagination feature. Defaults to `true`
 }>()
 
 // TODO: props overrules table-configure shared state

@@ -19,7 +19,7 @@ import { TableConfigure, TableV2 } from '../../src'
   />
 
   <!-- default state -->
-  <table-v2
+  <!-- <table-v2
     title="Collections"
     sub-title="Check out these beautiful pieces of art."
     cols="*"
@@ -28,5 +28,5 @@ import { TableConfigure, TableV2 } from '../../src'
     :sortable="true"
     :actionable="true"
     :per-page="20"
-  />
+  /> -->
 </template>
