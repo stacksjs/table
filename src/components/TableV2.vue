@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // import { MeiliSearch } from 'meilisearch'
+import Pagination from './Pagination.vue'
 import { state } from '~/composables/storage'
 import { getSearchClient, search } from '~/composables/search'
-
 const props = defineProps<{
   source?: string // TODO: should make sure at least one of these three is required to be set
   host?: string // alias of `source`
@@ -15,7 +15,7 @@ const props = defineProps<{
   actionable?: string | boolean // -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
   title?: string // -> TODO: defaults to capitalized $indexName. Alias: useTitle, defaults to `true`
   subTitle?: string // -> TODO: defaults to "A list of all the $pluralVersionOfIndexName in your database including their $columns[0], $columns[1], $columns[2] and $columns[3]." - based on amount of cols
-  // perPage?: number -> TODO: determines the items displayed per page. Defaults to 20.
+  perPage?: number
   usePagination?: boolean // -> TODO: determines whether to display/use the pagination feature. Defaults to `true`
 }>()
 
@@ -26,43 +26,69 @@ const sort = $ref('')
 const columns = $computed(() => props.columns.split(', '))
 const sortable = $computed(() => props.sortable.split(', '))
 
-const hits = state.value.results.hits
 const index = state.value.index
-
+state.value.perPage = props.perPage
 // async function sortTable(sort: string) {
 
 // }
 
-let finalOrder = $ref('')
-async function toggleSort(col: string, order: string) {
-  let sortString = ''
+let page = $ref(1)
+const finalOrder = $ref([])
+let sortString = $ref([])
+async function toggleSort(col: String, order: string) {
   switch (order) {
     case 'asc':
-      finalOrder = 'desc'
+      finalOrder[col] = 'desc'
       break
     case 'desc':
-      finalOrder = ''
+      finalOrder[col] = ''
       break
     case '':
-      finalOrder = 'asc'
+      finalOrder[col] = 'asc'
       break
     default:
-      finalOrder = 'asc'
+      finalOrder[col] = 'asc'
   }
 
-  if (finalOrder !== '')
-    sortString = [`${col}:${finalOrder}`]
+  if (finalOrder[col] !== '')
+    sortString = [`${col}:${finalOrder[col]}`]
   else
     sortString = []
 
-  const client = getSearchClient(state.value.host, '')
-  const clientIndex = client.index(index)
-  state.value.results = await search(clientIndex, '', { sort: sortString })
+  await clientSearch(sortString, '', page)
 }
 
 function isColSortable(col: string): Boolean {
   return sortable.includes(col)
 }
+
+async function clientSearch(sort: Array<String>, query: string, page = 1) {
+  const client = getSearchClient(state.value.host, '')
+  const clientIndex = client.index(index)
+  state.value.results = await search(clientIndex, query, { sort, offset: page })
+}
+
+async function toggleSearch(event: object): void {
+  clientSearch(sortString, event.target.value)
+}
+
+function prevPage() {
+  page = page - 1
+  if (page < 1)
+    page = 1
+
+  clientSearch(sortString, '', page)
+}
+
+function nextPage() {
+  page = page + 1
+
+  if (page <= 1)
+    page = 1
+
+  clientSearch(sortString, '', page)
+}
+
 </script>
 
 <template>
@@ -83,7 +109,8 @@ function isColSortable(col: string): Boolean {
           type="text"
           name="search"
           class="block w-full h-12 pl-4 pr-12 transition duration-150 ease-in-out border-none rounded-md cursor-pointer placeholder:text-gray-3 focus:ring-2 focus:ring-pink-500 sm:text-sm"
-          placeholder="Search Collections..."
+          :placeholder="`Search ${state.index}`"
+          @input="toggleSearch($event)"
         >
       </div>
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -99,17 +126,17 @@ function isColSortable(col: string): Boolean {
             <table class="min-w-full divide-y divide-gray-300">
               <thead class="bg-gray-50">
                 <tr>
-                  <th v-for="(col, colIndex) in columns" :key="colIndex" scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" @click="toggleSort(col, finalOrder)">
+                  <th v-for="(col, colIndex) in columns" :key="colIndex" scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     <div class="flex items-center">
                       {{ col }}
-                      <a v-if="isColSortable(col)" href="#" class="inline-flex group" @click="toggleSort(col, finalOrder)">
-                        <span v-if="(finalOrder === 'desc' || finalOrder === '')" :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`" class="flex-none ml-2 rounded">
+                      <a v-if="isColSortable(col)" href="#" class="inline-flex group" @click="toggleSort(col, finalOrder[col])">
+                        <span v-if="['desc', undefined, ''].includes(finalOrder[col])" :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`" class="flex-none ml-2 rounded">
                           <!-- Heroicon name: solid/chevron-down -->
                           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                           </svg>
                         </span>
-                        <span v-if="finalOrder === 'asc'" :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`" class="flex-none ml-2 rounded">
+                        <span v-if="finalOrder[col] === 'asc'" :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`" class="flex-none ml-2 rounded">
                           <!-- Heroicon name: solid/chevron-up -->
                           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
                         </span>
@@ -122,7 +149,7 @@ function isColSortable(col: string): Boolean {
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(item, itemIndex) in hits" :key="itemIndex">
+                <tr v-for="(item, itemIndex) in state.results.hits" :key="itemIndex">
                   <td v-for="(col, colIndex) in columns" :key="colIndex" class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
                     {{ item[col] }}
                   </td>
@@ -139,7 +166,7 @@ function isColSortable(col: string): Boolean {
         </div>
       </div>
     </div>
-    <Pagination v-if="usePagination" />
+    <Pagination v-if="usePagination" :current-page="page" :results="state.results" @previous-page="prevPage" @next-page="nextPage" />
   </div>
 </template>
 

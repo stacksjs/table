@@ -5,10 +5,9 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Pagination: typeof import('./components/Pagination.vue')['default']
-    'TableConfigure.ce': typeof import('./components/TableConfigure.ce.vue')['default']
-    'TableV2.ce': typeof import('./components/TableV2.ce.vue')['default']
+    TableConfigure: typeof import('./components/TableConfigure.vue')['default']
+    TableV2: typeof import('./components/TableV2.vue')['default']
   }
 }
 
