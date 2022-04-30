@@ -1,9 +1,23 @@
 <script setup lang="ts">
 // import { MeiliSearch } from 'meilisearch'
-import Pagination from './Pagination.vue'
+import { Table } from '../components'
 import { state } from '~/composables/storage'
 import { getSearchClient, search } from '~/composables/search'
-const props = defineProps<{
+
+const {
+  source = null,
+  host = null,
+  src = null,
+  index = null,
+  columns = null,
+  searchable = true,
+  sortable = true,
+  actionable = false,
+  title = null,
+  subTitle = null,
+  perPage = 20,
+  usePagination = true,
+} = defineProps<{
   source?: string // TODO: should make sure at least one of these three is required to be set
   host?: string // alias of `source`
   src?: string // alias of `source`
@@ -23,19 +37,34 @@ const props = defineProps<{
 
 const sort = $ref('')
 
-const columns = $computed(() => props.columns.split(', '))
-const sortable = $computed(() => props.sortable.split(', '))
+if (!source) {
+  if (src) {
+    const source = src
+  }
+  else if (host) {
+    const source = host
+  }
+}
 
-const index = state.value.index
-state.value.perPage = props.perPage
-// async function sortTable(sort: string) {
+if (columns) {
+  const columns = $computed(() => columns.split(', '))
+}
 
-// }
+if (sortable) {
+  const sortable = $computed(() => sortable.split(', '))
+}
+
+if (!index) {
+  const index = state.value.index
+}
+
+state.value.perPage = perPage
 
 let page = $ref(1)
 const finalOrder = $ref([])
 let sortString = $ref([])
-async function toggleSort(col: String, order: string) {
+
+async function toggleSort(col: string, order: string) {
   switch (order) {
     case 'asc':
       finalOrder[col] = 'desc'
@@ -166,7 +195,14 @@ function nextPage() {
         </div>
       </div>
     </div>
-    <Pagination v-if="usePagination" :current-page="page" :results="state.results" @previous-page="prevPage" @next-page="nextPage" />
+
+    <TablePagination
+      v-if="true"
+      :current-page="page"
+      :results="state.results"
+      @previous-page="prevPage"
+      @next-page="nextPage"
+    />
   </div>
 </template>
 

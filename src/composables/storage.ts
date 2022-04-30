@@ -14,4 +14,4 @@ const data: Object = {
   settings: {},
 }
 
-export const state = useStorage('table-store', data)
+export const state: Ref<Object> = useStorage('table-store', data)

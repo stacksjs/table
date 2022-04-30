@@ -1,9 +1,8 @@
 <script setup lang="ts">
-const props = defineProps<{
-  results?: object // TODO: should make sure at least one of these three is required to be set
-  currentPage?: number // TODO: should make sure at least one of these three is required to be set
+const { results, currentPage } = defineProps<{
+  results?: object
+  currentPage?: number
 }>()
-
 </script>
 
 <template>

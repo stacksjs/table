@@ -9,53 +9,51 @@ This cross-framework compatible (React, Vue, Svelte, Angular, HTML, etc.) web co
 - `<table-v2 />`
   - quickly & simply develop a highly-configurable table UI without worrying about the backend
   - "facet filtering" & "table head sorting" natively built in
+  - enterprise-ready
   - Meilisearch & Laravel Scout API compatible
 
 - `<table-configure />`
-  - simple way to configure the table in a HTML semantic fashion
+  - simple way to configure the table in HTML semantic fashion
 
-Read more about these features in their respective [docs](https://meema.xyz/docs).
+Read more about these features in their respective [docs](https://ow3.org/docs).
 
 ## 💡 Usage
 
 It's incredibly easy to use a Web Components within your own project. Check out the `index.html` to get an idea how it can be done.
 
 ```html
-<!-- the following props are required to be set either on this `table-configure` or `table-v2 element` -->
+<!-- the following props are required to be set either on this `table-configure` or `table-v2` element -->
 <table-configure
   source="127.0.0.1:7700"
-  index="collections"
-  cols="name, collection_published_at, created_at"
+  index="movies"
+  title="Award Winning Movies"
+  sub-title="Check out the list of these movies."
 />
 
 <table-v2 />
 
-<!-- optional props -->
+<!-- these are the default properties (all of them are optional)  -->
 <table-v2
-  searchable="true"
-  sorts="name, price, created_at"
-  filters="traits_Head, traits_Body, traits_Background"
-  actionable="true"
+  cols="*"
+  :searchable="true"
+  :filterable="true"
+  :sortable="true"
+  :actionable="true"
+  :per-page="20"
+/>
+
+<!-- alternatively, you may configure your table more specifically -->
+<table-v2
+  source="127.0.0.1:7700"
+  index="movies"
+  cols="id, title, poster, overview, release_date"
+  searchable="title, overview"
+  filterable="genre, director"
+  sortable="release_date"
+  actionable="Edit"
   per-page="20"
-  use-pagination="true"
 />
 ```
-
-## 🖥️ Browsers
-
-Meema Elements is built for the modern web and avoids bloated polyfills and outdated environments as much as possible. Currently, it supports all browsers that fully implement the [Custom Elements V1][caniuse-custom-el-v1].
-
-- Edge 79+
-- Firefox 63+
-- Chrome 67+
-- Safari 13.1+
-- Opera 64+
-- iOS Safari 13.7+
-- Android Browser 81+
-- Opera Mobile 59+
-- Chrome for Android 88+
-
-[caniuse-custom-el-v1]: https://caniuse.com/custom-elementsv1
 
 ## 🧪 Testing
 

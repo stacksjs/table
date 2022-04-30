@@ -1,8 +1,12 @@
 {
   "name": "table-vue",
   "version": "0.0.0",
-  "description": "The easy & modern way to work with tables.",
+  "description": "The easy & modern way to work with tables. Facet filtering, searching, pagination, ...",
   "keywords": [
+    "tables",
+    "filters",
+    "pagination",
+    "search",
     "component",
     "library",
     "vue",

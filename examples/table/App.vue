@@ -3,17 +3,30 @@ import { TableConfigure, TableV2 } from '../../src'
 </script>
 
 <template>
-  <table-configure host="http://127.0.0.1:7700/" index="collections" />
+  <table-configure
+    host="http://127.0.0.1:7700/"
+    index="hoodratz"
+  />
 
   <table-v2
-    searchable="true"
     title="Collections"
-    sorts="name, price, created_at"
-    filters="traits_Head, traits_Body, traits_Background"
-    columns="name, id, slug"
-    sortable="name, id"
-    actionable="true"
+    sub-title="Check out these beautiful pieces of art."
+    cols="id, name, slug"
+    sortable="id, name"
+    filterable="traits_Head, traits_Body, traits_Background"
+    actionable="Edit, Delete"
     per-page="50"
-    use-pagination="true"
+  />
+
+  <!-- default state -->
+  <table-v2
+    title="Collections"
+    sub-title="Check out these beautiful pieces of art."
+    cols="*"
+    :searchable="true"
+    :filterable="true"
+    :sortable="true"
+    :actionable="true"
+    :per-page="20"
   />
 </template>
