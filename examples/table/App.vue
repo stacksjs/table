@@ -3,12 +3,12 @@ import { TableConfigure, TableV2 } from '../../src'
 </script>
 
 <template>
-  <table-configure
+  <TableConfigure
     host="http://127.0.0.1:7700/"
     index="hoodratz"
   />
 
-  <table-v2
+  <TableV2
     title="Collections"
     sub-title="Check out these beautiful pieces of art."
     cols="id, name, slug"
@@ -19,7 +19,7 @@ import { TableConfigure, TableV2 } from '../../src'
   />
 
   <!-- default state -->
-  <!-- <table-v2
+  <!-- <TableV2
     title="Collections"
     sub-title="Check out these beautiful pieces of art."
     cols="*"

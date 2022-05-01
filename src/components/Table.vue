@@ -32,7 +32,7 @@ const {
   sortable?: string | boolean
   filterable?: string | boolean // -> TODO: determines whether the filters are displayed, , e.g. "traits_Head, traits_Body, traits_Background". `auto` could become a "setting" option as well. Alias: filters, useFilters- auto could become a setting as well. Defaults to `true`
   actionable?: string | boolean // -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
-  perPage?: number
+  perPage?: string | number
 }>()
 
 // TODO: props overrules table-configure shared state
@@ -179,7 +179,7 @@ function nextPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
+              <tbody class=" divide-y bg-white divide-gray-200">
                 <tr v-for="(item, itemIndex) in state.results.hits" :key="itemIndex">
                   <td v-for="(col, colIndex) in cols" :key="colIndex" class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
                     {{ item[col] }}

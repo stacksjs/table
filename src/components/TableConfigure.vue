@@ -9,6 +9,8 @@ const {
   src = null,
   index = null,
   cols = null,
+  query = null,
+  filters = null,
 } = defineProps<{
   source?: string // TODO: should make sure at least one of these three is required to be set
   host?: string // alias of `source`
