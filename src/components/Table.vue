@@ -8,9 +8,13 @@ const {
   host = null,
   src = null,
   index = null,
-  columns = null,
+  cols = null,
   searchable = true,
+  query = null,
   sortable = true,
+  // sorts = null,
+  filterable = true,
+  // filters = null,
   actionable = false,
   title = null,
   subTitle = null,
@@ -20,13 +24,14 @@ const {
   host?: string // alias of `source`
   src?: string // alias of `source`
   index?: string // TODO: in order to be fully optional, we need to implement a "indices component" which is triggered prior to rendering a specific index's data
-  columns: string // is used as the "table heads"/titles based on the same order the `string` was provided in
-  searchable?: string | boolean // -> TODO: determines whether the search input is displayed. If string is provided, use as placeholder. Add useSearch alias?. Defaults to `true`
-  sortable?: string
-  // filterable?: string -> TODO: determines whether the filters are displayed, , e.g. "traits_Head, traits_Body, traits_Background". `auto` could become a "setting" option as well. Alias: filters, useFilters- auto could become a setting as well. Defaults to `true`
-  actionable?: string | boolean // -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
   title?: string // -> TODO: defaults to capitalized $indexName. Alias: useTitle, defaults to `true`
-  subTitle?: string // -> TODO: defaults to "A list of all the $pluralVersionOfIndexName in your database including their $columns[0], $columns[1], $columns[2] and $columns[3]." - based on amount of cols
+  subTitle?: string // -> TODO: defaults to "A list of all the $pluralVersionOfIndexName in your database including their $cols[0], $cols[1], $cols[2] and $cols[3]." - based on amount of cols
+  cols: string // is used as the "table heads"/titles based on the same order the `string` was provided in
+  searchable?: string | boolean // -> TODO: determines whether the search input is displayed. If string is provided, use as placeholder. Add useSearch alias?. Defaults to `true`
+  query?: string
+  sortable?: string | boolean
+  filterable?: string | boolean // -> TODO: determines whether the filters are displayed, , e.g. "traits_Head, traits_Body, traits_Background". `auto` could become a "setting" option as well. Alias: filters, useFilters- auto could become a setting as well. Defaults to `true`
+  actionable?: string | boolean // -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
   perPage?: number
 }>()
 
@@ -43,8 +48,8 @@ if (!source) {
   }
 }
 
-if (columns) {
-  const columns = $computed(() => columns.split(', '))
+if (cols) {
+  const cols = $computed(() => cols.split(', '))
 }
 
 if (sortable) {
@@ -152,7 +157,7 @@ function nextPage() {
             <table class="min-w-full divide-y divide-gray-300">
               <thead class="bg-gray-50">
                 <tr>
-                  <th v-for="(col, colIndex) in columns" :key="colIndex" scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th v-for="(col, colIndex) in cols" :key="colIndex" scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     <div class="flex items-center">
                       {{ col }}
                       <a v-if="isColSortable(col)" href="#" class="inline-flex group" @click="toggleSort(col, finalOrder[col])">
@@ -176,7 +181,7 @@ function nextPage() {
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(item, itemIndex) in state.results.hits" :key="itemIndex">
-                  <td v-for="(col, colIndex) in columns" :key="colIndex" class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
+                  <td v-for="(col, colIndex) in cols" :key="colIndex" class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
                     {{ item[col] }}
                   </td>
 

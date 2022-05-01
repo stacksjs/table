@@ -19,15 +19,13 @@ Read more about these features in their respective [docs](https://ow3.org/docs).
 
 ## 💡 Get Started
 
-It's incredibly easy to use a Web Components within your own project. Simply require the dependency:
+To get started, you simply need to install the `@openweb/table-vue` npm package.
 
 ```bash
 npm install @openweb/table-vue
 ```
 
-## 💡 Usage
-
-Next, simply import the components and start using them:
+Next up, we need to make use of the components.
 
 ```vue
 <script setup>
