@@ -1,88 +1,167 @@
 <script setup lang="ts">
 // import { MeiliSearch } from 'meilisearch'
 import { state } from '~/composables/storage'
-import { getSearchClient, search } from '~/composables/search'
+// import { getSearchClient, search } from '~/composables/search'
 
-const {
-  source = null,
-  host = null,
-  src = null,
-  index = null,
-  cols = null,
-  searchable = true,
-  query = null,
-  sortable = true,
-  // sorts = null,
-  filterable = true,
-  // filters = null,
-  actionable = false,
-  title = null,
-  subTitle = null,
-  perPage = 20,
-} = defineProps<{
-  source?: string // TODO: should make sure at least one of these three is required to be set
-  host?: string // alias of `source`
-  src?: string // alias of `source`
-  index?: string // TODO: in order to be fully optional, we need to implement a "indices component" which is triggered prior to rendering a specific index's data
-  title?: string // -> TODO: defaults to capitalized $indexName. Alias: useTitle, defaults to `true`
-  subTitle?: string // -> TODO: defaults to "A list of all the $pluralVersionOfIndexName in your database including their $cols[0], $cols[1], $cols[2] and $cols[3]." - based on amount of cols
-  cols: string // is used as the "table heads"/titles based on the same order the `string` was provided in
+interface Props {
+  source?: string
+  type?: string | boolean // // TODO: in order to be fully optional, we need to implement a "indices component" which is triggered prior to rendering a specific index's data
+  useTitle?: string | boolean // defaults to false but may also accept a string to use as the title. Title defaults to the capitalized index name
+  useSubTitle?: string | boolean // defaults to false but may also accept a string to use as the subtitle.
+  title?: string | boolean
+  subTitle?: string | boolean
+  columns: string // is used as the "table heads"/titles based on the same order the comma-separated string was provided in
   searchable?: string | boolean // -> TODO: determines whether the search input is displayed. If string is provided, use as placeholder. Add useSearch alias?. Defaults to `true`
   query?: string
   sortable?: string | boolean
   filterable?: string | boolean // -> TODO: determines whether the filters are displayed, , e.g. "traits_Head, traits_Body, traits_Background". `auto` could become a "setting" option as well. Alias: filters, useFilters- auto could become a setting as well. Defaults to `true`
   actionable?: string | boolean // -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
   perPage?: string | number
-}>()
+
+  // aliases
+  src?: string // alias of `source`
+  host?: string // alias of `source` (for backwards compatibility)
+  index?: string // alias of `index` (for backwards compatibility)
+  cols?: string // alias of `columns`
+  sorts?: string | boolean // alias of `sortable`
+  useSorts?: string | boolean // alias of `sortable`
+  filters?: string | boolean // alias of `filterable`
+  useFilters?: string | boolean // alias of `filterable`
+  actions?: string | boolean // alias of `actionable`
+  useActions?: string | boolean // alias of `actionable`
+  q?: string // alias of `query`
+  search?: string // alias of `searchable`
+  useSearch?: string // alias of `searchable`
+}
+
+const props = defineProps<Props>()
+
+// let's destructure the props and set some defaults for our reactive values
+let {
+  source = null,
+  type = null,
+  title = null,
+  subTitle = 'A list of all the $pluralVersionOfIndexName in your database including their $cols[0], $cols[1], $cols[2] and $cols[3]',
+  columns = null,
+  searchable = true,
+  query = null,
+  sortable = true,
+  filterable = true,
+  actionable = false,
+  perPage = 20,
+} = props
+
+// aliases are constants
+const {
+  src = null,
+  index = null,
+  host = null,
+  cols = null,
+  sorts = null,
+  useSorts = null,
+  filters = null,
+  useFilters = null,
+  actions = null,
+  useActions = null,
+  q = null,
+  search = null,
+  useSearch = null,
+  useTitle = false,
+  useSubTitle = false,
+} = props
+
+// first, let's ensure the reactive state we are preparing is considering alias usages
+
+determineAliasUsage()
 
 // TODO: props overrules table-configure shared state
 
-const sort = $ref('')
-
-if (!source) {
-  if (src) {
-    const source = src
-  }
-  else if (host) {
-    const source = host
-  }
-}
-
-if (cols) {
-  const cols = $computed(() => cols.split(', '))
-}
-
-if (sortable) {
-  const sortable = $computed(() => sortable.split(', '))
-}
-
-if (!index) {
-  const index = state.value.index
-}
-
 state.value.perPage = perPage
 
-let page = $ref(1)
-const finalOrder = $ref([])
-let sortString = $ref([])
+// let page = $ref(1)
+const sortOrders = $ref([])
+// let sortString = $ref([])
+
+function determineAliasUsage() {
+  if (!source) {
+    if (src)
+      source = src
+    else if (host)
+      source = host
+  }
+
+  if (!type) {
+    if (index)
+      type = index
+  }
+
+  if (!columns) {
+    if (cols)
+      columns = cols
+  }
+
+  if (!sortable) {
+    if (sorts)
+      sortable = sorts
+
+    if (useSorts)
+      sortable = useSorts
+  }
+
+  if (!filterable) {
+    if (filters)
+      filterable = filters
+    if (useFilters)
+      filterable = useFilters
+  }
+
+  if (!actionable) {
+    if (actions)
+      actionable = actions
+    if (useActions)
+      actionable = useActions
+  }
+
+  if (!searchable) {
+    if (search)
+      searchable = search
+    if (useSearch)
+      searchable = useSearch
+  }
+
+  if (!query) {
+    if (q)
+      query = q
+  }
+
+  if (!title) {
+    if (useTitle)
+      title = useTitle
+  }
+
+  if (!subTitle) {
+    if (useSubTitle)
+      subTitle = useSubTitle
+  }
+}
 
 async function toggleSort(col: string, order: string) {
   switch (order) {
     case 'asc':
-      finalOrder[col] = 'desc'
+      sortOrders[col] = 'desc'
       break
     case 'desc':
-      finalOrder[col] = ''
+      sortOrders[col] = ''
       break
     case '':
-      finalOrder[col] = 'asc'
+      sortOrders[col] = 'asc'
       break
     default:
-      finalOrder[col] = 'asc'
+      sortOrders[col] = 'asc'
   }
 
-  if (finalOrder[col] !== '')
-    sortString = [`${col}:${finalOrder[col]}`]
+  if (sortOrders[col] !== '')
+    sortString = [`${col}:${sortOrders[col]}`]
   else
     sortString = []
 
@@ -93,33 +172,53 @@ function isColSortable(col: string): Boolean {
   return sortable.includes(col)
 }
 
-async function clientSearch(sort: Array<String>, query: string, page = 1) {
-  const client = getSearchClient(state.value.host, '')
-  const clientIndex = client.index(index)
-  state.value.results = await search(clientIndex, query, { sort, offset: page })
-}
+// async function clientSearch(sort: Array<String>, query: string, page = 1) {
+//   const client = getSearchClient(state.value.host, '')
+//   const clientIndex = client.index(index)
+//   state.value.results = await search(clientIndex, query, { sort, offset: page })
+// }
 
 async function toggleSearch(event: object): void {
-  clientSearch(sortString, event.target.value)
+  // clientSearch(sortString, event.target.value)
 }
 
 function prevPage() {
-  page = page - 1
-  if (page < 1)
-    page = 1
+  // page = page - 1
+  // if (page < 1)
+  //   page = 1
 
-  clientSearch(sortString, '', page)
+  // clientSearch(sortString, '', page)
 }
 
 function nextPage() {
-  page = page + 1
+  // page = page + 1
 
-  if (page <= 1)
-    page = 1
+  // if (page <= 1)
+  //   page = 1
 
-  clientSearch(sortString, '', page)
+  // clientSearch(sortString, '', page)
 }
 
+onMounted(() => {
+  // eslint-disable-next-line no-console
+  console.log('source is', source, src, host)
+  // eslint-disable-next-line no-console
+  console.log('type is', type, index)
+  // eslint-disable-next-line no-console
+  console.log('useTitle is', useTitle)
+  // eslint-disable-next-line no-console
+  console.log('useSubTitle is', useSubTitle)
+  // eslint-disable-next-line no-console
+  console.log('columns is', columns)
+  // eslint-disable-next-line no-console
+  console.log('query is', query)
+  // eslint-disable-next-line no-console
+  console.log('filterable is', filterable)
+  // eslint-disable-next-line no-console
+  console.log('search is', search)
+  // eslint-disable-next-line no-console
+  console.log('perPage is', perPage)
+})
 </script>
 
 <template>
@@ -164,10 +263,10 @@ function nextPage() {
                       {{ col }}
                       <a
                         v-if="isColSortable(col)" href="#" class="inline-flex group"
-                        @click="toggleSort(col, finalOrder[col])"
+                        @click="toggleSort(col, sortOrders[col])"
                       >
                         <span
-                          v-if="['desc', undefined, ''].includes(finalOrder[col])"
+                          v-if="['desc', undefined, ''].includes(sortOrders[col])"
                           :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`"
                           class="rounded flex-none ml-2"
                         >
@@ -184,7 +283,7 @@ function nextPage() {
                           </svg>
                         </span>
                         <span
-                          v-if="finalOrder[col] === 'asc'"
+                          v-if="sortOrders[col] === 'asc'"
                           :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`"
                           class="rounded flex-none ml-2"
                         >
