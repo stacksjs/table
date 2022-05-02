@@ -9,6 +9,7 @@
     "strings": true
   },
   "windicss.sortOnSave": true,
+  "windicss.enableCodeFolding": false,
   "cSpell.words": [
     "openweblabs",
     "openweb",
