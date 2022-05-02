@@ -49,17 +49,15 @@ state.value.query = query
 state.value.filters = filters
 state.value.index = index
 
-const settings = $ref({})
-
 onMounted(async () => {
   const client = getSearchClient(state.value.host, '')
   const clientIndex = client.index(index)
-  await clientIndex.getSettings()
+  const settings = await clientIndex.getSettings()
   state.value.results = await search(clientIndex, '', {})
-})
 
-// eslint-disable-next-line no-console
-console.log('state is', state)
+  // eslint-disable-next-line no-console
+  console.log('1state is', state)
+})
 </script>
 
 <!-- Workaround for: "Component is missing template or render function" -->
