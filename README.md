@@ -34,17 +34,17 @@ import { TableConfigure, TableV2 } from 'table-vue'
 
 <template>
   <!-- the following props are required to be set either on this `table-configure` or `table-v2` element -->
-  <table-configure
+  <TableConfigure
     source="127.0.0.1:7700"
     index="movies"
     title="Award Winning Movies"
     sub-title="Check out the list of these movies."
   />
 
-  <table-v2 />
+  <TableV2 />
 
   <!-- these are the default properties (all of them are optional)  -->
-  <table-v2
+  <TableV2
     cols="*"
     :searchable="true"
     :filterable="true"
@@ -54,7 +54,7 @@ import { TableConfigure, TableV2 } from 'table-vue'
   />
 
   <!-- alternatively, you may configure your table more specifically -->
-  <table-v2
+  <TableV2
     source="127.0.0.1:7700"
     index="movies"
     cols="id, title, poster, overview, release_date"
