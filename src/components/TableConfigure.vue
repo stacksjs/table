@@ -61,4 +61,6 @@ onMounted(async () => {
 </script>
 
 <!-- Workaround for: "Component is missing template or render function" -->
-<template><span class="hidden" /></template>
+<template>
+  <span class="hidden" />
+</template>

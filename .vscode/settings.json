@@ -8,6 +8,7 @@
   "editor.quickSuggestions": {
     "strings": true
   },
+  "windicss.sortOnSave": true,
   "cSpell.words": [
     "openweblabs",
     "openweb",
@@ -34,6 +35,8 @@
     "commitlintrc",
     "upath",
     "bumpp",
-    "unocss"
+    "unocss",
+    "semibold",
+    "meilisearch"
   ]
 }

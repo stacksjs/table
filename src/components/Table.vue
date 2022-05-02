@@ -123,10 +123,10 @@ function nextPage() {
 </script>
 
 <template>
-  <div class="px-4 font-sans table-v2 sm:px-6 lg:px-8">
+  <div class="font-sans px-4 table-v2 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
-        <h1 class="text-xl font-semibold text-gray-900">
+        <h1 class="font-semibold text-xl text-gray-900">
           {{ title }}
         </h1>
         <p class="mt-2 text-sm text-gray-700">
@@ -136,14 +136,14 @@ function nextPage() {
       <div v-if="searchable">
         <input
           id="search" ref="searchInput" type="text" name="search"
-          class="block w-full h-12 pl-4 pr-12 transition duration-150 ease-in-out border-none rounded-md cursor-pointer placeholder:text-gray-3 focus:ring-2 focus:ring-pink-500 sm:text-sm"
+          class="border-none rounded-md cursor-pointer h-12 w-full pr-12 pl-4 transition ease-in-out duration-150 block placeholder:text-gray-3 sm:text-sm focus:ring-2 focus:ring-pink-500"
           :placeholder="`Search ${state.index}`" @input="toggleSearch($event)"
         >
       </div>
-      <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <div class="mt-4 sm:flex-none sm:mt-0 sm:ml-16">
         <button
           type="button"
-          class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+          class="border border-transparent rounded-md font-medium bg-indigo-600 shadow-sm text-sm text-white py-2 px-4 inline-flex items-center justify-center sm:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           Add user
         </button>
@@ -151,14 +151,14 @@ function nextPage() {
     </div>
     <div class="flex flex-col mt-8">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table class="min-w-full divide-y divide-gray-300">
+        <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
+          <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
+            <table class="divide-y min-w-full divide-gray-300">
               <thead class="bg-gray-50">
                 <tr>
                   <th
                     v-for="(col, colIndex) in cols" :key="colIndex" scope="col"
-                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    class="font-semibold text-left text-sm py-3.5 px-3 text-gray-900"
                   >
                     <div class="flex items-center">
                       {{ col }}
@@ -169,11 +169,11 @@ function nextPage() {
                         <span
                           v-if="['desc', undefined, ''].includes(finalOrder[col])"
                           :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`"
-                          class="flex-none ml-2 rounded"
+                          class="rounded flex-none ml-2"
                         >
                           <!-- Heroicon name: solid/chevron-down -->
                           <svg
-                            class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                             fill="currentColor" aria-hidden="true"
                           >
                             <path
@@ -186,11 +186,11 @@ function nextPage() {
                         <span
                           v-if="finalOrder[col] === 'asc'"
                           :class="sort === 'name' ? `invisible text-gray-400 group-hover:visible group-focus:visible` : `bg-gray-200 text-gray-900 group-hover:bg-gray-300`"
-                          class="flex-none ml-2 rounded"
+                          class="rounded flex-none ml-2"
                         >
                           <!-- Heroicon name: solid/chevron-up -->
                           <svg
-                            class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
@@ -203,23 +203,23 @@ function nextPage() {
                       </a>
                     </div>
                   </th>
-                  <th v-if="actionable" scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <th v-if="actionable" scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
                     <span class="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
-              <tbody class=" divide-y bg-white divide-gray-200">
+              <tbody class="divide-y bg-white divide-gray-200">
                 <tr v-for="(item, itemIndex) in state.results.hits" :key="itemIndex">
                   <td
                     v-for="(col, colIndex) in cols" :key="colIndex"
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6"
+                    class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6"
                   >
                     {{ item[col] }}
                   </td>
 
                   <td
                     v-if="actionable"
-                    class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6"
+                    class="font-medium text-sm text-right py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
                   >
                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay
                       Walton</span></a>
