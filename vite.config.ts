@@ -2,6 +2,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Unocss from 'unocss/vite'
+import PresetIcons from '@unocss/preset-icons'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 
@@ -25,6 +26,15 @@ const config = {
 
     Unocss({
       mode: 'vue-scoped',
+      presets: [
+        PresetIcons({
+          prefix: 'i-',
+          extraProperties: {
+            'display': 'inline-block',
+            'vertical-align': 'middle',
+          },
+        }),
+      ],
     }),
 
     // https://github.com/antfu/unplugin-auto-import

@@ -24,10 +24,10 @@ const config = {
         PresetIcons({
           prefix: 'i-',
           extraProperties: {
-            display: 'inline-block',
+            'display': 'inline-block',
+            'vertical-align': 'middle',
           },
         }),
-        // ...other presets
       ],
     }),
 

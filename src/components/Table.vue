@@ -235,7 +235,7 @@ onMounted(() => {
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
         <h1 class="font-semibold text-xl text-gray-900">
-          Users
+          Users, Hello World <div class="text-3xl text-blue-500 i-heroicons-outline-archive" />
         </h1>
         <p class="mt-2 text-sm text-gray-700">
           A list of all the users in your account including their name, title, email and role.
