@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { MeiliSearch } from 'meilisearch'
 import { isBoolean, isString } from '@vueuse/core'
 import { tableStore } from '~/composables/table'
 
@@ -7,17 +6,20 @@ import { tableStore } from '~/composables/table'
 
 interface Props {
   source?: string
-  type?: string | boolean // // TODO: in order to be fully optional, we need to implement a "indices component" which is triggered prior to rendering a specific index's data
-  useTitle?: string | boolean // defaults to false but may also accept a string to use as the title. Title defaults to the capitalized index name
-  useSubTitle?: string | boolean // defaults to false but may also accept a string to use as the subtitle.
+  type?: string | boolean
+  useTitle?: string | boolean
+  useSubTitle?: string | boolean
   title?: string | boolean
   subTitle?: string | boolean
-  columns?: string | string[] // is used as the "table heads"/titles based on the same order the comma-separated string was provided in
-  searchable?: string | boolean // -> TODO: determines whether the search input is displayed. If string is provided, use as placeholder. Add useSearch alias?. Defaults to `true`
+  columns?: string | string[]
+  searchable?: string | boolean
   query?: string
   sortable?: string | boolean
-  filterable?: string | boolean // -> TODO: determines whether the filters are displayed, , e.g. "traits_Head, traits_Body, traits_Background". `auto` could become a "setting" option as well. Alias: filters, useFilters- auto could become a setting as well. Defaults to `true`
-  actionable?: string | boolean // -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
+  sorts?: string | string[]
+  filterable?: string | boolean
+  filters?: string | string[]
+  actionable?: string | boolean
+  actions?: string | string[]
   perPage?: string | number
   // stickyHeader?: string | boolean
   // stickyFooter?: string | boolean
@@ -27,11 +29,8 @@ interface Props {
   host?: string // alias of `source` (for backwards compatibility)
   index?: string // alias of `index` (for backwards compatibility)
   cols?: string | [] // alias of `columns`
-  sorts?: string | boolean // alias of `sortable`
   useSorts?: string | boolean // alias of `sortable`
-  filters?: string | boolean // alias of `filterable`
   useFilters?: string | boolean // alias of `filterable`
-  actions?: string | boolean // alias of `actionable`
   useActions?: string | boolean // alias of `actionable`
   q?: string // alias of `query`
   search?: string // alias of `searchable`
@@ -83,7 +82,8 @@ if (isString(columns))
 
 // TODO: props overrules table-configure shared tableStore
 
-tableStore.value.perPage = perPage
+// eslint-disable-next-line no-console
+console.log('tableStore', tableStore)
 
 let currentPageIndex = $ref(1)
 const sortOrders = $ref([])
@@ -170,15 +170,15 @@ function isColumnUsedAsSort(col: string) {
   return sortOrders[col]
 }
 
-// async function clientSearch(sort: Array<String>, query: string, page = 1) {
-//   const client = getSearchClient(tableStore.value.host, '')
-//   const clientIndex = client.index(index)
-//   tableStore.value.results = await search(clientIndex, query, { sort, offset: page })
-// }
+async function clientSearch(sort: Array<String>, query: string, page = 1) {
+  const client = getSearchClient(tableStore.value.host, '')
+  const clientIndex = client.index(index)
+  tableStore.value.results = await search(clientIndex, query, { sort, offset: page })
+}
 
-// async function toggleSearch(event: object): void {
-//   // clientSearch(sortString, event.target.value)
-// }
+async function toggleSearch(event: object): void {
+  clientSearch(sortString, event.target.value)
+}
 
 function prevPage() {
   currentPageIndex = currentPageIndex - 1
