@@ -38,6 +38,7 @@
     "bumpp",
     "unocss",
     "semibold",
-    "meilisearch"
+    "meilisearch",
+    "typecheck"
   ]
 }

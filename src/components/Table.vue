@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { isString } from '@vueuse/core'
+import { onMounted } from 'vue'
 // import { MeiliSearch } from 'meilisearch'
 import { state } from '~/composables/storage'
 // import { getSearchClient, search } from '~/composables/search'
@@ -10,7 +12,7 @@ interface Props {
   useSubTitle?: string | boolean // defaults to false but may also accept a string to use as the subtitle.
   title?: string | boolean
   subTitle?: string | boolean
-  columns: string // is used as the "table heads"/titles based on the same order the comma-separated string was provided in
+  columns: string | string[] // is used as the "table heads"/titles based on the same order the comma-separated string was provided in
   searchable?: string | boolean // -> TODO: determines whether the search input is displayed. If string is provided, use as placeholder. Add useSearch alias?. Defaults to `true`
   query?: string
   sortable?: string | boolean
@@ -22,7 +24,7 @@ interface Props {
   src?: string // alias of `source`
   host?: string // alias of `source` (for backwards compatibility)
   index?: string // alias of `index` (for backwards compatibility)
-  cols?: string // alias of `columns`
+  cols?: string | [] // alias of `columns`
   sorts?: string | boolean // alias of `sortable`
   useSorts?: string | boolean // alias of `sortable`
   filters?: string | boolean // alias of `filterable`
@@ -42,13 +44,12 @@ let {
   type = null,
   title = null,
   subTitle = 'A list of all the $pluralVersionOfIndexName in your database including their $cols[0], $cols[1], $cols[2] and $cols[3]',
-  columns = null,
+  columns,
   searchable = true,
   query = null,
   sortable = true,
   filterable = true,
   actionable = false,
-  perPage = 20,
 } = props
 
 // aliases are constants
@@ -56,7 +57,7 @@ const {
   src = null,
   index = null,
   host = null,
-  cols = null,
+  cols,
   sorts = null,
   useSorts = null,
   filters = null,
@@ -68,11 +69,15 @@ const {
   useSearch = null,
   useTitle = false,
   useSubTitle = false,
+  perPage = 20,
 } = props
 
 // first, let's ensure the reactive state we are preparing is considering alias usages
 
 determineAliasUsage()
+
+if (isString(columns))
+  columns = columns.split(',')
 
 // TODO: props overrules table-configure shared state
 
@@ -256,7 +261,7 @@ onMounted(() => {
               <thead class="bg-gray-50">
                 <tr>
                   <th
-                    v-for="(col, colIndex) in cols" :key="colIndex" scope="col"
+                    v-for="(col, colIndex) in columns" :key="colIndex" scope="col"
                     class="font-semibold text-left text-sm py-3.5 px-3 text-gray-900"
                   >
                     <div class="flex items-center">
