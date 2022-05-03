@@ -39,11 +39,7 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
-    "examples/**/*.ts",
-    "examples/**/*.d.ts",
-    "examples/**/*.tsx",
-    "examples/**/*.vue"
+    "src/**/*.vue"
   ],
   "exclude": [
     "dist",

@@ -18,11 +18,10 @@ export default defineConfig({
     presetIcons({
       scale: 1.2,
       warn: true,
-      //
-      // collections: {
-      //   'heroicon-outline': () => import('@iconify-json/heroicon-outline/icons.json').then(i => i.default as any),
-      //   'heroicon-solid': () => import('@iconify-json/heroicon-solid/icons.json').then(i => i.default as any),
-      // },
+      collections: {
+        'heroicon-outline': () => import('@iconify-json/heroicon-outline/icons.json').then(i => i.default as any),
+        'heroicon-solid': () => import('@iconify-json/heroicon-solid/icons.json').then(i => i.default as any),
+      },
     }),
     // presetTypography(),
     // presetWebFonts({

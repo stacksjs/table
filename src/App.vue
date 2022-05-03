@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TableConfigure, TableV2 } from '../../src'
+import { TableConfigure, TableV2 } from '~/main'
 </script>
 
 <template>
