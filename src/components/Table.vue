@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // import { MeiliSearch } from 'meilisearch'
-import { isString } from '@vueuse/core'
-import { state } from '~/composables/storage'
+import { isBoolean, isString } from '@vueuse/core'
+import { tableStore } from '~/composables/table'
+
 // import { getSearchClient, search } from '~/composables/search'
 
 interface Props {
@@ -44,7 +45,7 @@ let {
   source = null,
   type = null,
   title = null,
-  subTitle = 'A list of all the $pluralVersionOfIndexName in your database including their $cols[0], $cols[1], $cols[2] and $cols[3]',
+  subTitle = null,
   columns,
   searchable = true,
   query = null,
@@ -73,18 +74,19 @@ const {
   perPage = 20,
 } = props
 
-// first, let's ensure the reactive state we are preparing is considering alias usages
+// first, let's ensure the reactive tableStore we are preparing is considering alias usages
 
 determineAliasUsage()
 
 if (isString(columns))
   columns = columns.split(',')
 
-// TODO: props overrules table-configure shared state
+// TODO: props overrules table-configure shared tableStore
 
-state.value.perPage = perPage
+tableStore.value.perPage = perPage
 
-// let page = $ref(1)
+let currentPageIndex = $ref(1)
+const sortOrders = $ref([])
 // const sortOrders = $ref([])
 // let sortString = $ref([])
 
@@ -151,8 +153,6 @@ function determineAliasUsage() {
   }
 }
 
-const sortOrders = $ref([])
-
 function toggleSort(col: string) {
   sortOrders[col] = !sortOrders[col]
 }
@@ -171,31 +171,32 @@ function isColumnUsedAsSort(col: string) {
 }
 
 // async function clientSearch(sort: Array<String>, query: string, page = 1) {
-//   const client = getSearchClient(state.value.host, '')
+//   const client = getSearchClient(tableStore.value.host, '')
 //   const clientIndex = client.index(index)
-//   state.value.results = await search(clientIndex, query, { sort, offset: page })
+//   tableStore.value.results = await search(clientIndex, query, { sort, offset: page })
 // }
 
 // async function toggleSearch(event: object): void {
 //   // clientSearch(sortString, event.target.value)
 // }
 
-// function prevPage() {
-//   // page = page - 1
-//   // if (page < 1)
-//   //   page = 1
+function prevPage() {
+  currentPageIndex = currentPageIndex - 1
 
-//   // clientSearch(sortString, '', page)
-// }
+  if (currentPageIndex < 1)
+    currentPageIndex = 1
 
-// function nextPage() {
-//   // page = page + 1
+  // clientSearch(sortString, '', currentPageIndex)
+}
 
-//   // if (page <= 1)
-//   //   page = 1
+function nextPage() {
+  currentPageIndex = currentPageIndex + 1
 
-//   // clientSearch(sortString, '', page)
-// }
+  if (currentPageIndex <= 1)
+    currentPageIndex = 1
+
+  // clientSearch(sortString, '', currentPageIndex)
+}
 
 onMounted(() => {
   // eslint-disable-next-line no-console
@@ -224,14 +225,17 @@ onMounted(() => {
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
         <h1 class="font-semibold text-xl text-gray-900">
-          Users
+          {{ title }}
         </h1>
         <p class="mt-2 text-sm text-gray-700">
-          A list of all the users in your account including their name, title, email and role.
+          {{ subTitle }}
         </p>
       </div>
       <div class="mt-4 sm:flex-none sm:mt-0 sm:ml-16">
-        <button type="button" class="border border-transparent rounded-md font-medium bg-indigo-600 shadow-sm text-sm text-white py-2 px-4 inline-flex items-center justify-center sm:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        <button
+          type="button"
+          class="border border-transparent rounded-md font-medium bg-indigo-600 shadow-sm text-sm text-white py-2 px-4 inline-flex items-center justify-center sm:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
           Add user
         </button>
       </div>
@@ -245,15 +249,13 @@ onMounted(() => {
               <thead class="bg-gray-50">
                 <tr>
                   <th
-                    v-for="(columnName, index) in columns" :key="index"
-                    scope="col"
+                    v-for="(columnName, index) in columns" :key="index" scope="col"
                     :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
                   >
                     <a href="#" class="group inline-flex">
                       {{ columnName }}
                       <span
-                        v-if="isColumnSortable(columnName)"
-                        class="rounded flex-none ml-2 "
+                        v-if="isColumnSortable(columnName)" class="rounded flex-none ml-2 "
                         :class="isColumnUsedAsSort(columnName) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
                         @click="toggleSort(columnName)"
                       >
@@ -292,7 +294,8 @@ onMounted(() => {
                     Member
                   </td>
                   <td class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
+                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay
+                      Walton</span></a>
                   </td>
                 </tr>
               </tbody>
@@ -303,12 +306,15 @@ onMounted(() => {
     </div>
   </div>
 
-  <!-- <TablePagination
-    v-if="true" :current-page="page" :results="state.results" @previous-page="prevPage"
+  <TablePagination
+    v-if="true"
+    :current-page="currentPageIndex"
+    :results="tableStore.results"
+    @previous-page="prevPage"
     @next-page="nextPage"
-  /> -->
+  />
 </template>
 
 <style scoped>
-@import '@unocss/reset/tailwind.css'
+@import '@unocss/reset/tailwind.css';
 </style>

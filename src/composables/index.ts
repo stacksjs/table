@@ -1,3 +1,3 @@
 export * from './dark'
-export * from './storage'
 export * from './search'
+export * from './table'

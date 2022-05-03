@@ -80,6 +80,7 @@
     "shallowRef": true,
     "syncRef": true,
     "syncRefs": true,
+    "tableStore": true,
     "templateRef": true,
     "throttledRef": true,
     "throttledWatch": true,

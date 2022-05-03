@@ -1,10 +1,9 @@
 import { MeiliSearch } from 'meilisearch'
-import { state } from '~/composables/storage'
+import { tableStore } from './table'
 
 export async function search(index: string, search: string, attrs: object): Promise<[]> {
-  const q = search || ''
-  const perPage = parseInt(state.value.perPage) || 20
-
+  const q = search.trim()
+  const perPage = parseInt(tableStore.value.perPage) || 20
   const results = await index.search(q, { ...{ limit: perPage }, ...attrs })
 
   return results

@@ -1,62 +1,113 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { state } from '~/composables/storage'
-import { getSearchClient, search } from '~/composables/search'
+// import { MeiliSearch } from 'meilisearch'
+import { isString } from '@vueuse/core'
+import { tableStore } from '~/composables/table'
 
-const {
+interface Props {
+  source?: string
+  type?: string | boolean // // TODO: in order to be fully optional, we need to implement a "indices component" which is triggered prior to rendering a specific index's data
+  useTitle?: string | boolean // defaults to false but may also accept a string to use as the title. Title defaults to the capitalized index name
+  useSubTitle?: string | boolean // defaults to false but may also accept a string to use as the subtitle.
+  title?: string | boolean
+  subTitle?: string | boolean
+  columns?: string | string[] // is used as the "table heads"/titles based on the same order the comma-separated string was provided in
+  searchable?: string | boolean // -> TODO: determines whether the search input is displayed. If string is provided, use as placeholder. Add useSearch alias?. Defaults to `true`
+  query?: string
+  sortable?: string | boolean
+  filterable?: string | boolean // -> TODO: determines whether the filters are displayed, , e.g. "traits_Head, traits_Body, traits_Background". `auto` could become a "setting" option as well. Alias: filters, useFilters- auto could become a setting as well. Defaults to `true`
+  actionable?: string | boolean // -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
+  perPage?: string | number
+  // stickyHeader?: string | boolean
+  // stickyFooter?: string | boolean
+
+  // aliases
+  src?: string // alias of `source`
+  host?: string // alias of `source` (for backwards compatibility)
+  index?: string // alias of `index` (for backwards compatibility)
+  cols?: string | [] // alias of `columns`
+  sorts?: string | boolean // alias of `sortable`
+  useSorts?: string | boolean // alias of `sortable`
+  filters?: string | boolean // alias of `filterable`
+  useFilters?: string | boolean // alias of `filterable`
+  actions?: string | boolean // alias of `actionable`
+  useActions?: string | boolean // alias of `actionable`
+  q?: string // alias of `query`
+  search?: string // alias of `searchable`
+  useSearch?: string // alias of `searchable`
+}
+
+const props = defineProps<Props>()
+
+// let's destructure the props and set some defaults for our reactive values
+let {
   source = null,
-  host = null,
+  type = null,
+  title = null,
+  subTitle = null,
+  columns,
+  searchable = true,
+  query = null,
+  sortable = true,
+  filterable = true,
+  actionable = false,
+} = props
+
+// aliases are constants
+const {
   src = null,
   index = null,
-  cols = null,
-  query = null,
+  host = null,
+  cols,
+  sorts = null,
+  useSorts = null,
   filters = null,
-} = defineProps<{
-  source?: string // TODO: should make sure at least one of these three is required to be set
-  host?: string // alias of `source`
-  src?: string // alias of `source`
-  index?: string // TODO: in order to be fully optional, we need to implement a "indices component" which is triggered prior to rendering a specific index's data
-  cols?: string // is used as the "table heads"/titles based on the same order the `string` was provided in
-  // searchable?: string | boolean -> TODO: determines whether the search input is displayed. If string is provided, use as placeholder. Add useSearch alias?. Defaults to `true`
-  // sortable?: string | boolean -> TODO: determines whether the sorts are displayed, e.g. "name, price, created_at". `auto` could become a "setting" option as well. Alias: sorts, useSorts. Defaults to `true`
-  // sorts: string
-  // filterable?: string -> TODO: determines whether the filters are displayed, , e.g. "traits_Head, traits_Body, traits_Background". `auto` could become a "setting" option as well. Alias: filters, useFilters- auto could become a setting as well. Defaults to `true`
-  filters?: string
-  // actionable?: string | boolean -> TODO: determines whether the "edit"/action button is displayed. Future version should allow for more configuration here
-  // title?: string -> TODO: defaults to capitalized $indexName. Alias: useTitle, defaults to `true`
-  // subTitle?: string -> TODO: defaults to "A list of all the $pluralVersionOfIndexName in your database including their $cols[0], $cols[1], $cols[2] and $cols[3]." - based on amount of cols
-  // perPage?: number -> TODO: determines the items displayed per page. Defaults to 20.
-  // usePagination?: boolean -> TODO: determines whether to display/use the pagination feature. Defaults to `true`
-  query?: string
-}>()
+  useFilters = null,
+  actions = null,
+  useActions = null,
+  q = null,
+  search = null,
+  useSearch = null,
+  useTitle = false,
+  useSubTitle = false,
+  perPage = 20,
+} = props
 
-// for a demo reference https://vueuse.org/core/usestorage/#demo
-// const state = useStorage('table-source', {
-//   host: source ?? host ?? src,
-//   index: index,
-//   cols: cols,
-//   query: query,
-//   sorts: sorts,
-//   filters: filters,
-//   settings: '',
-//   results: [],
-// })
+// first, let's ensure the reactive tableStore we are preparing is considering alias usages
 
-state.value.host = source ?? host ?? src
-state.value.cols = cols
-state.value.query = query
-// state.value.sorts = sorts
-state.value.filters = filters
-state.value.index = index
+if (isString(columns))
+  columns = columns.split(',')
+
+// TODO: props overrules table-configure shared tableStore
 
 onMounted(async () => {
-  const client = getSearchClient(state.value.host, '')
-  const clientIndex = client.index(index)
+  // eslint-disable-next-line no-console
+  console.log('source is', source, src, host)
+  // eslint-disable-next-line no-console
+  console.log('type is', type, index)
+  // eslint-disable-next-line no-console
+  console.log('useTitle is', useTitle)
+  // eslint-disable-next-line no-console
+  console.log('useSubTitle is', useSubTitle)
+  // eslint-disable-next-line no-console
+  console.log('columns is', columns)
+  // eslint-disable-next-line no-console
+  console.log('query is', query)
+  // eslint-disable-next-line no-console
+  console.log('filterable is', filterable)
+  // eslint-disable-next-line no-console
+  console.log('search is', search)
+  // eslint-disable-next-line no-console
+  console.log('perPage is', perPage)
+
+  const client = getSearchClient(tableStore.value.host, '')
+  const clientIndex = client.index(index as string)
   const settings = await clientIndex.getSettings()
-  state.value.results = await search(clientIndex, '', {})
+  tableStore.value.results = await search(clientIndex, '', {})
 
   // eslint-disable-next-line no-console
-  console.log('1state is', state)
+  console.log('tableStore is', tableStore)
+  // eslint-disable-next-line no-console
+  console.log('settings', settings)
 })
 </script>
 

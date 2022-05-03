@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { TableConfigure, TableV2 } from '~/main'
+import { TableV2 } from '~/main'
 </script>
 
 <template>
-  <TableConfigure
-    host="http://127.0.0.1:7700/"
-    index="hoodratz"
-  />
-
   <TableV2
+    source="http://127.0.0.1:7700/"
+    type="hoodratz"
     title="Collections"
     sub-title="Check out these beautiful pieces of art."
     cols="order, name, slug, collection_name, image_url, created_at, published_at"
