@@ -11,7 +11,7 @@ import { TableConfigure, TableV2 } from '../../src'
   <TableV2
     title="Collections"
     sub-title="Check out these beautiful pieces of art."
-    cols="order, name, slug, collection_name, description, image_url, created_at, published_at"
+    cols="order, name, slug, collection_name, image_url, created_at, published_at"
     sortable="order, name, published_at"
     filterable=""
     actionable="Edit, Delete"

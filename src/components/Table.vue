@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { isBoolean, isString } from '@vueuse/core'
-import { onMounted } from 'vue'
 // import { MeiliSearch } from 'meilisearch'
+import { isString } from '@vueuse/core'
 import { state } from '~/composables/storage'
 // import { getSearchClient, search } from '~/composables/search'
 
@@ -154,17 +153,8 @@ function determineAliasUsage() {
 
 const sortOrders = $ref([])
 
-function toggleSort(col: string, currentSortOrder: 'asc' | 'desc') {
-  switch (currentSortOrder) {
-    case 'asc':
-      sortOrders[col] = 'desc'
-      break
-    case 'desc':
-      sortOrders[col] = ''
-      break
-    default:
-      sortOrders[col] = 'asc'
-  }
+function toggleSort(col: string) {
+  sortOrders[col] = !sortOrders[col]
 }
 
 function isColumnSortable(col: string): Boolean {
@@ -177,7 +167,7 @@ function isColumnSortable(col: string): Boolean {
 }
 
 function isColumnUsedAsSort(col: string) {
-  // if (col === )
+  return sortOrders[col]
 }
 
 // async function clientSearch(sort: Array<String>, query: string, page = 1) {
