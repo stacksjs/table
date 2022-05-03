@@ -86,7 +86,7 @@ if (isString(columns))
 state.value.perPage = perPage
 
 // let page = $ref(1)
-const sortOrders = $ref([])
+// const sortOrders = $ref([])
 // let sortString = $ref([])
 
 function determineAliasUsage() {
@@ -152,8 +152,10 @@ function determineAliasUsage() {
   }
 }
 
-async function toggleSort(col: string, order: string) {
-  switch (order) {
+const sortOrders = $ref([])
+
+function toggleSort(col: string, currentSortOrder: 'asc' | 'desc') {
+  switch (currentSortOrder) {
     case 'asc':
       sortOrders[col] = 'desc'
       break
@@ -163,13 +165,6 @@ async function toggleSort(col: string, order: string) {
     default:
       sortOrders[col] = 'asc'
   }
-
-  if (sortOrders[col] !== '')
-    sortString = [`${col}:${sortOrders[col]}`]
-  else
-    sortString = []
-
-  await clientSearch(sortString, '', page)
 }
 
 function isColumnSortable(col: string): Boolean {
@@ -181,32 +176,36 @@ function isColumnSortable(col: string): Boolean {
     return false
 }
 
+function isColumnUsedAsSort(col: string) {
+  // if (col === )
+}
+
 // async function clientSearch(sort: Array<String>, query: string, page = 1) {
 //   const client = getSearchClient(state.value.host, '')
 //   const clientIndex = client.index(index)
 //   state.value.results = await search(clientIndex, query, { sort, offset: page })
 // }
 
-async function toggleSearch(event: object): void {
-  // clientSearch(sortString, event.target.value)
-}
+// async function toggleSearch(event: object): void {
+//   // clientSearch(sortString, event.target.value)
+// }
 
-function prevPage() {
-  // page = page - 1
-  // if (page < 1)
-  //   page = 1
+// function prevPage() {
+//   // page = page - 1
+//   // if (page < 1)
+//   //   page = 1
 
-  // clientSearch(sortString, '', page)
-}
+//   // clientSearch(sortString, '', page)
+// }
 
-function nextPage() {
-  // page = page + 1
+// function nextPage() {
+//   // page = page + 1
 
-  // if (page <= 1)
-  //   page = 1
+//   // if (page <= 1)
+//   //   page = 1
 
-  // clientSearch(sortString, '', page)
-}
+//   // clientSearch(sortString, '', page)
+// }
 
 onMounted(() => {
   // eslint-disable-next-line no-console
@@ -235,7 +234,7 @@ onMounted(() => {
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
         <h1 class="font-semibold text-xl text-gray-900">
-          Users, Hello World <div class="text-3xl text-blue-500 i-heroicons-outline-archive" />
+          Users
         </h1>
         <p class="mt-2 text-sm text-gray-700">
           A list of all the users in your account including their name, title, email and role.
@@ -247,6 +246,7 @@ onMounted(() => {
         </button>
       </div>
     </div>
+
     <div class="flex flex-col mt-8">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
@@ -254,59 +254,30 @@ onMounted(() => {
             <table class="divide-y min-w-full divide-gray-300">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6">
+                  <th
+                    v-for="(columnName, index) in columns" :key="index"
+                    scope="col"
+                    :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
+                  >
                     <a href="#" class="group inline-flex">
-                      Name
-                      <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                      <span class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible">
-                        <!-- Heroicon name: solid/chevron-down -->
-                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
+                      {{ columnName }}
+                      <span
+                        v-if="isColumnSortable(columnName)"
+                        class="rounded flex-none ml-2 "
+                        :class="isColumnUsedAsSort(columnName) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+                        @click="toggleSort(columnName)"
+                      >
+                        <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
                       </span>
                     </a>
                   </th>
-                  <th scope="col" class="font-semibold text-left text-sm py-3.5 px-3 text-gray-900">
-                    <a href="#" class="group inline-flex">
-                      Title
-                      <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                      <span class="rounded flex-none bg-gray-200 ml-2 text-gray-900 group-hover:bg-gray-300">
-                        <!-- Heroicon name: solid/chevron-down -->
-                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
-                    </a>
-                  </th>
-                  <th scope="col" class="font-semibold text-left text-sm py-3.5 px-3 text-gray-900">
-                    <a href="#" class="group inline-flex">
-                      Email
-                      <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                      <span class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible">
-                        <!-- Heroicon name: solid/chevron-down -->
-                        <svg class="rounded flex-none h-5 ml-2 text-gray-400 w-5 invisible group-hover:visible group-focus:visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
-                    </a>
-                  </th>
-                  <th scope="col" class="font-semibold text-left text-sm py-3.5 px-3 text-gray-900">
-                    <a href="#" class="group inline-flex">
-                      Role
-                      <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                      <span class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible">
-                        <!-- Heroicon name: solid/chevron-down -->
-                        <svg class="rounded flex-none h-5 ml-2 text-gray-400 w-5 invisible group-hover:visible group-focus:visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
-                    </a>
-                  </th>
-                  <th scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
+
+                  <th v-if="actionable" scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
                     <span class="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
+
               <tbody class="divide-y bg-white divide-gray-200">
                 <tr>
                   <td class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6">
@@ -321,12 +292,19 @@ onMounted(() => {
                   <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
                     Member
                   </td>
+                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
+                    Member
+                  </td>
+                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
+                    Member
+                  </td>
+                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
+                    Member
+                  </td>
                   <td class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6">
                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
                   </td>
                 </tr>
-
-              <!-- More people... -->
               </tbody>
             </table>
           </div>
@@ -335,10 +313,10 @@ onMounted(() => {
     </div>
   </div>
 
-  <TablePagination
+  <!-- <TablePagination
     v-if="true" :current-page="page" :results="state.results" @previous-page="prevPage"
     @next-page="nextPage"
-  />
+  /> -->
 </template>
 
 <style scoped>
