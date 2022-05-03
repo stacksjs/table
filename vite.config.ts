@@ -14,6 +14,10 @@ const config = {
     },
   },
 
+  optimizeDeps: {
+    exclude: ['vue-demi'],
+  },
+
   plugins: [
     Vue({
       reactivityTransform: true, // https://vuejs.org/guide/extras/reactivity-transform.html
@@ -38,7 +42,8 @@ const config = {
     // https://github.com/antfu/unplugin-vue-components
     Components({
       dirs: ['src/components'],
-      extensions: ['vue'],
+      // allow auto import and register components used in markdown
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       dts: 'src/components.d.ts',
     }),
   ],
@@ -51,11 +56,12 @@ const config = {
     },
 
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'vue-demi'],
       output: {
         // exports: 'named',
         globals: {
-          vue: 'Vue',
+          'vue': 'Vue',
+          'vue-demi': 'vue-demi',
         },
       },
     },
