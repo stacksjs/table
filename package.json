@@ -75,7 +75,7 @@
     "@unocss/preset-wind": "^0.32.9",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vue/compiler-sfc": "^3.2.33",
-    "@vueuse/core": "^8.3.1",
+    "@vueuse/core": "^8.4.0",
     "bumpp": "^7.1.1",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.2.2",
@@ -92,7 +92,7 @@
     "unplugin-vue-components": "^0.19.3",
     "upath": "^2.0.1",
     "vite": "^2.9.7",
-    "vitest": "^0.10.1",
+    "vitest": "^0.10.2",
     "vue-demi": "^0.12.5",
     "vue-tsc": "^0.34.11"
   },
