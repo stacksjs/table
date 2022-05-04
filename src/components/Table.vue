@@ -47,7 +47,7 @@ const {
   perPage = 20,
 } = props
 
-await setInitialState()
+setInitialState()
 
 search()
 
@@ -114,7 +114,7 @@ function nextPage() {
 
 async function setInitialState() {
   if (isString(columns))
-    columns = columns.split(',')
+    columns = columns.split(',').map(col => col.trim())
 
   const initialData: TableStore = {
     source,
@@ -167,7 +167,9 @@ async function setInitialState() {
               <thead class="bg-gray-50">
                 <tr>
                   <th
-                    v-for="(columnName, index) in columns" :key="index" scope="col"
+                    v-for="(columnName, index) in columns"
+                    :key="index"
+                    scope="col"
                     :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
                   >
                     <a href="#" class="group inline-flex">
@@ -189,32 +191,26 @@ async function setInitialState() {
               </thead>
 
               <tbody class="divide-y bg-white divide-gray-200">
-                <tr>
-                  <td class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6">
+                <tr
+                  v-for="(hit, i) in tableStore.results?.hits"
+                  :key="i"
+                  scope="row"
+                >
+                  <!-- <td class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6">
                     Lindsay Walton
+                  </td> -->
+                  <td
+                    v-for="(col, x) in columns"
+                    :key="x"
+                    class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap"
+                  >
+                    {{ hit[col] }}
                   </td>
-                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
-                    Front-end Developer
-                  </td>
-                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
-                    lindsay.walton@example.com
-                  </td>
-                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
-                    Member
-                  </td>
-                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
-                    Member
-                  </td>
-                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
-                    Member
-                  </td>
-                  <td class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap">
-                    Member
-                  </td>
-                  <td class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6">
+
+                  <!-- <td class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6">
                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay
                       Walton</span></a>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
