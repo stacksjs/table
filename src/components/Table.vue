@@ -3,8 +3,6 @@ import { isBoolean, isString } from '@vueuse/core'
 import type { TableStore } from '~/composables/table'
 import { tableStore } from '~/composables/table'
 
-import { getSearchClient, search } from '~/composables/search'
-
 // 1. we need to initialize the props
 // 2. all them are have to accept strings because our Web Component library can only accept strings
 // 3. store the props to localStorage using useStorage and ensure reactivity
@@ -51,7 +49,7 @@ const {
 
 setInitialState()
 
-clientSearch()
+search()
 
 // TODO: props overrules table-configure shared tableStore
 
@@ -94,19 +92,6 @@ function isColumnSortable(col: string): Boolean {
 
 function isColumnUsedAsSort(col: string) {
   return sortOrders[col]
-}
-
-async function clientSearch(sort?: Array<String>, query?: string, page = 1) {
-  if (!sort)
-    sort = []
-  if (!query)
-    query = ''
-
-  const apiKei = ''
-  const client = getSearchClient(tableStore.value.source, apiKei)
-  const index = client.index(tableStore.value.type)
-
-  tableStore.value.results = await search(index, query, { sort, offset: page })
 }
 
 function prevPage() {
