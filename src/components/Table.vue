@@ -7,15 +7,13 @@ import { tableStore } from '~/composables/table'
 interface Props {
   source?: string
   type?: string | boolean
-  useTitle?: string | boolean
-  useSubTitle?: string | boolean
   title?: string | boolean
   subTitle?: string | boolean
   columns?: string | string[]
-  searchable?: string | boolean
+  searchable?: string
   query?: string
-  sortable?: string | boolean
-  sorts?: string | string[]
+  sortable?: string
+  sorts?: string
   filterable?: string | boolean
   filters?: string | string[]
   actionable?: string | boolean
@@ -32,6 +30,8 @@ interface Props {
   useSorts?: string | boolean // alias of `sortable`
   useFilters?: string | boolean // alias of `filterable`
   useActions?: string | boolean // alias of `actionable`
+  useTitle?: string | boolean // alias of `title`
+  useSubTitle?: string | boolean // alias of `subTitle`
   q?: string // alias of `query`
   search?: string // alias of `searchable`
   useSearch?: string // alias of `searchable`
@@ -54,28 +54,31 @@ let {
 } = props
 
 // aliases are constants
-const {
-  src = null,
-  index = null,
-  host = null,
-  cols,
-  sorts = null,
-  useSorts = null,
-  filters = null,
-  useFilters = null,
-  actions = null,
-  useActions = null,
-  q = null,
-  search = null,
-  useSearch = null,
-  useTitle = false,
-  useSubTitle = false,
-  perPage = 20,
-} = props
+// const {
+//   src = null,
+//   index = null,
+//   host = null,
+//   cols,
+//   sorts = null,
+//   useSorts = null,
+//   filters = null,
+//   useFilters = null,
+//   actions = null,
+//   useActions = null,
+//   q = null,
+//   search = null,
+//   useSearch = null,
+//   useTitle = false,
+//   useSubTitle = false,
+//   perPage = 20,
+// } = props
 
-// first, let's ensure the reactive tableStore we are preparing is considering alias usages
+setInitialState()
 
-determineAliasUsage()
+function setInitialState() {
+  // first, let's ensure the reactive tableStore we are preparing is considering alias usages
+  determineAliasUsage()
+}
 
 if (isString(columns))
   columns = columns.split(',')
@@ -87,7 +90,6 @@ console.log('tableStore', tableStore)
 
 let currentPageIndex = $ref(1)
 const sortOrders = $ref([])
-// const sortOrders = $ref([])
 // let sortString = $ref([])
 
 function determineAliasUsage() {

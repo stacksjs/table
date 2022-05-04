@@ -1,12 +1,10 @@
 import type { Ref } from 'vue'
 
 interface TableStore {
-  source?: string
-  type?: string | boolean
-  useTitle?: string | boolean
-  useSubTitle?: string | boolean
-  title?: string | boolean
-  subTitle?: string | boolean
+  source: string
+  type: string
+  title: string
+  subTitle: string
   columns?: string | string[]
   searchable?: string | boolean
   query?: string
