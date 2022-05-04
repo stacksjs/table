@@ -11,19 +11,14 @@ export async function search(attrs: object = {}) {
   console.log('config', config)
   // eslint-disable-next-line no-console
   console.log('options', options)
-
   // eslint-disable-next-line no-console
   console.log('source', source)
-
   // eslint-disable-next-line no-console
   console.log('query', query)
   const client = await getSearchClient()
-  // eslint-disable-next-line no-console
-  console.log('client', client)
-  const index = client.index(source)
-  // eslint-disable-next-line no-console
-  console.log('index', index)
-  const results: SearchResponse<Record<string, any>> = await index.search(query)
+  const index = client.index(tableStore.value.type)
+  const results: SearchResponse<Record<string, any>> = await index.search(tableStore.value.query)
+  tableStore.value.results = results
 
   // eslint-disable-next-line no-console
   console.log('results', results)
@@ -32,8 +27,6 @@ export async function search(attrs: object = {}) {
 }
 
 export async function getSearchClient(apiKey = '') {
-  // eslint-disable-next-line no-console
-  console.log('host', tableStore.value.source)
   return new MeiliSearch({
     host: 'http://127.0.0.1:7700',
     apiKey,
