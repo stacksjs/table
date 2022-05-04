@@ -99,10 +99,10 @@ onMounted(async () => {
   // eslint-disable-next-line no-console
   console.log('perPage is', perPage)
 
-  const client = getSearchClient(tableStore.value.host, '')
+  const client = getSearchClient(tableStore.value.source)
   const clientIndex = client.index(index as string)
   const settings = await clientIndex.getSettings()
-  tableStore.value.results = await search(clientIndex, '', {})
+  tableStore.value.results = await search(clientIndex)
 
   // eslint-disable-next-line no-console
   console.log('tableStore is', tableStore)

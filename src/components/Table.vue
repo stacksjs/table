@@ -103,7 +103,7 @@ async function clientSearch(sort?: Array<String>, query?: string, page = 1) {
     query = ''
 
   const apiKei = ''
-  const client = getSearchClient(tableStore.value.type, apiKei)
+  const client = getSearchClient(tableStore.value.source, apiKei)
   const index = client.index(tableStore.value.type)
 
   tableStore.value.results = await search(index, query, { sort, offset: page })
