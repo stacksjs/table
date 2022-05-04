@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 
-interface TableStore {
+export interface TableStore {
   source: string
   type: string
   title: string
@@ -22,8 +22,8 @@ interface TableStore {
 const initialData: TableStore = {
   source: '',
   type: '',
-  title: false,
-  subTitle: false,
+  title: '',
+  subTitle: '',
   columns: [],
   searchable: false,
   query: '',

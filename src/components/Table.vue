@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { isBoolean, isString } from '@vueuse/core'
+import type { TableStore } from '~/composables/table'
 import { tableStore } from '~/composables/table'
 
 // import { getSearchClient, search } from '~/composables/search'
 
 interface Props {
-  source?: string
-  type?: string | boolean
-  title?: string | boolean
-  subTitle?: string | boolean
+  source: string
+  type: string
+  title: string
+  subTitle: string
   columns?: string | string[]
-  searchable?: string
+  searchable?: string | boolean
   query?: string
   sortable?: string
-  sorts?: string
+  sorts?: string | string[]
   filterable?: string | boolean
   filters?: string | string[]
   actionable?: string | boolean
@@ -21,67 +22,55 @@ interface Props {
   perPage?: string | number
   // stickyHeader?: string | boolean
   // stickyFooter?: string | boolean
-
-  // aliases
-  src?: string // alias of `source`
-  host?: string // alias of `source` (for backwards compatibility)
-  index?: string // alias of `index` (for backwards compatibility)
-  cols?: string | [] // alias of `columns`
-  useSorts?: string | boolean // alias of `sortable`
-  useFilters?: string | boolean // alias of `filterable`
-  useActions?: string | boolean // alias of `actionable`
-  useTitle?: string | boolean // alias of `title`
-  useSubTitle?: string | boolean // alias of `subTitle`
-  q?: string // alias of `query`
-  search?: string // alias of `searchable`
-  useSearch?: string // alias of `searchable`
 }
 
 const props = defineProps<Props>()
 
 // let's destructure the props and set some defaults for our reactive values
-let {
-  source = null,
-  type = null,
-  title = null,
-  subTitle = null,
-  columns,
+let { columns } = props
+const {
+  source,
+  type,
+  title,
+  subTitle,
   searchable = true,
-  query = null,
-  sortable = true,
-  filterable = true,
+  query,
+  filters = [],
+  filterable = false,
+  sorts = [],
+  sortable = false,
+  actions = [],
   actionable = false,
+  perPage = 20,
 } = props
-
-// aliases are constants
-// const {
-//   src = null,
-//   index = null,
-//   host = null,
-//   cols,
-//   sorts = null,
-//   useSorts = null,
-//   filters = null,
-//   useFilters = null,
-//   actions = null,
-//   useActions = null,
-//   q = null,
-//   search = null,
-//   useSearch = null,
-//   useTitle = false,
-//   useSubTitle = false,
-//   perPage = 20,
-// } = props
 
 setInitialState()
 
 function setInitialState() {
   // first, let's ensure the reactive tableStore we are preparing is considering alias usages
-  determineAliasUsage()
-}
+  if (isString(columns))
+    columns = columns.split(',')
 
-if (isString(columns))
-  columns = columns.split(',')
+  const initialData: TableStore = {
+    source,
+    type,
+    title,
+    subTitle,
+    columns,
+    searchable,
+    query,
+    filters,
+    filterable,
+    sorts,
+    sortable,
+    actions,
+    actionable,
+    perPage,
+  }
+
+  // then, let's set the initial state
+  tableStore.value = initialData
+}
 
 // TODO: props overrules table-configure shared tableStore
 
@@ -91,69 +80,6 @@ console.log('tableStore', tableStore)
 let currentPageIndex = $ref(1)
 const sortOrders = $ref([])
 // let sortString = $ref([])
-
-function determineAliasUsage() {
-  if (!source) {
-    if (src)
-      source = src
-    else if (host)
-      source = host
-  }
-
-  if (!type) {
-    if (index)
-      type = index
-  }
-
-  if (!columns) {
-    if (cols)
-      columns = cols
-  }
-
-  if (!sortable) {
-    if (sorts)
-      sortable = sorts
-
-    if (useSorts)
-      sortable = useSorts
-  }
-
-  if (!filterable) {
-    if (filters)
-      filterable = filters
-    if (useFilters)
-      filterable = useFilters
-  }
-
-  if (!actionable) {
-    if (actions)
-      actionable = actions
-    if (useActions)
-      actionable = useActions
-  }
-
-  if (!searchable) {
-    if (search)
-      searchable = search
-    if (useSearch)
-      searchable = useSearch
-  }
-
-  if (!query) {
-    if (q)
-      query = q
-  }
-
-  if (!title) {
-    if (useTitle)
-      title = useTitle
-  }
-
-  if (!subTitle) {
-    if (useSubTitle)
-      subTitle = useSubTitle
-  }
-}
 
 function toggleSort(col: string) {
   sortOrders[col] = !sortOrders[col]
