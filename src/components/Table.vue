@@ -112,6 +112,15 @@ function nextPage() {
   // clientSearch(sortString, '', currentPageIndex)
 }
 
+function columnName(name: string) {
+  // we store our column names in the following format: ['name: Name', 'slug: URL']
+  // it allows to set a custom column/table head name
+  if (name.includes(':'))
+    return name.split(':')[1].trim
+
+  return name
+}
+
 async function setInitialState() {
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
@@ -173,11 +182,11 @@ async function setInitialState() {
                     :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
                   >
                     <a href="#" class="group inline-flex">
-                      {{ columnName }}
+                      {{ columnName.includes(':') ? columnName.split(':')[1].trim() : columnName }}
                       <span
-                        v-if="isColumnSortable(columnName)" class="rounded flex-none ml-2 "
-                        :class="isColumnUsedAsSort(columnName) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-                        @click="toggleSort(columnName)"
+                        v-if="isColumnSortable(columnName.includes(':') ? columnName.split(':')[0].trim() : columnName)" class="rounded flex-none ml-2 "
+                        :class="isColumnUsedAsSort(columnName.includes(':') ? columnName.split(':')[0].trim() : columnName) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+                        @click="toggleSort(columnName.includes(':') ? columnName.split(':')[0].trim() : columnName)"
                       >
                         <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
                       </span>
@@ -204,7 +213,7 @@ async function setInitialState() {
                     :key="x"
                     class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap"
                   >
-                    {{ hit[col] }}
+                    {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
                   </td>
 
                   <!-- <td class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6">
