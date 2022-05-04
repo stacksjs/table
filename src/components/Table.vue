@@ -51,6 +51,82 @@ const {
 
 setInitialState()
 
+clientSearch()
+
+// TODO: props overrules table-configure shared tableStore
+
+// eslint-disable-next-line no-console
+console.log('tableStore', tableStore)
+
+let currentPageIndex = $ref(1)
+const sortOrders = $ref([])
+// let sortString = $ref([])
+
+onMounted(() => {
+  // eslint-disable-next-line no-console
+  console.log('source is', source)
+  // eslint-disable-next-line no-console
+  console.log('type is', type)
+  // eslint-disable-next-line no-console
+  console.log('title is', title)
+  // eslint-disable-next-line no-console
+  console.log('columns is', columns)
+  // eslint-disable-next-line no-console
+  console.log('query is', query)
+  // eslint-disable-next-line no-console
+  console.log('filterable is', filterable)
+  // eslint-disable-next-line no-console
+  console.log('perPage is', perPage)
+})
+
+function toggleSort(col: string) {
+  sortOrders[col] = !sortOrders[col]
+}
+
+function isColumnSortable(col: string): Boolean {
+  if (isString(sortable))
+    return sortable.includes(col)
+  else if (isBoolean(sortable))
+    return sortable
+  else
+    return false
+}
+
+function isColumnUsedAsSort(col: string) {
+  return sortOrders[col]
+}
+
+async function clientSearch(sort?: Array<String>, query?: string, page = 1) {
+  if (!sort)
+    sort = []
+  if (!query)
+    query = ''
+
+  const apiKei = ''
+  const client = getSearchClient(tableStore.value.type, apiKei)
+  const index = client.index(tableStore.value.type)
+
+  tableStore.value.results = await search(index, query, { sort, offset: page })
+}
+
+function prevPage() {
+  currentPageIndex = currentPageIndex - 1
+
+  if (currentPageIndex < 1)
+    currentPageIndex = 1
+
+  // clientSearch(sortString, '', currentPageIndex)
+}
+
+function nextPage() {
+  currentPageIndex = currentPageIndex + 1
+
+  if (currentPageIndex <= 1)
+    currentPageIndex = 1
+
+  // clientSearch(sortString, '', currentPageIndex)
+}
+
 function setInitialState() {
   if (isString(columns))
     columns = columns.split(',')
@@ -75,77 +151,6 @@ function setInitialState() {
   // then, let's set the initial state
   tableStore.value = initialData
 }
-
-// TODO: props overrules table-configure shared tableStore
-
-// eslint-disable-next-line no-console
-console.log('tableStore', tableStore)
-
-let currentPageIndex = $ref(1)
-const sortOrders = $ref([])
-// let sortString = $ref([])
-
-function toggleSort(col: string) {
-  sortOrders[col] = !sortOrders[col]
-}
-
-function isColumnSortable(col: string): Boolean {
-  if (isString(sortable))
-    return sortable.includes(col)
-  else if (isBoolean(sortable))
-    return sortable
-  else
-    return false
-}
-
-function isColumnUsedAsSort(col: string) {
-  return sortOrders[col]
-}
-
-async function clientSearch(sort: Array<String>, query: string, page = 1) {
-  const client = getSearchClient(tableStore.value.host, '')
-  const clientIndex = client.index(index)
-  tableStore.value.results = await search(clientIndex, query, { sort, offset: page })
-}
-
-async function toggleSearch(event: object): void {
-  clientSearch(sortString, event.target.value)
-}
-
-function prevPage() {
-  currentPageIndex = currentPageIndex - 1
-
-  if (currentPageIndex < 1)
-    currentPageIndex = 1
-
-  // clientSearch(sortString, '', currentPageIndex)
-}
-
-function nextPage() {
-  currentPageIndex = currentPageIndex + 1
-
-  if (currentPageIndex <= 1)
-    currentPageIndex = 1
-
-  // clientSearch(sortString, '', currentPageIndex)
-}
-
-onMounted(() => {
-  // eslint-disable-next-line no-console
-  console.log('source is', source)
-  // eslint-disable-next-line no-console
-  console.log('type is', type)
-  // eslint-disable-next-line no-console
-  console.log('title is', title)
-  // eslint-disable-next-line no-console
-  console.log('columns is', columns)
-  // eslint-disable-next-line no-console
-  console.log('query is', query)
-  // eslint-disable-next-line no-console
-  console.log('filterable is', filterable)
-  // eslint-disable-next-line no-console
-  console.log('perPage is', perPage)
-})
 </script>
 
 <template>

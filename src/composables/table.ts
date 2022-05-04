@@ -1,3 +1,4 @@
+import type { SearchResponse } from 'meilisearch'
 import type { Ref } from 'vue'
 
 export interface TableStore {
@@ -15,6 +16,8 @@ export interface TableStore {
   actionable?: string | boolean
   actions?: string | string[]
   perPage?: string | number
+  results?: SearchResponse<Record<string, any>>
+
   // stickyHeader?: string | boolean
   // stickyFooter?: string | boolean
 }
@@ -34,6 +37,7 @@ const initialData: TableStore = {
   actionable: false,
   actions: [],
   perPage: 20,
+  results: undefined,
   // TODO: stickyHeader?: string | boolean
   // TODO: stickyFooter?: string | boolean
 }
