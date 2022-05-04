@@ -3,7 +3,7 @@ import { isBoolean, isString } from '@vueuse/core'
 import type { TableStore } from '~/composables/table'
 import { tableStore } from '~/composables/table'
 
-// import { getSearchClient, search } from '~/composables/search'
+import { getSearchClient, search } from '~/composables/search'
 
 // 1. we need to initialize the props
 // 2. all them are have to accept strings because our Web Component library can only accept strings
