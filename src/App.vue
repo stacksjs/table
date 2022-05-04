@@ -8,10 +8,10 @@ import { TableV2 } from '~/main'
     type="hoodratz"
     title="Collections"
     sub-title="Check out these beautiful pieces of art."
-    cols="order, name, slug, collection_name, image_url, created_at, published_at"
-    sortable="order, name, published_at"
-    filterable=""
-    actionable="Edit, Delete"
+    columns="order, name, slug, collection_name, image_url, created_at, published_at"
+    sorts="order, name, published_at"
+    filters="trait_Accessories, trait_Background, trait_Breed, trait_Ears, trait_Eyes, trait_Head, trait_Mouth"
+    actions="Edit, Delete"
     per-page="50"
   />
 

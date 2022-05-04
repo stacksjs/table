@@ -5,6 +5,11 @@ import { tableStore } from '~/composables/table'
 
 // import { getSearchClient, search } from '~/composables/search'
 
+// 1. we need to initialize the props
+// 2. all them are have to accept strings because our Web Component library can only accept strings
+// 3. store the props to localStorage using useStorage and ensure reactivity
+// 4. we need to ini
+
 interface Props {
   source: string
   type: string
@@ -47,7 +52,6 @@ const {
 setInitialState()
 
 function setInitialState() {
-  // first, let's ensure the reactive tableStore we are preparing is considering alias usages
   if (isString(columns))
     columns = columns.split(',')
 
@@ -128,21 +132,17 @@ function nextPage() {
 
 onMounted(() => {
   // eslint-disable-next-line no-console
-  console.log('source is', source, src, host)
+  console.log('source is', source)
   // eslint-disable-next-line no-console
-  console.log('type is', type, index)
+  console.log('type is', type)
   // eslint-disable-next-line no-console
-  console.log('useTitle is', useTitle)
-  // eslint-disable-next-line no-console
-  console.log('useSubTitle is', useSubTitle)
+  console.log('title is', title)
   // eslint-disable-next-line no-console
   console.log('columns is', columns)
   // eslint-disable-next-line no-console
   console.log('query is', query)
   // eslint-disable-next-line no-console
   console.log('filterable is', filterable)
-  // eslint-disable-next-line no-console
-  console.log('search is', search)
   // eslint-disable-next-line no-console
   console.log('perPage is', perPage)
 })
@@ -192,7 +192,7 @@ onMounted(() => {
                     </a>
                   </th>
 
-                  <th v-if="actionable" scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
+                  <th v-if="actionable || actions.length" scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
                     <span class="sr-only">Edit</span>
                   </th>
                 </tr>
