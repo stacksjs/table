@@ -7,7 +7,6 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     _Pagination: typeof import('./components/_Pagination.vue')['default']
     Table: typeof import('./components/Table.vue')['default']
-    TableConfigure: typeof import('./components/TableConfigure.vue')['default']
   }
 }
 
