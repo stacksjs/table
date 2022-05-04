@@ -47,7 +47,7 @@ const {
   perPage = 20,
 } = props
 
-setInitialState()
+await setInitialState()
 
 search()
 
@@ -112,7 +112,7 @@ function nextPage() {
   // clientSearch(sortString, '', currentPageIndex)
 }
 
-function setInitialState() {
+async function setInitialState() {
   if (isString(columns))
     columns = columns.split(',')
 

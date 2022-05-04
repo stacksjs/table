@@ -1,6 +1,5 @@
 import type { SearchResponse } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
-import { tableStore } from './table'
 
 export async function search(attrs: object = {}) {
   const query = tableStore.value.query?.trim() || ''
@@ -16,7 +15,15 @@ export async function search(attrs: object = {}) {
   // eslint-disable-next-line no-console
   console.log('source', source)
 
-  const results: SearchResponse<Record<string, any>> = await getSearchClient().index(source).search(query)
+  // eslint-disable-next-line no-console
+  console.log('query', query)
+  const client = await getSearchClient()
+  // eslint-disable-next-line no-console
+  console.log('client', client)
+  const index = client.index(source)
+  // eslint-disable-next-line no-console
+  console.log('index', index)
+  const results: SearchResponse<Record<string, any>> = await index.search(query)
 
   // eslint-disable-next-line no-console
   console.log('results', results)
@@ -24,9 +31,11 @@ export async function search(attrs: object = {}) {
   return results
 }
 
-export function getSearchClient(apiKey = '') {
+export async function getSearchClient(apiKey = '') {
+  // eslint-disable-next-line no-console
+  console.log('host', tableStore.value.source)
   return new MeiliSearch({
-    host: tableStore.value.source,
+    host: 'http://127.0.0.1:7700',
     apiKey,
   })
 }
