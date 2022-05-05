@@ -228,14 +228,6 @@ async function setInitialState() {
       </div>
     </div>
   </div>
-
-  <TablePagination
-    v-if="true"
-    :current-page="currentPageIndex"
-    :results="tableStore.results"
-    @previous-page="prevPage"
-    @next-page="nextPage"
-  />
 </template>
 
 <style scoped>
