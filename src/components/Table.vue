@@ -148,26 +148,7 @@ async function setInitialState() {
 </script>
 
 <template>
-  <div class="font-sans px-4 sm:px-6 lg:px-8">
-    <div class="sm:flex sm:items-center">
-      <div class="sm:flex-auto">
-        <h1 class="font-semibold text-xl text-gray-900">
-          {{ title }}
-        </h1>
-        <p class="mt-2 text-sm text-gray-700">
-          {{ subTitle }}
-        </p>
-      </div>
-      <div class="mt-4 sm:flex-none sm:mt-0 sm:ml-16">
-        <button
-          type="button"
-          class="border border-transparent rounded-md font-medium bg-indigo-600 shadow-sm text-sm text-white py-2 px-4 inline-flex items-center justify-center sm:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          Add user
-        </button>
-      </div>
-    </div>
-
+  <div class="px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col mt-8">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
