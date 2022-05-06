@@ -4,8 +4,6 @@ import type { Ref } from 'vue'
 export interface TableStore {
   source: string
   type: string
-  title: string
-  subTitle: string
   columns?: string | string[]
   searchable?: string | boolean
   query?: string
@@ -25,8 +23,6 @@ export interface TableStore {
 const initialData: TableStore = {
   source: '',
   type: '',
-  title: '',
-  subTitle: '',
   columns: [],
   searchable: false,
   query: '',
@@ -37,7 +33,15 @@ const initialData: TableStore = {
   actionable: false,
   actions: [],
   perPage: 20,
-  results: undefined,
+  results: {
+    nbHits: 0,
+    hits: [],
+    offset: 0,
+    limit: 20,
+    processingTimeMs: 0,
+    query: '',
+    exhaustiveNbHits: false,
+  },
   // TODO: stickyHeader?: string | boolean
   // TODO: stickyFooter?: string | boolean
 }

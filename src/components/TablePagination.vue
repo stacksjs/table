@@ -29,7 +29,7 @@ const currentPage = $ref(1)
           Showing {{ ((tableStore.results.limit * currentPage) - tableStore.results.limit) + 1 }}
           <span class="font-medium" />
           to
-          <span class="font-medium"> {{ tableStore.results.limit * currentPage }} </span>
+          <span class="font-medium"> {{ tableStore.perPage * currentPage }} </span>
           of
           <span class="font-medium"> {{ tableStore.results.nbHits }} </span>
           results

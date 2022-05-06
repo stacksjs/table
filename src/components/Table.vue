@@ -11,8 +11,6 @@ import { tableStore } from '~/composables/table'
 interface Props {
   source: string
   type: string
-  title: string
-  subTitle: string
   columns?: string | string[]
   searchable?: string | boolean
   query?: string
@@ -34,8 +32,6 @@ let { columns } = props
 const {
   source,
   type,
-  title,
-  subTitle,
   searchable = true,
   query,
   filters = [],
@@ -65,8 +61,6 @@ onMounted(() => {
   console.log('source is', source)
   // eslint-disable-next-line no-console
   console.log('type is', type)
-  // eslint-disable-next-line no-console
-  console.log('title is', title)
   // eslint-disable-next-line no-console
   console.log('columns is', columns)
   // eslint-disable-next-line no-console
@@ -112,14 +106,14 @@ function nextPage() {
   // clientSearch(sortString, '', currentPageIndex)
 }
 
-function columnName(name: string) {
-  // we store our column names in the following format: ['name: Name', 'slug: URL']
-  // it allows to set a custom column/table head name
-  if (name.includes(':'))
-    return name.split(':')[1].trim
+// function columnName(name: string) {
+//   // we store our column names in the following format: ['name: Name', 'slug: URL']
+//   // it allows to set a custom column/table head name
+//   if (name.includes(':'))
+//     return name.split(':')[1].trim
 
-  return name
-}
+//   return name
+// }
 
 async function setInitialState() {
   if (isString(columns))
@@ -128,8 +122,6 @@ async function setInitialState() {
   const initialData: TableStore = {
     source,
     type,
-    title,
-    subTitle,
     columns,
     searchable,
     query,
