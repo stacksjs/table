@@ -26,12 +26,12 @@ const currentPage = $ref(1)
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-sm text-gray-700">
-          Showing {{ ((tableStore.results.limit * currentPage) - tableStore.results.limit) + 1 }}
+          Showing {{ ((tableStore.perPage * currentPage) - tableStore.perPage) + 1 }}
           <span class="font-medium" />
           to
           <span class="font-medium"> {{ tableStore.perPage * currentPage }} </span>
           of
-          <span class="font-medium"> {{ tableStore.results.nbHits }} </span>
+          <span class="font-medium"> {{ tableStore.results?.nbHits ?? 0 }} </span>
           results
         </p>
       </div>
