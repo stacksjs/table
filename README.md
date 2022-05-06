@@ -4,13 +4,23 @@ The easiest way to integrate Meilisearch (Algolia coming soon) into your fronten
 
 ## 🐙 Features
 
-This cross-framework compatible (React, Vue, Svelte, Angular, HTML, etc.) web component library comes with the following features & "improvements" to the table element:
+This Vue component library comes with the following features/"improvements" to the table element:
 
 - `<table-v2 />`
   - quickly & simply develop a highly-configurable table UI without worrying about the backend
   - "facet filtering" & "table head sorting" natively built in
   - enterprise-ready
   - Meilisearch & Laravel Scout API compatible
+  - _Soon: Algolia integration_
+
+- `<table-search />`
+  - configure your search input for blazing fast search results
+
+- `<table-filters />`
+  - overwrite the default display of your table's filters
+
+- `<table-pagination />`
+  - easily configure the pagination of your table
 
 - `<table-configure />`
   - simple way to configure the table in HTML semantic fashion
@@ -33,18 +43,12 @@ import { TableConfigure, TableV2 } from 'table-vue'
 </script>
 
 <template>
-  <!-- the following props are required to be set either on this `table-configure` or `table-v2` element -->
-  <TableConfigure
-    source="127.0.0.1:7700"
-    index="movies"
-    title="Award Winning Movies"
-    sub-title="Check out the list of these movies."
-  />
-
-  <TableV2 />
+  <!-- the `type`-property indicates to Meilisearch the "index" you want to target   -->
+  <TableV2 type="movies" />
 
   <!-- these are the default properties (all of them are optional)  -->
   <TableV2
+    src="127.0.0.1:7700"
     cols="*"
     :searchable="true"
     :filterable="true"
@@ -53,16 +57,19 @@ import { TableConfigure, TableV2 } from 'table-vue'
     :per-page="20"
   />
 
-  <!-- alternatively, you may configure your table more specifically -->
+  <!-- alternatively, you may configure your table by using these 2 components in combination -->
   <TableV2
-    source="127.0.0.1:7700"
-    index="movies"
-    cols="id, title, poster, overview, release_date"
-    searchable="title, overview"
-    filterable="genre, director"
+    columns="id, title, poster, overview, release_date"
     sortable="release_date"
     actionable="Edit"
     per-page="20"
+  />
+
+  <TableConfigure
+    source="search.ow3.org/api"
+    type="movies"
+    searchable="title, overview"
+    filterable="genre, director"
   />
 </template>
 ```

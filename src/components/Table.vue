@@ -4,7 +4,7 @@ import type { TableStore } from '~/composables/table'
 import { isColumnSortable, tableStore } from '~/composables/table'
 
 interface Props {
-  source: string
+  source?: string
   type: string
   columns: string | string[]
   searchable?: string | boolean
@@ -26,7 +26,7 @@ const props = defineProps<Props>()
 let { columns, perPage = 20 } = props
 
 const {
-  source,
+  source = 'http://127.0.0.1:7700',
   type,
   searchable = true,
   query,
