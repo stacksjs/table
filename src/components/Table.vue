@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { isBoolean, isString } from '@vueuse/core'
+import { isString } from '@vueuse/core'
 import type { TableStore } from '~/composables/table'
-import { tableStore } from '~/composables/table'
-
-// 1. we need to initialize the props
-// 2. all them are have to accept strings because our Web Component library can only accept strings
-// 3. store the props to localStorage using useStorage and ensure reactivity
-// 4. we need to ini
+import { isColumnSortable, tableStore } from '~/composables/table'
 
 interface Props {
   source: string
@@ -29,6 +24,7 @@ const props = defineProps<Props>()
 
 // let's destructure the props and set some defaults for our reactive values
 let { columns } = props
+
 const {
   source,
   type,
@@ -43,18 +39,14 @@ const {
   perPage = 20,
 } = props
 
-setInitialState()
+ensureInitialStateIsSet()
 
 search()
-
-// TODO: props overrules table-configure shared tableStore
 
 // eslint-disable-next-line no-console
 console.log('tableStore', tableStore)
 
-let currentPageIndex = $ref(1)
 const sortOrders = $ref([])
-// let sortString = $ref([])
 
 onMounted(() => {
   // eslint-disable-next-line no-console
@@ -75,47 +67,11 @@ function toggleSort(col: string) {
   sortOrders[col] = !sortOrders[col]
 }
 
-function isColumnSortable(col: string): Boolean {
-  if (isString(sortable))
-    return sortable.includes(col)
-  else if (isBoolean(sortable))
-    return sortable
-  else
-    return false
-}
-
 function isColumnUsedAsSort(col: string) {
   return sortOrders[col]
 }
 
-function prevPage() {
-  tableStore.value.currentPage = tableStore.value.currentPage - 1
-
-  if (tableStore.value.currentPage < 1)
-    tableStore.value.currentPage = 1
-
-  // clientSearch(sortString, '', currentPageIndex)
-}
-
-function nextPage() {
-  tableStore.value.currentPage = tableStore.value.currentPage + 1
-
-  if (tableStore.value.currentPage <= 1)
-    tableStore.value.currentPage = 1
-
-  // clientSearch(sortString, '', currentPageIndex)
-}
-
-// function columnName(name: string) {
-//   // we store our column names in the following format: ['name: Name', 'slug: URL']
-//   // it allows to set a custom column/table head name
-//   if (name.includes(':'))
-//     return name.split(':')[1].trim
-
-//   return name
-// }
-
-async function setInitialState() {
+async function ensureInitialStateIsSet() {
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
 
@@ -131,7 +87,8 @@ async function setInitialState() {
     sortable,
     actions,
     actionable,
-    perPage,
+    perPage: perPage as number,
+    currentPage: 1,
   }
 
   // then, let's set the initial state
@@ -178,9 +135,14 @@ async function setInitialState() {
                   :key="i"
                   scope="row"
                 >
-                  <!-- <td class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6">
-                    Lindsay Walton
+                  <!-- <td
+                    v-for="(col, y) in columns[0]"
+                    :key="y"
+                    class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6"
+                  >
+                    {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
                   </td> -->
+
                   <td
                     v-for="(col, x) in columns"
                     :key="x"
@@ -189,9 +151,12 @@ async function setInitialState() {
                     {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
                   </td>
 
-                  <!-- <td class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay
-                      Walton</span></a>
+                  <!-- <td
+                    v-for="(col, x) in columns[columns.length - 1]"
+                    :key="x"
+                    class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
+                  >
+                    {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
                   </td> -->
                 </tr>
               </tbody>

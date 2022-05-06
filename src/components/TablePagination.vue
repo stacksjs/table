@@ -1,10 +1,20 @@
 <script setup lang="ts">
+// import { isNumber } from '@vueuse/core'
 import { tableStore } from '~/composables/table'
 const emit = defineEmits(['prevPage', 'nextPage'])
 // const { results, currentPage } = defineProps<{
 //   results?: object
 //   currentPage?: number
 // }>()
+
+// let perPage: number
+
+// if (isNumber(tableStore.value.perPage)) {
+//   const perPage: number = $computed(() => tableStore.value.perPage as number)
+// }
+// else {
+//   const perPage: number = $computed(() => parseInt(tableStore.value.perPage as string) || 20)
+// }
 </script>
 
 <template>

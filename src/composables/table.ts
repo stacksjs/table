@@ -1,10 +1,11 @@
+import { isBoolean, isString } from '@vueuse/core'
 import type { SearchResponse } from 'meilisearch'
 import type { Ref } from 'vue'
 
 export interface TableStore {
   source: string
   type: string
-  columns?: string | string[]
+  columns: string | string[]
   searchable?: string | boolean
   query?: string
   sortable?: string | boolean
@@ -13,7 +14,7 @@ export interface TableStore {
   filters?: string | string[]
   actionable?: string | boolean
   actions?: string | string[]
-  perPage?: string | number
+  perPage: string | number
   currentPage: number
   results?: SearchResponse<Record<string, any>>
 
@@ -49,3 +50,30 @@ const initialData: TableStore = {
 }
 
 export const tableStore: Ref<TableStore> = useStorage('table-store', initialData)
+
+export function prevPage() {
+  tableStore.value.currentPage = tableStore.value.currentPage - 1
+
+  if (tableStore.value.currentPage < 1)
+    tableStore.value.currentPage = 1
+
+  // clientSearch(sortString, '', currentPage)
+}
+
+export function nextPage() {
+  tableStore.value.currentPage = tableStore.value.currentPage + 1
+
+  if (tableStore.value.currentPage <= 1)
+    tableStore.value.currentPage = 1
+
+  // clientSearch(sortString, '', currentPage)
+}
+
+export function isColumnSortable(col: string): Boolean {
+  if (isString(tableStore.value.sortable))
+    return tableStore.value.sortable.includes(col)
+  else if (isBoolean(tableStore.value.sortable))
+    return tableStore.value.sortable
+  else
+    return false
+}
