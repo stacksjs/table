@@ -4,7 +4,7 @@ import { TablePagination, TableSearch, TableV2 } from './main'
 
 <template>
   <div class="font-sans">
-    <div class="sm:flex sm:items-center">
+    <!-- <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
         <h1 class="font-semibold text-xl text-gray-900">
           Collections
@@ -21,7 +21,7 @@ import { TablePagination, TableSearch, TableV2 } from './main'
           Add user
         </button>
       </div>
-    </div>
+    </div> -->
 
     <TableSearch />
 

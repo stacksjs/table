@@ -108,7 +108,7 @@ async function ensureInitialStateIsSet() {
               <thead class="bg-gray-50">
                 <tr>
                   <th
-                    v-for="(columnName, index) in columns"
+                    v-for="(columnName, index) in columns.slice(0, -1)"
                     :key="index"
                     scope="col"
                     :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
@@ -125,8 +125,22 @@ async function ensureInitialStateIsSet() {
                     </a>
                   </th>
 
-                  <th v-if="actionable || actions.length" scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
+                  <!-- <th v-if="actionable || actions.length" scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
                     <span class="sr-only">Edit</span>
+                  </th> -->
+
+                  <th scope="col" class="font-semibold text-right text-sm py-3.5 pr-4 pl-3 text-gray-900 sm:pr-6">
+                    <a href="#" class="group inline-flex">
+                      {{ columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[1].trim() : columns[columns.length - 1] }}
+                      <span
+                        v-if="isColumnSortable(columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1])"
+                        class="rounded flex-none ml-2"
+                        :class="isColumnUsedAsSort(columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1]) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+                        @click="toggleSort(columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1])"
+                      >
+                        <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
+                      </span>
+                    </a>
                   </th>
                 </tr>
               </thead>
@@ -137,29 +151,25 @@ async function ensureInitialStateIsSet() {
                   :key="i"
                   scope="row"
                 >
-                  <!-- <td
-                    v-for="(col, y) in columns[0]"
-                    :key="y"
+                  <td
                     class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6"
                   >
-                    {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
-                  </td> -->
+                    {{ hit[columns[0].includes(':') ? columns[0].split(':')[0].trim() : columns[0]] }}
+                  </td>
 
                   <td
-                    v-for="(col, x) in columns"
+                    v-for="(col, x) in columns.slice(1, -1)"
                     :key="x"
                     class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap"
                   >
                     {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
                   </td>
 
-                  <!-- <td
-                    v-for="(col, x) in columns[columns.length - 1]"
-                    :key="x"
+                  <td
                     class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
                   >
-                    {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
-                  </td> -->
+                    {{ hit[columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1]] }}
+                  </td>
                 </tr>
               </tbody>
             </table>
