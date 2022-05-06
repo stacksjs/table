@@ -6,7 +6,7 @@ import { isColumnSortable, tableStore } from '~/composables/table'
 interface Props {
   source: string
   type: string
-  columns?: string | string[]
+  columns: string | string[]
   searchable?: string | boolean
   query?: string
   sortable?: string

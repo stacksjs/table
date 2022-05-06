@@ -60,7 +60,6 @@ export async function goToPrevPage() {
   if (tableStore.value.currentPage < 1)
     tableStore.value.currentPage = 1
 
-  // set the offset
   await search()
 }
 

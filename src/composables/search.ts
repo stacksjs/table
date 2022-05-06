@@ -1,4 +1,3 @@
-import { isString } from '@vueuse/core'
 import type { SearchParams, SearchResponse } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
 
