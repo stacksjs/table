@@ -32,7 +32,7 @@ import { TablePagination, TableSearch, TableV2 } from './main'
       sorts="name, absolute_rarity, created_at"
       filters="trait_Accessories: Accessories, trait_Background: Background, trait_Breed: Breed, trait_Ears: Ears, trait_Eyes: Eyes, trait_Head: Head, trait_Mouth: Mouth"
       actions="Edit, Delete"
-      per-page="25"
+      per-page="10"
     />
 
     <TablePagination />

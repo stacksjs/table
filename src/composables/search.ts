@@ -1,4 +1,5 @@
-import type { SearchResponse } from 'meilisearch'
+import { isString } from '@vueuse/core'
+import type { SearchParams, SearchResponse } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
 
 export async function getSearchClient(apiKey = '') {
@@ -10,17 +11,21 @@ export async function getSearchClient(apiKey = '') {
 
 export async function search() {
   const query = tableStore.value.query?.trim() || ''
-  const source = tableStore.value.source
-  // const perPage = tableStore.value.perPage as number || 20
-  const client = await getSearchClient()
-  // eslint-disable-next-line no-console
-  console.log('index is', tableStore.value.type)
-  const index = client.index(tableStore.value.type)
-  const results: SearchResponse<Record<string, any>> = await index.search(query)
+  const perPage = tableStore.value.perPage
+  const currentPage = tableStore.value.currentPage
+  const type = tableStore.value.type // index name
+  const options: SearchParams = {
+    offset: (currentPage - 1) * perPage,
+    limit: perPage,
+  }
+
+  const index = (await getSearchClient()).index(type)
+  const results: SearchResponse<Record<string, any>> = await index.search(query, options)
+
   tableStore.value.results = results
 
   // eslint-disable-next-line no-console
-  console.log('source', source)
+  console.log('index is', tableStore.value.type)
   // eslint-disable-next-line no-console
   console.log('query', query)
   // eslint-disable-next-line no-console

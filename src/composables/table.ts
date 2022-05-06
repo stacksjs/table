@@ -14,7 +14,7 @@ export interface TableStore {
   filters?: string | string[]
   actionable?: string | boolean
   actions?: string | string[]
-  perPage: string | number
+  perPage: number
   currentPage: number
   results?: SearchResponse<Record<string, any>>
 
@@ -60,6 +60,7 @@ export async function goToPrevPage() {
   if (tableStore.value.currentPage < 1)
     tableStore.value.currentPage = 1
 
+  // set the offset
   await search()
 }
 

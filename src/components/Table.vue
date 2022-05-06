@@ -23,7 +23,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // let's destructure the props and set some defaults for our reactive values
-let { columns } = props
+let { columns, perPage = 20 } = props
 
 const {
   source,
@@ -36,7 +36,6 @@ const {
   sortable = false,
   actions = [],
   actionable = false,
-  perPage = 20,
 } = props
 
 ensureInitialStateIsSet()
@@ -75,6 +74,9 @@ async function ensureInitialStateIsSet() {
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
 
+  if (isString(perPage))
+    perPage = parseInt(perPage)
+
   const initialData: TableStore = {
     source,
     type,
@@ -87,7 +89,7 @@ async function ensureInitialStateIsSet() {
     sortable,
     actions,
     actionable,
-    perPage: perPage as number,
+    perPage,
     currentPage: 1,
   }
 
