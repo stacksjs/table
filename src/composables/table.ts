@@ -51,22 +51,28 @@ const initialData: TableStore = {
 
 export const tableStore: Ref<TableStore> = useStorage('table-store', initialData)
 
-export function prevPage() {
+export async function goToPrevPage() {
+  // eslint-disable-next-line no-console
+  console.log('going to previous page')
+
   tableStore.value.currentPage = tableStore.value.currentPage - 1
 
   if (tableStore.value.currentPage < 1)
     tableStore.value.currentPage = 1
 
-  // clientSearch(sortString, '', currentPage)
+  await search()
 }
 
-export function nextPage() {
+export function goToNextPage() {
+  // eslint-disable-next-line no-console
+  console.log('going to next page')
+
   tableStore.value.currentPage = tableStore.value.currentPage + 1
 
   if (tableStore.value.currentPage <= 1)
     tableStore.value.currentPage = 1
 
-  // clientSearch(sortString, '', currentPage)
+  search()
 }
 
 export function isColumnSortable(col: string): Boolean {

@@ -1,20 +1,7 @@
 <script setup lang="ts">
 // import { isNumber } from '@vueuse/core'
-import { tableStore } from '~/composables/table'
+import { goToNextPage, goToPrevPage, tableStore } from '~/composables/table'
 const emit = defineEmits(['prevPage', 'nextPage'])
-// const { results, currentPage } = defineProps<{
-//   results?: object
-//   currentPage?: number
-// }>()
-
-// let perPage: number
-
-// if (isNumber(tableStore.value.perPage)) {
-//   const perPage: number = $computed(() => tableStore.value.perPage as number)
-// }
-// else {
-//   const perPage: number = $computed(() => parseInt(tableStore.value.perPage as string) || 20)
-// }
 </script>
 
 <template>
@@ -48,7 +35,7 @@ const emit = defineEmits(['prevPage', 'nextPage'])
           <a
             href="#"
             class="bg-white border rounded-l-md font-medium border-gray-300 text-sm py-2 px-2 text-gray-500 relative inline-flex items-center hover:bg-gray-50"
-            @click.prevent="emit('prevPage')"
+            @click.prevent="goToPrevPage() && emit('prevPage')"
           >
             <span class="sr-only">Previous</span>
             <div class="h-5 w-5 i-heroicons-solid-chevron-left" />
@@ -58,7 +45,7 @@ const emit = defineEmits(['prevPage', 'nextPage'])
           <a
             href="#"
             class="bg-white border rounded-r-md font-medium border-gray-300 text-sm py-2 px-2 text-gray-500 relative inline-flex items-center hover:bg-gray-50"
-            @click.prevent="emit('nextPage')"
+            @click.prevent="goToNextPage() && emit('nextPage')"
           >
             <span class="sr-only">Next</span>
             <div class="h-5 w-5 i-heroicons-solid-chevron-right" />
