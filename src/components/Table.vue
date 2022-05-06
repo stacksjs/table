@@ -89,19 +89,19 @@ function isColumnUsedAsSort(col: string) {
 }
 
 function prevPage() {
-  currentPageIndex = currentPageIndex - 1
+  tableStore.value.currentPage = tableStore.value.currentPage - 1
 
-  if (currentPageIndex < 1)
-    currentPageIndex = 1
+  if (tableStore.value.currentPage < 1)
+    tableStore.value.currentPage = 1
 
   // clientSearch(sortString, '', currentPageIndex)
 }
 
 function nextPage() {
-  currentPageIndex = currentPageIndex + 1
+  tableStore.value.currentPage = tableStore.value.currentPage + 1
 
-  if (currentPageIndex <= 1)
-    currentPageIndex = 1
+  if (tableStore.value.currentPage <= 1)
+    tableStore.value.currentPage = 1
 
   // clientSearch(sortString, '', currentPageIndex)
 }

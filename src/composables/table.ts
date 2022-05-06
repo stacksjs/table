@@ -14,6 +14,7 @@ export interface TableStore {
   actionable?: string | boolean
   actions?: string | string[]
   perPage?: string | number
+  currentPage: number
   results?: SearchResponse<Record<string, any>>
 
   // stickyHeader?: string | boolean
@@ -33,6 +34,7 @@ const initialData: TableStore = {
   actionable: false,
   actions: [],
   perPage: 20,
+  currentPage: 1,
   results: {
     nbHits: 0,
     hits: [],
