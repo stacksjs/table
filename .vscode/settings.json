@@ -41,6 +41,7 @@
     "semibold",
     "meilisearch",
     "typecheck",
-    "iconify"
+    "iconify",
+    "laravel"
   ]
 }
