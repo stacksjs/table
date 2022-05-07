@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
-import TableHead from './TableHead.vue'
 import type { TableStore } from '~/composables/table'
 import { tableStore } from '~/composables/table'
 
