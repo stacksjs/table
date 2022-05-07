@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
+import TableHead from './TableHead.vue'
 import type { TableStore } from '~/composables/table'
-import { isColumnSortable, tableStore } from '~/composables/table'
+import { tableStore } from '~/composables/table'
 
 interface Props {
   source?: string
@@ -61,14 +62,6 @@ onMounted(() => {
   console.log('perPage is', perPage)
 })
 
-function toggleSort(col: string) {
-  sortOrders[col] = !sortOrders[col]
-}
-
-function isColumnUsedAsSort(col: string) {
-  return sortOrders[col]
-}
-
 async function ensureInitialStateIsSet() {
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
@@ -107,73 +100,8 @@ async function ensureInitialStateIsSet() {
         <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
           <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
             <table class="divide-y min-w-full divide-gray-300">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th
-                    v-for="(col, index) in columns.slice(0, -1)"
-                    :key="index"
-                    scope="col"
-                    :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
-                  >
-                    <a href="#" class="group inline-flex">
-                      {{ col.includes(':') ? col.split(':')[1].trim() : col }}
-                      <span
-                        v-if="isColumnSortable(col.includes(':') ? col.split(':')[0].trim() : col)" class="rounded flex-none ml-2 "
-                        :class="isColumnUsedAsSort(col.includes(':') ? col.split(':')[0].trim() : col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-                        @click="toggleSort(col.includes(':') ? col.split(':')[0].trim() : col)"
-                      >
-                        <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
-                      </span>
-                    </a>
-                  </th>
-
-                  <!-- <th v-if="actionable || actions.length" scope="col" class="py-3.5 pr-4 pl-3 relative sm:pr-6">
-                    <span class="sr-only">Edit</span>
-                  </th> -->
-
-                  <th scope="col" class="font-semibold text-right text-sm py-3.5 pr-4 pl-3 text-gray-900 sm:pr-6">
-                    <a href="#" class="group inline-flex">
-                      {{ columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[1].trim() : columns[columns.length - 1] }}
-                      <span
-                        v-if="isColumnSortable(columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1])"
-                        class="rounded flex-none ml-2"
-                        :class="isColumnUsedAsSort(columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1]) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-                        @click="toggleSort(columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1])"
-                      >
-                        <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
-                      </span>
-                    </a>
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody class="divide-y bg-white divide-gray-200">
-                <tr
-                  v-for="(hit, i) in tableStore.results?.hits"
-                  :key="i"
-                  scope="row"
-                >
-                  <td
-                    class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6"
-                  >
-                    {{ hit[columns[0].includes(':') ? columns[0].split(':')[0].trim() : columns[0]] }}
-                  </td>
-
-                  <td
-                    v-for="(col, x) in columns.slice(1, -1)"
-                    :key="x"
-                    class="text-sm py-4 px-3 text-gray-500 whitespace-nowrap"
-                  >
-                    {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
-                  </td>
-
-                  <td
-                    class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
-                  >
-                    {{ hit[columns[columns.length - 1].includes(':') ? columns[columns.length - 1].split(':')[0].trim() : columns[columns.length - 1]] }}
-                  </td>
-                </tr>
-              </tbody>
+              <TableHead />
+              <TableBody />
             </table>
           </div>
         </div>

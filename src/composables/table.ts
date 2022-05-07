@@ -1,4 +1,4 @@
-import { isBoolean, isString } from '@vueuse/core'
+import { isBoolean, isObject, isString } from '@vueuse/core'
 import type { SearchResponse } from 'meilisearch'
 import type { Ref } from 'vue'
 
@@ -76,7 +76,7 @@ export function goToNextPage() {
 }
 
 export function isColumnSortable(col: string): Boolean {
-  if (isString(tableStore.value.sorts))
+  if (isString(tableStore.value.sorts) || isObject(tableStore.value.sorts))
     return tableStore.value.sorts.includes(col)
   else if (isBoolean(tableStore.value.sortable))
     return tableStore.value.sortable
