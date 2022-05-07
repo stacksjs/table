@@ -19,7 +19,7 @@ export async function search() {
   }
 
   const index = (await getSearchClient()).index(type)
-  const results: SearchResponse<Record<string, any>> = await index.search(query, options)
+  const results = await index.search(query, options)
 
   tableStore.value.results = results
 

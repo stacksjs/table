@@ -55,7 +55,7 @@ export async function goToPrevPage() {
   // eslint-disable-next-line no-console
   console.log('going to previous page')
 
-  tableStore.value.currentPage = tableStore.value.currentPage - 1
+  tableStore.value.currentPage--
 
   if (tableStore.value.currentPage < 1)
     tableStore.value.currentPage = 1
@@ -67,7 +67,7 @@ export function goToNextPage() {
   // eslint-disable-next-line no-console
   console.log('going to next page')
 
-  tableStore.value.currentPage = tableStore.value.currentPage + 1
+  tableStore.value.currentPage++
 
   if (tableStore.value.currentPage <= 1)
     tableStore.value.currentPage = 1
