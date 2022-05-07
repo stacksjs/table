@@ -76,8 +76,8 @@ export function goToNextPage() {
 }
 
 export function isColumnSortable(col: string): Boolean {
-  if (isString(tableStore.value.sortable))
-    return tableStore.value.sortable.includes(col)
+  if (isString(tableStore.value.sorts))
+    return tableStore.value.sorts.includes(col)
   else if (isBoolean(tableStore.value.sortable))
     return tableStore.value.sortable
   else

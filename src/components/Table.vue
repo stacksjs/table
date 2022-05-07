@@ -23,7 +23,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // let's destructure the props and set some defaults for our reactive values
-let { columns, perPage = 20 } = props
+let { columns, perPage = 20, sorts = [] } = props
 
 const {
   source = 'http://127.0.0.1:7700',
@@ -31,9 +31,8 @@ const {
   searchable = true,
   query,
   filters = [],
-  filterable = false,
-  sorts = [],
-  sortable = false,
+  filterable = true,
+  sortable = true,
   actions = [],
   actionable = false,
 } = props
@@ -74,6 +73,9 @@ async function ensureInitialStateIsSet() {
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
 
+  if (isString(sorts))
+    sorts = sorts.split(',').map(col => col.trim())
+
   if (isString(perPage))
     perPage = parseInt(perPage)
 
@@ -108,17 +110,17 @@ async function ensureInitialStateIsSet() {
               <thead class="bg-gray-50">
                 <tr>
                   <th
-                    v-for="(columnName, index) in columns.slice(0, -1)"
+                    v-for="(col, index) in columns.slice(0, -1)"
                     :key="index"
                     scope="col"
                     :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
                   >
                     <a href="#" class="group inline-flex">
-                      {{ columnName.includes(':') ? columnName.split(':')[1].trim() : columnName }}
+                      {{ col.includes(':') ? col.split(':')[1].trim() : col }}
                       <span
-                        v-if="isColumnSortable(columnName.includes(':') ? columnName.split(':')[0].trim() : columnName)" class="rounded flex-none ml-2 "
-                        :class="isColumnUsedAsSort(columnName.includes(':') ? columnName.split(':')[0].trim() : columnName) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-                        @click="toggleSort(columnName.includes(':') ? columnName.split(':')[0].trim() : columnName)"
+                        v-if="isColumnSortable(col.includes(':') ? col.split(':')[0].trim() : col)" class="rounded flex-none ml-2 "
+                        :class="isColumnUsedAsSort(col.includes(':') ? col.split(':')[0].trim() : col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+                        @click="toggleSort(col.includes(':') ? col.split(':')[0].trim() : col)"
                       >
                         <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
                       </span>
