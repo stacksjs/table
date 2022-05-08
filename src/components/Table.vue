@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
-import type { TableStore } from '~/composables/table'
 import { tableStore } from '~/composables/table'
 
 interface Props {
@@ -44,8 +43,6 @@ search()
 // eslint-disable-next-line no-console
 console.log('tableStore', tableStore)
 
-const sortOrders = $ref([])
-
 onMounted(() => {
   // eslint-disable-next-line no-console
   console.log('source is', source)
@@ -71,7 +68,7 @@ async function ensureInitialStateIsSet() {
   if (isString(perPage))
     perPage = parseInt(perPage)
 
-  const initialData: TableStore = {
+  const initialData = {
     source,
     type,
     columns,
