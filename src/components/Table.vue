@@ -35,11 +35,11 @@ const {
   actionable = false,
 } = props
 
-await ensureInitialStateIsSet()
+ensureInitialStateIsSet()
 
 search()
 
-async function ensureInitialStateIsSet() {
+function ensureInitialStateIsSet() {
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
 
@@ -51,6 +51,7 @@ async function ensureInitialStateIsSet() {
 
   // then, let's set the initial state
   const table = $(useTable())
+
   table.initialData = {
     source,
     type,

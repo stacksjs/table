@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { isNumber } from '@vueuse/core'
-import { useTable } from '~/composables/table'
 const emit = defineEmits(['prevPage', 'nextPage'])
 
 const { goToNextPage, goToPrevPage, store } = $(useTable())

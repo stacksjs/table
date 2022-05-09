@@ -60,7 +60,13 @@ export function useTable() {
   }
 
   // if (control)
-  return $$({ initialData, store, isColumnSortable, goToPrevPage, goToNextPage })
+  return $$({
+    initialData,
+    store,
+    isColumnSortable,
+    goToPrevPage,
+    goToNextPage,
+  })
 
   // return $$(store)
 }
