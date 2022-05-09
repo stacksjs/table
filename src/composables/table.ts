@@ -37,8 +37,7 @@ export function useTable() {
       return store.value.sorts.includes(col)
     else if (isBoolean(store.value.sortable))
       return store.value.sortable
-    else
-      return false
+    return false
   }
 
   function goToPrevPage() {
