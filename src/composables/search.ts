@@ -7,6 +7,9 @@ export async function getSearchClient(apiKey = '') {
   if (!store)
     return
 
+  // eslint-disable-next-line no-console
+  console.log('storeD', store.source)
+
   return new MeiliSearch({
     host: store.source,
     apiKey,

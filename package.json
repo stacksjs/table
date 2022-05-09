@@ -39,7 +39,7 @@
     "commit": "git-cz",
     "coverage": "vitest run --coverage",
     "dev": "vite dev --open --port 3333",
-    "preinstall": "node .scripts/check-for-pnpm.js && node .scripts/check-node-version.js",
+    "preinstall": "node .scripts/check-for-pnpm.mjs && node .scripts/check-node-version.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
