@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { isColumnSortable, tableStore } from '~/composables/table'
-const columns = tableStore.value.columns
+const { store, isColumnSortable } = $(useTable())
+
+if (!store)
+  return
+
+const columns = $ref(store.columns)
 const sortOrders = $ref([])
 
 function isColumnUsedAsSort(col: string) {
@@ -55,6 +59,4 @@ function toggleSort(col: string) {
   </thead>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

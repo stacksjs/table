@@ -4,8 +4,11 @@ import { MeiliSearch } from 'meilisearch'
 export async function getSearchClient(apiKey = '') {
   const { store } = $(useTable())
 
+  if (!store)
+    return
+
   return new MeiliSearch({
-    host: store.value.source,
+    host: store.source,
     apiKey,
   })
 }
@@ -13,22 +16,29 @@ export async function getSearchClient(apiKey = '') {
 export async function search() {
   const { store } = $(useTable())
 
-  const query = store.value.query?.trim() || ''
-  const perPage = store.value.perPage
-  const currentPage = store.value.currentPage
-  const type = store.value.type // index name
+  if (!store)
+    return
+
+  const query = store.query?.trim() || ''
+  const perPage = store.perPage
+  const currentPage = store.currentPage
+  const type = store.type // index name
   const options: SearchParams = {
     offset: (currentPage - 1) * perPage,
     limit: perPage,
   }
 
-  const index = (await getSearchClient()).index(type)
+  const client = (await getSearchClient())
+  if (!client)
+    return
+
+  const index = client.index(type)
   const results = await index.search(query, options)
 
-  store.value.results = results
+  store.results = results
 
   // eslint-disable-next-line no-console
-  console.log('index is', store.value.type)
+  console.log('index is', store.type)
   // eslint-disable-next-line no-console
   console.log('query', query)
   // eslint-disable-next-line no-console

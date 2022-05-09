@@ -1,66 +1,52 @@
 import { isBoolean, isObject, isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
-// import type { TableOptions, TableStore } from '~/types'
 
-export function useTable() {
-  const initialData: TableStore = {
-    source: '',
-    type: '',
-    columns: [],
-    searchable: false,
-    query: '',
-    sortable: false,
-    sorts: [],
-    filterable: false,
-    filters: [],
-    actionable: false,
-    actions: [],
-    perPage: 20,
-    currentPage: 1,
-    // TODO: stickyHeader?: string | boolean
-    // TODO: stickyFooter?: string | boolean
-    results: {
-      nbHits: 0,
-      hits: [],
-      offset: 0,
-      limit: 20,
-      processingTimeMs: 0,
-      query: '',
-      exhaustiveNbHits: false,
-    },
-  }
-
-  const store = useStorage('table-store', initialData)
+export function useTable(initialState?: TableStore) {
+  const store = $(useStorage('table-store', initialState))
 
   function isColumnSortable(col: string): Boolean {
-    if (isString(store.value.sorts) || isObject(store.value.sorts))
-      return store.value.sorts.includes(col)
-    else if (isBoolean(store.value.sortable))
-      return store.value.sortable
+    if (isString(store?.sorts) || isObject(store?.sorts)) {
+      if (!store)
+        return false
+      return store.sorts.includes(col)
+    }
+
+    else if (isBoolean(store?.sortable)) {
+      if (!store)
+        return false
+      return store.sortable
+    }
+
     return false
   }
 
   function goToPrevPage() {
-    store.value.currentPage--
+    if (!store)
+      return
 
-    if (store.value.currentPage < 1)
-      store.value.currentPage = 1
+    store.currentPage--
+
+    if (store.currentPage < 1)
+      store.currentPage = 1
 
     search()
   }
 
   function goToNextPage() {
-    store.value.currentPage++
+    if (!store)
+      return
 
-    if (store.value.currentPage <= 1)
-      store.value.currentPage = 1
+    store.currentPage++
+
+    if (store.currentPage <= 1)
+      store.currentPage = 1
 
     search()
   }
 
   // if (control)
   return $$({
-    initialData,
+    initialState,
     store,
     isColumnSortable,
     goToPrevPage,

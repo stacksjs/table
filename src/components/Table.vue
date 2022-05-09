@@ -35,11 +35,11 @@ const {
   actionable = false,
 } = props
 
-ensureInitialStateIsSet()
+await initializeTable()
 
 search()
 
-function ensureInitialStateIsSet() {
+function initializeTable() {
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
 
@@ -49,10 +49,7 @@ function ensureInitialStateIsSet() {
   if (isString(perPage))
     perPage = parseInt(perPage)
 
-  // then, let's set the initial state
-  const table = $(useTable())
-
-  table.initialData = {
+  const initialData = {
     source,
     type,
     columns,
@@ -67,6 +64,11 @@ function ensureInitialStateIsSet() {
     perPage,
     currentPage: 1,
   }
+
+  // then, let's initialize the table
+  const { store } = $(useTable(initialData))
+  // eslint-disable-next-line no-console
+  console.log('store', store)
 }
 </script>
 
