@@ -42,7 +42,7 @@ const config = {
       imports: ['vue', '@vueuse/core', {
         '~/composables/dark': ['isDark', 'toggleDark'],
         '~/composables/search': ['search', 'getSearchClient'],
-        '~/composables/table': ['tableStore', 'goToPrevPage', 'goToNextPage', 'isColumnSortable'],
+        '~/composables/table': ['useTable'],
       }],
       dts: 'src/auto-imports.d.ts',
       eslintrc: {

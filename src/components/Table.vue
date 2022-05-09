@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
-import { tableStore } from '~/composables/table'
 
 interface Props {
   source?: string
@@ -36,27 +35,9 @@ const {
   actionable = false,
 } = props
 
-ensureInitialStateIsSet()
+await ensureInitialStateIsSet()
 
 search()
-
-// eslint-disable-next-line no-console
-console.log('tableStore', tableStore)
-
-onMounted(() => {
-  // eslint-disable-next-line no-console
-  console.log('source is', source)
-  // eslint-disable-next-line no-console
-  console.log('type is', type)
-  // eslint-disable-next-line no-console
-  console.log('columns is', columns)
-  // eslint-disable-next-line no-console
-  console.log('query is', query)
-  // eslint-disable-next-line no-console
-  console.log('filterable is', filterable)
-  // eslint-disable-next-line no-console
-  console.log('perPage is', perPage)
-})
 
 async function ensureInitialStateIsSet() {
   if (isString(columns))
@@ -68,7 +49,9 @@ async function ensureInitialStateIsSet() {
   if (isString(perPage))
     perPage = parseInt(perPage)
 
-  const initialData = {
+  // then, let's set the initial state
+  const table = $(useTable())
+  table.initialData = {
     source,
     type,
     columns,
@@ -83,9 +66,6 @@ async function ensureInitialStateIsSet() {
     perPage,
     currentPage: 1,
   }
-
-  // then, let's set the initial state
-  tableStore.value = initialData
 }
 </script>
 

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-const q = ref(tableStore.value.query)
+const { store } = $(useTable())
+
+const q = ref(store.value?.query)
 
 // let's debounce the search for 500ms
 watchDebounced(
   q,
   () => {
-    tableStore.value.query = q.value
+    store.value.query = q.value
     search()
   },
   { debounce: 500 },

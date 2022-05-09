@@ -1,6 +1,5 @@
 {
   "name": "table-vue",
-  "type": "module",
   "version": "0.0.0",
   "description": "The easy & modern way to work with tables. Facet filtering, searching, pagination, ...",
   "keywords": [
@@ -21,14 +20,14 @@
   "contributors": [
     "Chris Breuer <chris@meema.xyz>"
   ],
-  "main": "./dist/table-vue.umd.js",
-  "module": "./dist/table-vue.es.js",
   "exports": {
     ".": {
       "import": "./dist/table-vue.es.js",
       "require": "./dist/table-vue.umd.js"
     }
   },
+  "main": "./dist/table-vue.umd.js",
+  "module": "./dist/table-vue.es.js",
   "typings": "./dist/index.d.ts",
   "files": [
     "dist",
@@ -53,6 +52,15 @@
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
     "commit-msg": "npx commitlint --config ./commitlint.config.ts --edit $1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,vue}": "eslint --fix",
+    "package.json": "sort-package-json"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   },
   "dependencies": {
     "@unocss/reset": "^0.33.1",
@@ -95,17 +103,8 @@
     "vue-demi": "^0.12.5",
     "vue-tsc": "^0.34.11"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": "eslint --fix",
-    "package.json": "sort-package-json"
-  },
-  "config": {
-    "commitizen": {
-      "path": "@commitlint/cz-commitlint"
-    }
-  },
   "engines": {
-    "node": ">=v16.15.0",
-    "pnpm": ">=7.0.1"
+    "node": ">=v18.0.0",
+    "pnpm": ">=7.0.0"
   }
 }

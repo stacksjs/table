@@ -10,7 +10,7 @@
             "es6",
             "dom",
             "dom.iterable"
-        ],
+        ]
     },
     "exclude": [],
     "include": [

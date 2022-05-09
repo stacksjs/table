@@ -1,3 +1,7 @@
+/**
+ * This file is used to define the types/interfaces used in the project.
+ */
+
 import type { SearchResponse } from 'meilisearch'
 
 export interface TableStore {
@@ -15,7 +19,6 @@ export interface TableStore {
   perPage: number
   currentPage: number
   results?: SearchResponse<Record<string, any>>
-
   // stickyHeader?: string | boolean
   // stickyFooter?: string | boolean
 }

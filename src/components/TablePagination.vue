@@ -1,7 +1,9 @@
 <script setup lang="ts">
 // import { isNumber } from '@vueuse/core'
-import { goToNextPage, goToPrevPage, tableStore } from '~/composables/table'
+import { useTable } from '~/composables/table'
 const emit = defineEmits(['prevPage', 'nextPage'])
+
+const { goToNextPage, goToPrevPage, store } = $(useTable())
 </script>
 
 <template>
@@ -21,12 +23,12 @@ const emit = defineEmits(['prevPage', 'nextPage'])
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-sm text-gray-700">
-          Showing {{ ((tableStore.perPage * tableStore.currentPage) - tableStore.perPage) + 1 }}
+          Showing {{ ((store.perPage * store.currentPage) - store.perPage) + 1 }}
           <span class="font-medium" />
           to
-          <span class="font-medium"> {{ tableStore.perPage * tableStore.currentPage }} </span>
+          <span class="font-medium"> {{ store.perPage * store.currentPage }} </span>
           of
-          <span class="font-medium"> {{ tableStore.results?.nbHits ?? 0 }} </span>
+          <span class="font-medium"> {{ store.results?.nbHits ?? 0 }} </span>
           results
         </p>
       </div>

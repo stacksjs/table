@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { tableStore } from '~/composables/table'
-
-const columns = tableStore.value.columns
+const { store } = $(useTable())
+const columns = store.value.columns
 </script>
 
 <template>
   <tbody class="divide-y bg-white divide-gray-200">
     <tr
-      v-for="(hit, i) in tableStore.results?.hits"
+      v-for="(hit, i) in store.results?.hits"
       :key="i"
       scope="row"
     >
@@ -34,6 +33,4 @@ const columns = tableStore.value.columns
   </tbody>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
