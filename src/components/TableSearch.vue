@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { store } = $(useTable())
+const { search } = $(useSearch())
 
 const q = ref(store.value?.query)
 
