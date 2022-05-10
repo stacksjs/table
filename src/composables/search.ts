@@ -1,9 +1,9 @@
 import type { SearchParams } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
 
-// TODO: also separately push this composable to npm
+// TODO: also separately push this as a composable to npm
 export function useSearch() {
-  function getSearchClient(apiKey = '') {
+  function getClient(apiKey = '') {
     const { store } = $(useTable())
 
     if (!store)
@@ -33,7 +33,7 @@ export function useSearch() {
       limit: perPage,
     }
 
-    const client = (await getSearchClient())
+    const client = (await getClient())
     if (!client)
       return
 
@@ -53,7 +53,7 @@ export function useSearch() {
   }
 
   return {
-    getSearchClient,
+    getClient,
     search,
   }
 }
