@@ -4,6 +4,8 @@ import type { TableStore } from '~/types'
 export function useTable(initialState?: TableStore) {
   const { search } = $(useSearch())
   const store = $(useStorage('table-store', initialState))
+  const columnsExcludingLast = $computed(() => store?.columns ? store.columns.slice(0, -1) : [])
+  const lastColumn = $computed(() => store?.columns ? store.columns[store.columns.length - 1] : [])
 
   function isColumnSortable(col: string): Boolean {
     if (isString(store?.sorts) || isObject(store?.sorts)) {
@@ -48,7 +50,13 @@ export function useTable(initialState?: TableStore) {
   return $$({
     initialState,
     store,
+    columns: store?.columns,
+    columnsExcludingLast,
+    lastColumn,
     isColumnSortable,
+    sorts: store?.sorts,
+    results: store?.results,
+    hits: store?.results?.hits,
     goToPrevPage,
     goToNextPage,
   })

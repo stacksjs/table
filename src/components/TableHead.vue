@@ -1,12 +1,7 @@
 <script setup lang="ts">
-const { store: table, isColumnSortable } = $(useTable())
+const { store: table, columns, sorts, columnsExcludingLast, lastColumn, isColumnSortable } = $(useTable())
 const sortOrders = $ref([])
-const columns = $ref(table?.columns)
 let tableHeads = $ref([''])
-
-const sorts = $computed(() => table?.sorts)
-const columnsExcludingLast = $computed(() => table?.columns ? table.columns.slice(0, -1) : [])
-const lastColumn = $computed(() => table?.columns ? table.columns[table.columns.length - 1] : [])
 
 watch(
   () => columns,

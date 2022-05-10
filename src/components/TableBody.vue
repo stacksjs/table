@@ -1,8 +1,6 @@
 <script setup lang="ts">
-const { store } = $(useTable())
+const { store, hits, columns } = $(useTable())
 const { search } = $(useSearch())
-const hits = $ref(store?.results?.hits)
-const columns = $ref(store?.columns)
 
 watch(
   () => store,
