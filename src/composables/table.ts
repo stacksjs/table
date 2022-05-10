@@ -1,6 +1,8 @@
 import { isBoolean, isObject, isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
+const { search } = useSearch()
+
 export function useTable(initialState?: TableStore) {
   const store = $(useStorage('table-store', initialState))
 

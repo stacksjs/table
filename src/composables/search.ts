@@ -1,6 +1,7 @@
 import type { SearchParams } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
 
+// TODO: also separately push this composable to npm
 export function useSearch() {
   function getSearchClient(apiKey = '') {
     const { store } = $(useTable())

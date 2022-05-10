@@ -21,12 +21,12 @@ const { goToNextPage, goToPrevPage, store } = $(useTable())
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-sm text-gray-700">
-          Showing {{ ((store.perPage * store.currentPage) - store.perPage) + 1 }}
+          Showing {{ ((store?.perPage * store?.currentPage) - store?.perPage) + 1 }}
           <span class="font-medium" />
           to
-          <span class="font-medium"> {{ store.perPage * store.currentPage }} </span>
+          <span class="font-medium"> {{ store?.perPage * store?.currentPage }} </span>
           of
-          <span class="font-medium"> {{ store.results?.nbHits ?? 0 }} </span>
+          <span class="font-medium"> {{ store?.results?.nbHits ?? 0 }} </span>
           results
         </p>
       </div>

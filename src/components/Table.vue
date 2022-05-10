@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
+import TableBody from './TableBody.vue'
+import TableHead from './TableHead.vue'
 
 interface Props {
   source?: string
@@ -35,11 +37,9 @@ const {
   actionable = false,
 } = props
 
-await initializeTable()
-
-search()
-
-function initializeTable() {
+const initializeTable = () => {
+  // eslint-disable-next-line no-console
+  console.log('initializing table')
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
 
@@ -65,11 +65,17 @@ function initializeTable() {
     currentPage: 1,
   }
 
+  // eslint-disable-next-line no-console
+  console.log('initial data', initialData)
+
   // then, let's initialize the table
   const { store } = $(useTable(initialData))
+  const hits = ref(store?.results?.hits)
   // eslint-disable-next-line no-console
-  console.log('store', store)
+  console.log('hitsd', hits)
 }
+
+initializeTable()
 </script>
 
 <template>

@@ -1,12 +1,26 @@
 <script setup lang="ts">
 const { store } = $(useTable())
-const columns = store.value.columns
+// eslint-disable-next-line no-console
+console.log('stp', store)
+const hits = $ref(store?.results?.hits)
+const columns = $ref(store?.columns)
+
+// eslint-disable-next-line no-console
+console.log('Hits Is')
+
+// eslint-disable-next-line no-console
+console.log('hw', store)
+
+onBeforeMount(() => {
+  // eslint-disable-next-line no-console
+  console.log('')
+})
 </script>
 
 <template>
   <tbody class="divide-y bg-white divide-gray-200">
     <tr
-      v-for="(hit, i) in store.results?.hits"
+      v-for="(hit, i) in hits"
       :key="i"
       scope="row"
     >
@@ -32,5 +46,3 @@ const columns = store.value.columns
     </tr>
   </tbody>
 </template>
-
-<style scoped></style>

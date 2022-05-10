@@ -2,13 +2,13 @@
 const { store } = $(useTable())
 const { search } = $(useSearch())
 
-const q = ref(store.value?.query)
+const q = ref(store?.query)
 
 // let's debounce the search for 500ms
 watchDebounced(
   q,
   () => {
-    store.value.query = q.value
+    store.query = q.value
     search()
   },
   { debounce: 500 },
