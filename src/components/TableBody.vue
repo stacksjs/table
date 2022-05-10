@@ -1,11 +1,13 @@
 <script setup lang="ts">
 const { store } = $(useTable())
+const { search } = $(useSearch())
 const hits = $ref(store?.results?.hits)
 const columns = $ref(store?.columns)
 
-onBeforeMount(() => {
-  //
-})
+watch(
+  () => store,
+  () => search(),
+)
 </script>
 
 <template>

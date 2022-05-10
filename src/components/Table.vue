@@ -73,10 +73,13 @@ function initializeTable() {
   // let's initialize the table now
   const table = useTable(initialData)
   // eslint-disable-next-line no-console
-  console.log('test', table.store)
+  console.log('table store', table?.store.value)
   const results = table?.store?.value?.results
+  const hits = results?.hits
   // eslint-disable-next-line no-console
   console.log('results', results)
+  // eslint-disable-next-line no-console
+  console.log('hits', hits)
 }
 
 initializeTable()
