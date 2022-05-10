@@ -5,8 +5,6 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    _TableBody: typeof import('./components/_TableBody.vue')['default']
-    _TableHead: typeof import('./components/_TableHead.vue')['default']
     Table: typeof import('./components/Table.vue')['default']
     TableBody: typeof import('./components/TableBody.vue')['default']
     TableFilters: typeof import('./components/TableFilters.vue')['default']

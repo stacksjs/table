@@ -52,8 +52,8 @@ export function useSearch() {
     return results
   }
 
-  return {
+  return $$({
     getClient,
     search,
-  }
+  })
 }
