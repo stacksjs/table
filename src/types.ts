@@ -7,7 +7,7 @@ import type { SearchResponse } from 'meilisearch'
 export interface TableStore {
   source: string
   type: string
-  columns: string | string[]
+  columns: string[]
   searchable?: string | boolean
   query?: string
   sortable?: string | boolean

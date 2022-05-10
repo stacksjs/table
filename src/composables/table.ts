@@ -45,7 +45,6 @@ export function useTable(initialState?: TableStore) {
     search()
   }
 
-  // if (control)
   return $$({
     initialState,
     store,
@@ -53,6 +52,4 @@ export function useTable(initialState?: TableStore) {
     goToPrevPage,
     goToNextPage,
   })
-
-  // return $$(store)
 }

@@ -23,7 +23,7 @@
     "outDir": "dist",
     "types": [
       "vite/client",
-      "vue/ref-macros",
+      "vue/macros-global",
       "node"
     ],
     "paths": {

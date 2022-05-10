@@ -2,6 +2,7 @@
 import { isString } from '@vueuse/core'
 import TableBody from './TableBody.vue'
 import TableHead from './TableHead.vue'
+import { useTable } from '~/composables/table'
 
 interface Props {
   source?: string
@@ -37,9 +38,10 @@ const {
   actionable = false,
 } = props
 
-const initializeTable = () => {
+function initializeTable() {
   // eslint-disable-next-line no-console
   console.log('initializing table')
+
   if (isString(columns))
     columns = columns.split(',').map(col => col.trim())
 
@@ -68,11 +70,13 @@ const initializeTable = () => {
   // eslint-disable-next-line no-console
   console.log('initial data', initialData)
 
-  // then, let's initialize the table
-  const { store } = $(useTable(initialData))
-  const hits = ref(store?.results?.hits)
+  // let's initialize the table now
+  const table = useTable(initialData)
   // eslint-disable-next-line no-console
-  console.log('hitsd', hits)
+  console.log('test', table.store)
+  const results = table?.store?.value?.results
+  // eslint-disable-next-line no-console
+  console.log('results', results)
 }
 
 initializeTable()

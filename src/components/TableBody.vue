@@ -1,19 +1,10 @@
 <script setup lang="ts">
 const { store } = $(useTable())
-// eslint-disable-next-line no-console
-console.log('stp', store)
 const hits = $ref(store?.results?.hits)
 const columns = $ref(store?.columns)
 
-// eslint-disable-next-line no-console
-console.log('Hits Is')
-
-// eslint-disable-next-line no-console
-console.log('hw', store)
-
 onBeforeMount(() => {
-  // eslint-disable-next-line no-console
-  console.log('')
+  //
 })
 </script>
 
