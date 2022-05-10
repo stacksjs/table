@@ -10,9 +10,9 @@ specifiers:
   '@iconify-json/heroicons-outline': ^1.1.1
   '@iconify-json/heroicons-solid': ^1.1.1
   '@types/node': ^17.0.31
-  '@unocss/preset-icons': ^0.33.1
-  '@unocss/preset-wind': ^0.33.1
-  '@unocss/reset': ^0.33.1
+  '@unocss/preset-icons': ^0.33.2
+  '@unocss/preset-wind': ^0.33.2
+  '@unocss/reset': ^0.33.2
   '@vitejs/plugin-vue': ^2.3.2
   '@vue/compiler-sfc': ^3.2.33
   '@vueuse/core': ^8.4.2
@@ -23,25 +23,25 @@ specifiers:
   eslint-plugin-cypress: ^2.12.1
   inquirer: ^8.2.4
   lint-staged: ^12.4.1
-  meilisearch: 0.25.0
+  meilisearch: 0.25.1
   minimist: ^1.2.6
   prompts: ^2.4.2
   simple-git-hooks: ^2.7.0
   sort-package-json: ^1.57.0
   typescript: ^4.6.4
-  unocss: ^0.33.1
+  unocss: ^0.33.2
   unplugin-auto-import: ^0.7.1
-  unplugin-vue-components: ^0.19.3
+  unplugin-vue-components: ^0.19.5
   upath: ^2.0.1
   vite: ^2.9.8
-  vitest: ^0.12.0
+  vitest: ^0.12.3
   vue: ^3.2.33
   vue-demi: ^0.12.5
   vue-tsc: ^0.34.11
 
 dependencies:
   '@unocss/reset': 0.33.2
-  meilisearch: 0.25.0
+  meilisearch: 0.25.1
   prompts: 2.4.2
   vue: 3.2.33
 
@@ -76,7 +76,7 @@ devDependencies:
   unplugin-vue-components: 0.19.5_vite@2.9.8+vue@3.2.33
   upath: 2.0.1
   vite: 2.9.8
-  vitest: 0.12.2
+  vitest: 0.12.3
   vue-demi: 0.12.5_vue@3.2.33
   vue-tsc: 0.34.11_typescript@4.6.4
 
@@ -3719,8 +3719,8 @@ packages:
     resolution: {integrity: sha512-kwqO0I0jtWr25KcfLm9pia8vLZ8qoAKhWZuZMbneJq3jjBD3gl5nZs8l8Tu3ZBlBAHVQtDur9rdDGyvtfVraHQ==}
     dev: true
 
-  /meilisearch/0.25.0:
-    resolution: {integrity: sha512-TSIJTh5lva7WHBaoG3arNYQXuIAQkcD3BY09h2nHhjHS/wzxWKJM45x5bEC67Grw8zXihVqqmWty4a4ps4S+tg==}
+  /meilisearch/0.25.1:
+    resolution: {integrity: sha512-20jO0pK9BhghxHSkOLbdoYn58h/Z0PNL3JQcRq7ipNIeqrxkAetCZZ6ttJC3uxcz0jVglmiFoSXu3Z/lEOLOLQ==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
@@ -5209,8 +5209,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.12.2:
-    resolution: {integrity: sha512-olNsbdqYEPsAXbMe9Rgg9X8bCWO7+wn+AvoRqNmCOze32b9qQ+FhU1jO5H6Z6AxnTWGOGqoLSrXBea73xdOo1A==}
+  /vitest/0.12.3:
+    resolution: {integrity: sha512-Dc4uJAcnUampdJ6+C8IasrmL+Px+oDhS9gxeHlL9uwUzoM0ae2WydAK9UF2THxHszfZogLGT37atQwOkj1Lqvg==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
