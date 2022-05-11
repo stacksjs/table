@@ -6,15 +6,13 @@ interface Props {
   sorts: string[]
 }
 
-const { columns: cols, sorts } = defineProps<Props>()
-
-let { columns } = $(useTable())
-const { isColumnSortable, columnsExcludingLast, lastColumn } = $$(useTable())
-
-columns = cols
+const { columns, sorts } = defineProps<Props>()
+const { isColumnSortable, lastColumn } = $$(useTable())
 
 // eslint-disable-next-line no-console
 console.log('columns', columns)
+const columnsExcludingLast = $computed(() => columns.slice(0, -1))
+
 // eslint-disable-next-line no-console
 console.log('columnsExcludingLast', columnsExcludingLast)
 
@@ -54,7 +52,7 @@ function toggleSort(col: string) {
         <a href="#" class="group inline-flex">
           {{ col.includes(':') ? col.split(':')[1].trim() : col }}
           <span
-            v-if="isColumnSortable(sorts as string)"
+            v-if="isColumnSortable(sorts)"
             class="rounded flex-none ml-2 "
             :class="isColumnUsedAsSort(col.includes(':') ? col.split(':')[0].trim() : col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
             @click="toggleSort(col.includes(':') ? col.split(':')[0].trim() : col)"

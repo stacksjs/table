@@ -21,22 +21,20 @@ interface Props {
   // stickyFooter?: string | boolean
 }
 
-const props = defineProps<Props>()
-
-// let's destructure the props and set some defaults for our reactive values
-const { columns, perPage = 20, sorts = [] } = props
-
 const {
   source = 'http://127.0.0.1:7700',
   type,
+  columns,
   searchable = true,
   query,
   filters = [],
   filterable = true,
+  sorts = [],
   sortable = true,
+  perPage = 20,
   actions = [],
   actionable = false,
-} = props
+} = defineProps<Props>()
 
 const cols = $computed(() => {
   if (isString(columns))
@@ -54,6 +52,13 @@ const sortDirections = $computed(() => {
   return sorts
 })
 
+const facetFilters = $computed(() => {
+  if (isString(filters))
+    return filters.split(',').map(col => col.trim())
+
+  return filters
+})
+
 const itemsPerPage = $computed(() => {
   if (isString(perPage))
     return parseInt(perPage)
@@ -64,25 +69,25 @@ const itemsPerPage = $computed(() => {
 // eslint-disable-next-line no-console
 console.log('initializing table')
 
-onBeforeMount(() => {
-  // let's initialize/use the table now by passing the default table state
-  useTable({
-    source,
-    type,
-    columns: cols,
-    columnsExcludingLast,
-    searchable,
-    query,
-    filters,
-    filterable,
-    sorts: sortDirections,
-    sortable,
-    actions,
-    actionable,
-    perPage: itemsPerPage,
-    currentPage: 1,
-  })
+// onBeforeMount(() => {
+// let's initialize/use the table by passing the default state
+useTable({
+  source,
+  type,
+  columns: cols,
+  columnsExcludingLast,
+  searchable,
+  query,
+  filters: facetFilters,
+  filterable,
+  sorts: sortDirections,
+  sortable,
+  actions,
+  actionable,
+  perPage: itemsPerPage,
+  currentPage: 1,
 })
+// })
 </script>
 
 <template>

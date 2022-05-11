@@ -1,9 +1,15 @@
 import { isBoolean, isObject, isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
-export function useTable(initialState?: TableStore) {
+export function useTable(state?: TableStore) {
+  if (!state) {
+    const ls = localStorage.getItem('table')
+    state = isObject(ls) ? JSON.parse(ls) : {}
+  }
+
+  // here, we need to either set the "initial state" or the "current state" from localStorage
+  const table = $(useStorage('table', state))
   const { search } = $(useSearch())
-  const table = $(useStorage('table-table', initialState))
 
   // eslint-disable-next-line no-console
   console.log('table?.columns', table?.columns)
@@ -90,7 +96,7 @@ export function useTable(initialState?: TableStore) {
   }
 
   return $$({
-    initialState,
+    state,
     table,
     type,
     columns,
