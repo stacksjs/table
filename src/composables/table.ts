@@ -3,90 +3,95 @@ import type { TableStore } from '~/types'
 
 export function useTable(initialState?: TableStore) {
   const { search } = $(useSearch())
-  const store = $(useStorage('table-store', initialState))
+  const table = $(useStorage('table-table', initialState))
+
+  // eslint-disable-next-line no-console
+  console.log('table?.columns', table?.columns)
 
   const results = $computed({
-    get: () => store?.results,
+    get: () => table?.results,
     set: (val) => {
-      if (store)
-        store.results = val
+      if (table)
+        table.results = val
     },
   })
 
   const hits = $computed({
-    get: () => store?.results?.hits,
+    get: () => table?.results?.hits,
     set: (val) => {
-      if (store?.results?.hits && val)
-        store.results.hits = val
+      if (table?.results?.hits && val)
+        table.results.hits = val
     },
   })
 
   const columns = $computed({
-    get: () => store?.columns,
+    get: () => table?.columns,
     set: (val) => {
-      if (store?.columns && val)
-        store.columns = val
+      if (table?.columns && val)
+        table.columns = val
     },
   })
 
   const sorts = $computed({
-    get: () => store?.sorts,
+    get: () => table?.sorts,
     set: (val) => {
-      if (store?.sorts && val)
-        store.sorts = val
+      if (table?.sorts && val)
+        table.sorts = val
     },
   })
 
-  const columnsExcludingLast = $computed(() => store?.columns?.slice(0, -1))
-  const lastColumn = $computed(() => store?.columns ? store.columns[store.columns.length - 1] : [])
-  const currentPage = $computed(() => store?.currentPage || 1)
-  const perPage = $computed(() => store?.perPage || 20)
-  const query = $computed(() => store?.query || '')
-  const type = $computed(() => store?.type || '')
+  const columnsExcludingLast = $computed(() => table?.columns?.slice(0, -1))
+  const lastColumn = $computed(() => table?.columns ? table.columns[table.columns.length - 1] : [])
+  // eslint-disable-next-line no-console
+  console.log('lastColumn', lastColumn)
+  const currentPage = $computed(() => table?.currentPage || 1)
+  const perPage = $computed(() => table?.perPage || 20)
+  const query = $computed(() => table?.query || '')
+  const type = $computed(() => table?.type || '')
 
   function isColumnSortable(col: string): Boolean {
-    if (isString(store?.sorts) || isObject(store?.sorts)) {
-      if (!store)
+    if (isString(table?.sorts) || isObject(table?.sorts)) {
+      if (!table)
         return false
-      return store.sorts.includes(col)
+      return table.sorts.includes(col)
     }
 
-    else if (isBoolean(store?.sortable)) {
-      if (!store)
+    else if (isBoolean(table?.sortable)) {
+      if (!table)
         return false
-      return store.sortable
+      return table.sortable
     }
 
     return false
   }
 
   function goToPrevPage() {
-    if (currentPage === undefined || store === undefined)
+    if (currentPage === undefined || table === undefined)
       return
 
-    store.currentPage--
+    table.currentPage--
 
     if (currentPage < 1)
-      store.currentPage = 1
+      table.currentPage = 1
 
     search()
   }
 
   function goToNextPage() {
-    if (currentPage === undefined || store === undefined)
+    if (currentPage === undefined || table === undefined)
       return
 
-    store.currentPage++
+    table.currentPage++
 
-    if (store.currentPage <= 1)
-      store.currentPage = 1
+    if (table.currentPage <= 1)
+      table.currentPage = 1
 
     search()
   }
 
   return $$({
     initialState,
-    store,
+    table,
     type,
     columns,
     columnsExcludingLast,

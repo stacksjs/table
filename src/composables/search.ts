@@ -5,16 +5,16 @@ import { useTable } from './table'
 // TODO: also separately push this as a composable to npm
 export function useSearch() {
   function getClient(apiKey = '') {
-    const { store } = $(useTable())
+    const { table } = $(useTable())
 
-    if (!store)
+    if (!table)
       return
 
     // eslint-disable-next-line no-console
-    console.log('storeD', store.source)
+    console.log('tableD', table.source)
 
     return new MeiliSearch({
-      host: store.source,
+      host: table.source,
       apiKey,
     })
   }

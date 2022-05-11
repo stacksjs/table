@@ -64,22 +64,24 @@ const itemsPerPage = $computed(() => {
 // eslint-disable-next-line no-console
 console.log('initializing table')
 
-// let's initialize/use the table now by passing the default table state
-useTable({
-  source,
-  type,
-  columns: cols,
-  columnsExcludingLast,
-  searchable,
-  query,
-  filters,
-  filterable,
-  sorts: sortDirections,
-  sortable,
-  actions,
-  actionable,
-  perPage: itemsPerPage,
-  currentPage: 1,
+onBeforeMount(() => {
+  // let's initialize/use the table now by passing the default table state
+  useTable({
+    source,
+    type,
+    columns: cols,
+    columnsExcludingLast,
+    searchable,
+    query,
+    filters,
+    filterable,
+    sorts: sortDirections,
+    sortable,
+    actions,
+    actionable,
+    perPage: itemsPerPage,
+    currentPage: 1,
+  })
 })
 </script>
 
@@ -90,7 +92,7 @@ useTable({
         <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
           <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
             <table class="divide-y min-w-full divide-gray-300">
-              <TableHead :columns="cols" :columns-excluding-last="columnsExcludingLast" />
+              <TableHead :columns="cols" :sorts="sortDirections" />
               <TableBody />
             </table>
           </div>

@@ -3,16 +3,18 @@ import { useTable } from '~/composables/table'
 
 interface Props {
   columns: string[]
-  columnsExcludingLast: string[]
-  sorts: string
+  sorts: string[]
 }
 
-const { columns, columnsExcludingLast } = defineProps<Props>()
+const { columns: cols, sorts } = defineProps<Props>()
 
-const { isColumnSortable } = useTable()
+let { columns } = $(useTable())
+const { isColumnSortable, columnsExcludingLast, lastColumn } = $$(useTable())
+
+columns = cols
 
 // eslint-disable-next-line no-console
-console.log('columns', columns.slice(0, -1))
+console.log('columns', columns)
 // eslint-disable-next-line no-console
 console.log('columnsExcludingLast', columnsExcludingLast)
 
@@ -30,8 +32,6 @@ const sortOrders = $ref([])
 //   // eslint-disable-next-line no-console
 //   console.log('tableHeads', tableHeads)
 // })
-
-const lastColumn = columns[columns.length - 1]
 
 function isColumnUsedAsSort(col: string) {
   return sortOrders[col]
@@ -69,7 +69,7 @@ function toggleSort(col: string) {
 
       <th scope="col" class="font-semibold text-sm text-right py-3.5 pr-4 pl-3 text-gray-900 sm:pr-6">
         <a href="#" class="group inline-flex">
-          {{ lastColumn.includes(':') ? lastColumn.split(':')[1].trim() : lastColumn }}
+          {{ lastColumn[0].includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0] }}
           <span
             v-if="isColumnSortable(lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[0].trim() : lastColumn[0])"
             class="rounded flex-none ml-2"

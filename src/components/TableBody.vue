@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const { store, hits } = $(useTable())
+const { table, hits } = $(useTable())
 const { search } = $(useSearch())
 
 watch(
-  () => store,
+  () => table,
   () => search(),
 )
 </script>
