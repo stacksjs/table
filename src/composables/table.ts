@@ -4,8 +4,15 @@ import type { TableStore } from '~/types'
 export function useTable(initialState?: TableStore) {
   const { search } = $(useSearch())
   const store = $(useStorage('table-store', initialState))
-  const columnsExcludingLast = $computed(() => store?.columns ? store.columns.slice(0, -1) : [])
-  const lastColumn = $computed(() => store?.columns ? store.columns[store.columns.length - 1] : [])
+
+  const results = store?.results
+  const hits = store?.results?.hits
+  const columns = store?.columns
+  const sorts = store?.sorts
+  const columnsExcludingLast = store?.columns?.slice(0, -1)
+  const lastColumn = store?.columns ? store.columns[store.columns.length - 1] : []
+  const currentPage = store?.currentPage || 1
+  const perPage = store?.perPage || 20
 
   function isColumnSortable(col: string): Boolean {
     if (isString(store?.sorts) || isObject(store?.sorts)) {
@@ -24,19 +31,19 @@ export function useTable(initialState?: TableStore) {
   }
 
   function goToPrevPage() {
-    if (!store)
+    if (currentPage === undefined || store === undefined)
       return
 
     store.currentPage--
 
-    if (store.currentPage < 1)
+    if (currentPage < 1)
       store.currentPage = 1
 
     search()
   }
 
   function goToNextPage() {
-    if (!store)
+    if (currentPage === undefined || store === undefined)
       return
 
     store.currentPage++
@@ -50,13 +57,15 @@ export function useTable(initialState?: TableStore) {
   return $$({
     initialState,
     store,
-    columns: store?.columns,
+    columns,
     columnsExcludingLast,
     lastColumn,
     isColumnSortable,
-    sorts: store?.sorts,
-    results: store?.results,
-    hits: store?.results?.hits,
+    sorts,
+    results,
+    hits,
+    perPage,
+    currentPage,
     goToPrevPage,
     goToNextPage,
   })

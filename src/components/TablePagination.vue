@@ -1,7 +1,17 @@
 <script setup lang="ts">
 const emit = defineEmits(['prevPage', 'nextPage'])
 
-const { goToNextPage, goToPrevPage, store } = $(useTable())
+const { goToNextPage, goToPrevPage, perPage, currentPage, results } = $(useTable())
+
+function next() {
+  goToNextPage()
+  emit('nextPage')
+}
+
+function back() {
+  goToPrevPage()
+  emit('prevPage')
+}
 </script>
 
 <template>
@@ -21,12 +31,12 @@ const { goToNextPage, goToPrevPage, store } = $(useTable())
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-sm text-gray-700">
-          Showing {{ ((store?.perPage * store?.currentPage) - store?.perPage) + 1 }}
+          Showing {{ ((perPage * currentPage) - perPage) + 1 }}
           <span class="font-medium" />
           to
-          <span class="font-medium"> {{ store?.perPage * store?.currentPage }} </span>
+          <span class="font-medium"> {{ perPage * currentPage }} </span>
           of
-          <span class="font-medium"> {{ store?.results?.nbHits ?? 0 }} </span>
+          <span class="font-medium"> {{ results?.nbHits ?? 0 }} </span>
           results
         </p>
       </div>
@@ -35,7 +45,7 @@ const { goToNextPage, goToPrevPage, store } = $(useTable())
           <a
             href="#"
             class="bg-white border rounded-l-md font-medium border-gray-300 text-sm py-2 px-2 text-gray-500 relative inline-flex items-center hover:bg-gray-50"
-            @click.prevent="goToPrevPage() && emit('prevPage')"
+            @click.prevent="back()"
           >
             <span class="sr-only">Previous</span>
             <div class="h-5 w-5 i-heroicons-solid-chevron-left" />
@@ -45,7 +55,7 @@ const { goToNextPage, goToPrevPage, store } = $(useTable())
           <a
             href="#"
             class="bg-white border rounded-r-md font-medium border-gray-300 text-sm py-2 px-2 text-gray-500 relative inline-flex items-center hover:bg-gray-50"
-            @click.prevent="goToNextPage() && emit('nextPage')"
+            @click.prevent="next()"
           >
             <span class="sr-only">Next</span>
             <div class="h-5 w-5 i-heroicons-solid-chevron-right" />
