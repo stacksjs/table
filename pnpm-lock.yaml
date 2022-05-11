@@ -13,7 +13,7 @@ specifiers:
   '@unocss/preset-icons': ^0.33.2
   '@unocss/preset-wind': ^0.33.2
   '@unocss/reset': ^0.33.2
-  '@vitejs/plugin-vue': ^2.3.2
+  '@vitejs/plugin-vue': ^2.3.3
   '@vue/compiler-sfc': ^3.2.33
   '@vueuse/core': ^8.4.2
   bumpp: ^7.1.1
@@ -33,8 +33,8 @@ specifiers:
   unplugin-auto-import: ^0.7.1
   unplugin-vue-components: ^0.19.5
   upath: ^2.0.1
-  vite: ^2.9.8
-  vitest: ^0.12.3
+  vite: ^2.9.9
+  vitest: ^0.12.4
   vue: ^3.2.33
   vue-demi: ^0.12.5
   vue-tsc: ^0.34.12
@@ -57,7 +57,7 @@ devDependencies:
   '@types/node': 17.0.32
   '@unocss/preset-icons': 0.33.2
   '@unocss/preset-wind': 0.33.2
-  '@vitejs/plugin-vue': 2.3.2_vite@2.9.8+vue@3.2.33
+  '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.33
   '@vue/compiler-sfc': 3.2.33
   '@vueuse/core': 8.4.2_vue@3.2.33
   bumpp: 7.1.1
@@ -71,12 +71,12 @@ devDependencies:
   simple-git-hooks: 2.7.0
   sort-package-json: 1.57.0
   typescript: 4.6.4
-  unocss: 0.33.2_vite@2.9.8
-  unplugin-auto-import: 0.7.1_zx3pfbbc5uei3k4c6zdezegtqm
-  unplugin-vue-components: 0.19.5_vite@2.9.8+vue@3.2.33
+  unocss: 0.33.2_vite@2.9.9
+  unplugin-auto-import: 0.7.1_y44jlmyuqbnkfkqeyjo67naj6e
+  unplugin-vue-components: 0.19.5_vite@2.9.9+vue@3.2.33
   upath: 2.0.1
-  vite: 2.9.8
-  vitest: 0.12.3
+  vite: 2.9.9
+  vitest: 0.12.4
   vue-demi: 0.12.5_vue@3.2.33
   vue-tsc: 0.34.12_typescript@4.6.4
 
@@ -836,7 +836,7 @@ packages:
       '@unocss/core': 0.33.2
     dev: true
 
-  /@unocss/vite/0.33.2_vite@2.9.8:
+  /@unocss/vite/0.33.2_vite@2.9.9:
     resolution: {integrity: sha512-oRt1ejtUEHwGMKXfuXy9BiETkeV27J8miOKrlt+tlg/pm2y0h8113C12J0m15FS3cJhls4eBZs5umPr4J+shDw==}
     peerDependencies:
       vite: ^2.9.0
@@ -848,17 +848,17 @@ packages:
       '@unocss/scope': 0.33.2
       '@unocss/transformer-directives': 0.33.2
       magic-string: 0.26.1
-      vite: 2.9.8
+      vite: 2.9.9
     dev: true
 
-  /@vitejs/plugin-vue/2.3.2_vite@2.9.8+vue@3.2.33:
-    resolution: {integrity: sha512-umyypfSHS4kQLdYAnJHhaASq7FRzNCdvcRoQ3uYGNk1/M4a+hXUd7ysN7BLhCrWH6uBokyCkFeUAaFDzSaaSrQ==}
+  /@vitejs/plugin-vue/2.3.3_vite@2.9.9+vue@3.2.33:
+    resolution: {integrity: sha512-SmQLDyhz+6lGJhPELsBdzXGc+AcaT8stgkbiTFGpXPe8Tl1tJaBw1A6pxDqDuRsVkD8uscrkx3hA7QDOoKYtyw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       vite: ^2.5.10
       vue: ^3.2.25
     dependencies:
-      vite: 2.9.8
+      vite: 2.9.9
       vue: 3.2.33
     dev: true
 
@@ -5048,7 +5048,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unocss/0.33.2_vite@2.9.8:
+  /unocss/0.33.2_vite@2.9.9:
     resolution: {integrity: sha512-ISGmthl9kNPujda/Yt25irdV9s9F3hr8MWpd/NE7Kv/qkZJC3/FvO/l/9d5ggkbgsAuGQrsfuaQnxT2p4k9Yug==}
     engines: {node: '>=14'}
     dependencies:
@@ -5065,13 +5065,13 @@ packages:
       '@unocss/transformer-compile-class': 0.33.2
       '@unocss/transformer-directives': 0.33.2
       '@unocss/transformer-variant-group': 0.33.2
-      '@unocss/vite': 0.33.2_vite@2.9.8
+      '@unocss/vite': 0.33.2_vite@2.9.9
     transitivePeerDependencies:
       - supports-color
       - vite
     dev: true
 
-  /unplugin-auto-import/0.7.1_zx3pfbbc5uei3k4c6zdezegtqm:
+  /unplugin-auto-import/0.7.1_y44jlmyuqbnkfkqeyjo67naj6e:
     resolution: {integrity: sha512-9865OV9eP99PNxHR2mtTDExeN01m4M9boT5U2BtIwsU1wDRsaFIYWLwcCBEjvXzXfTTC2NNMskhHGVAMfL2WgA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -5086,7 +5086,7 @@ packages:
       local-pkg: 0.4.1
       magic-string: 0.26.1
       resolve: 1.22.0
-      unplugin: 0.6.3_vite@2.9.8
+      unplugin: 0.6.3_vite@2.9.9
     transitivePeerDependencies:
       - esbuild
       - rollup
@@ -5094,7 +5094,7 @@ packages:
       - webpack
     dev: true
 
-  /unplugin-vue-components/0.19.5_vite@2.9.8+vue@3.2.33:
+  /unplugin-vue-components/0.19.5_vite@2.9.9+vue@3.2.33:
     resolution: {integrity: sha512-cIC+PdQEXmG+B1gmZGk4hws2xP+00C6pg3FD6ixEgRyW+WF+QXQW/60pc+hUhtDYs1PFE+23K3NY7yvYTnDDTA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -5116,7 +5116,7 @@ packages:
       magic-string: 0.26.1
       minimatch: 5.0.1
       resolve: 1.22.0
-      unplugin: 0.6.3_vite@2.9.8
+      unplugin: 0.6.3_vite@2.9.9
       vue: 3.2.33
     transitivePeerDependencies:
       - esbuild
@@ -5126,7 +5126,7 @@ packages:
       - webpack
     dev: true
 
-  /unplugin/0.6.3_vite@2.9.8:
+  /unplugin/0.6.3_vite@2.9.9:
     resolution: {integrity: sha512-CoW88FQfCW/yabVc4bLrjikN9HC8dEvMU4O7B6K2jsYMPK0l6iAnd9dpJwqGcmXJKRCU9vwSsy653qg+RK0G6A==}
     peerDependencies:
       esbuild: '>=0.13'
@@ -5144,7 +5144,7 @@ packages:
         optional: true
     dependencies:
       chokidar: 3.5.3
-      vite: 2.9.8
+      vite: 2.9.9
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.4.3
     dev: true
@@ -5185,8 +5185,8 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite/2.9.8:
-    resolution: {integrity: sha512-zsBGwn5UT3YS0NLSJ7hnR54+vUKfgzMUh/Z9CxF1YKEBVIe213+63jrFLmZphgGI5zXwQCSmqIdbPuE8NJywPw==}
+  /vite/2.9.9:
+    resolution: {integrity: sha512-ffaam+NgHfbEmfw/Vuh6BHKKlI/XIAhxE5QSS7gFLIngxg171mg1P3a4LSRME0z2ZU1ScxoKzphkipcYwSD5Ew==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
@@ -5209,8 +5209,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.12.3:
-    resolution: {integrity: sha512-Dc4uJAcnUampdJ6+C8IasrmL+Px+oDhS9gxeHlL9uwUzoM0ae2WydAK9UF2THxHszfZogLGT37atQwOkj1Lqvg==}
+  /vitest/0.12.4:
+    resolution: {integrity: sha512-EDxdhlAt6vcu6y4VouAI60z78iCAVFnfBL4VlSQVQnGmOk5altOtIKvp3xfZ+cfo4iVHgqq1QNyf5qOFiL4leg==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -5234,7 +5234,7 @@ packages:
       local-pkg: 0.4.1
       tinypool: 0.1.3
       tinyspy: 0.3.2
-      vite: 2.9.8
+      vite: 2.9.9
     transitivePeerDependencies:
       - less
       - sass
