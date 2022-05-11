@@ -45,6 +45,8 @@ const cols = $computed(() => {
   return columns
 })
 
+const columnsExcludingLast = $computed(() => cols?.slice(0, -1))
+
 const sortDirections = $computed(() => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
@@ -67,6 +69,7 @@ useTable({
   source,
   type,
   columns: cols,
+  columnsExcludingLast,
   searchable,
   query,
   filters,
@@ -87,7 +90,7 @@ useTable({
         <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
           <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
             <table class="divide-y min-w-full divide-gray-300">
-              <TableHead />
+              <TableHead :columns="cols" :columns-excluding-last="columnsExcludingLast" />
               <TableBody />
             </table>
           </div>

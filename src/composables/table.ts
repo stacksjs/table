@@ -5,8 +5,6 @@ export function useTable(initialState?: TableStore) {
   const { search } = $(useSearch())
   const store = $(useStorage('table-store', initialState))
 
-  // search()
-
   const results = $computed({
     get: () => store?.results,
     set: (val) => {
