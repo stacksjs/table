@@ -1,5 +1,6 @@
 import type { SearchParams } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
+import { useTable } from './table'
 
 // TODO: also separately push this as a composable to npm
 export function useSearch() {
@@ -19,31 +20,24 @@ export function useSearch() {
   }
 
   async function search() {
-    const { store } = $(useTable())
-
-    if (!store)
-      return
-
-    const query = store.query?.trim() || ''
-    const perPage = store.perPage
-    const currentPage = store.currentPage
-    const type = store.type // index name
+    const { currentPage, perPage, query, type } = $(useTable())
     const options: SearchParams = {
       offset: (currentPage - 1) * perPage,
       limit: perPage,
     }
 
     const client = (await getClient())
+
     if (!client)
       return
 
     const index = client.index(type)
     const results = await index.search(query, options)
 
-    store.results = results
+    // results = results
 
     // eslint-disable-next-line no-console
-    console.log('index is', store.type)
+    console.log('index is', type)
     // eslint-disable-next-line no-console
     console.log('query', query)
     // eslint-disable-next-line no-console

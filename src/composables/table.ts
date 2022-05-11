@@ -1,11 +1,11 @@
 import { isBoolean, isObject, isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
-export async function useTable(initialState?: TableStore) {
+export function useTable(initialState?: TableStore) {
   const { search } = $(useSearch())
   const store = $(useStorage('table-store', initialState))
 
-  await search()
+  // search()
 
   const results = $computed({
     get: () => store?.results,
@@ -43,6 +43,8 @@ export async function useTable(initialState?: TableStore) {
   const lastColumn = $computed(() => store?.columns ? store.columns[store.columns.length - 1] : [])
   const currentPage = $computed(() => store?.currentPage || 1)
   const perPage = $computed(() => store?.perPage || 20)
+  const query = $computed(() => store?.query || '')
+  const type = $computed(() => store?.type || '')
 
   function isColumnSortable(col: string): Boolean {
     if (isString(store?.sorts) || isObject(store?.sorts)) {
@@ -87,11 +89,13 @@ export async function useTable(initialState?: TableStore) {
   return $$({
     initialState,
     store,
+    type,
     columns,
     columnsExcludingLast,
     lastColumn,
     isColumnSortable,
     sorts,
+    query,
     results,
     hits,
     perPage,
