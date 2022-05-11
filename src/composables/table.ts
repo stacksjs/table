@@ -1,8 +1,11 @@
 import { isBoolean, isObject, isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
-export function useTable(state?: TableStore) {
-  if (!state) {
+export function useTable(initialState?: TableStore) {
+  let state = initialState
+
+  // in case the initial state is not provided
+  if (!initialState) {
     const ls = localStorage.getItem('table')
     state = isObject(ls) ? JSON.parse(ls) : {}
   }
@@ -46,6 +49,7 @@ export function useTable(state?: TableStore) {
     },
   })
 
+  const type = $computed(() => table?.type || '')
   const columnsExcludingLast = $computed(() => table?.columns?.slice(0, -1))
   const lastColumn = $computed(() => table?.columns ? table.columns[table.columns.length - 1] : [])
   // eslint-disable-next-line no-console
@@ -53,7 +57,6 @@ export function useTable(state?: TableStore) {
   const currentPage = $computed(() => table?.currentPage || 1)
   const perPage = $computed(() => table?.perPage || 20)
   const query = $computed(() => table?.query || '')
-  const type = $computed(() => table?.type || '')
 
   function isColumnSortable(col: string): Boolean {
     if (isString(table?.sorts) || isObject(table?.sorts)) {
