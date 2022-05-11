@@ -14,9 +14,6 @@ export function useTable(initialState?: TableStore) {
   const table = $(useStorage('table', state))
   const { search } = $(useSearch())
 
-  // eslint-disable-next-line no-console
-  console.log('table?.columns', table?.columns)
-
   const results = $computed({
     get: () => table?.results,
     set: (val) => {
@@ -52,8 +49,6 @@ export function useTable(initialState?: TableStore) {
   const type = $computed(() => table?.type || '')
   const columnsExcludingLast = $computed(() => table?.columns?.slice(0, -1))
   const lastColumn = $computed(() => table?.columns ? table.columns[table.columns.length - 1] : [])
-  // eslint-disable-next-line no-console
-  console.log('lastColumn', lastColumn)
   const currentPage = $computed(() => table?.currentPage || 1)
   const perPage = $computed(() => table?.perPage || 20)
   const query = $computed(() => table?.query || '')

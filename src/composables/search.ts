@@ -10,9 +10,6 @@ export function useSearch() {
     if (!table)
       return
 
-    // eslint-disable-next-line no-console
-    console.log('tableD', table.source)
-
     return new MeiliSearch({
       host: table.source,
       apiKey,
@@ -33,15 +30,6 @@ export function useSearch() {
 
     const index = client.index(type)
     const results = await index.search(query, options)
-
-    // results = results
-
-    // eslint-disable-next-line no-console
-    console.log('index is', type)
-    // eslint-disable-next-line no-console
-    console.log('query', query)
-    // eslint-disable-next-line no-console
-    console.log('results', results)
 
     return results
   }

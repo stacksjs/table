@@ -10,7 +10,7 @@ interface Props {
   columns: string | string[]
   searchable?: string | boolean
   query?: string
-  sortable?: string
+  sortable?: string | boolean
   sorts?: string | string[]
   filterable?: string | boolean
   filters?: string | string[]

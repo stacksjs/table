@@ -7,15 +7,8 @@ interface Props {
 }
 
 const { columns, sorts } = defineProps<Props>()
-const { isColumnSortable, lastColumn } = $$(useTable())
-
-// eslint-disable-next-line no-console
-console.log('columns', columns)
+const { isColumnSortable, lastColumn } = $(useTable())
 const columnsExcludingLast = $computed(() => columns.slice(0, -1))
-
-// eslint-disable-next-line no-console
-console.log('columnsExcludingLast', columnsExcludingLast)
-
 const sortOrders = $ref([])
 // let tableHeads = $ref([''])
 
@@ -67,12 +60,12 @@ function toggleSort(col: string) {
 
       <th scope="col" class="font-semibold text-sm text-right py-3.5 pr-4 pl-3 text-gray-900 sm:pr-6">
         <a href="#" class="group inline-flex">
-          {{ lastColumn[0].includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0] }}
+          {{ lastColumn.includes(':') ? lastColumn.split(':')[1].trim() : lastColumn }}
           <span
-            v-if="isColumnSortable(lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[0].trim() : lastColumn[0])"
+            v-if="isColumnSortable(lastColumn?.includes(':') ? lastColumn.split(':')[0].trim() : lastColumn)"
             class="rounded flex-none ml-2"
-            :class="isColumnUsedAsSort(lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[0].trim() : lastColumn[0]) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-            @click="toggleSort(lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[0].trim() : lastColumn[0])"
+            :class="isColumnUsedAsSort(lastColumn?.includes(':') ? lastColumn.split(':')[0].trim() : lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+            @click="toggleSort(lastColumn?.includes(':') ? lastColumn.split(':')[0].trim() : lastColumn)"
           >
             <span
               class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible"
