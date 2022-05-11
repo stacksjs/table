@@ -18,7 +18,7 @@ watch(
       <td
         class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6"
       >
-        hello {{ hit }}
+        {{ hit }}
         <!-- {{ hit[columns[0].includes(':') ? columns[0].split(':')[0].trim() : columns[0]] }} -->
       </td>
 

@@ -24,7 +24,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // let's destructure the props and set some defaults for our reactive values
-let { columns, perPage = 20, sorts = [] } = props
+const { columns, perPage = 20, sorts = [] } = props
 
 const {
   source = 'http://127.0.0.1:7700',
@@ -38,43 +38,46 @@ const {
   actionable = false,
 } = props
 
-function initializeTable() {
-  // eslint-disable-next-line no-console
-  console.log('initializing table')
-
+const cols = $computed(() => {
   if (isString(columns))
-    columns = columns.split(',').map(col => col.trim())
+    return columns.split(',').map(col => col.trim())
 
+  return columns
+})
+
+const sortDirections = $computed(() => {
   if (isString(sorts))
-    sorts = sorts.split(',').map(col => col.trim())
+    return sorts.split(',').map(col => col.trim())
 
+  return sorts
+})
+
+const itemsPerPage = $computed(() => {
   if (isString(perPage))
-    perPage = parseInt(perPage)
+    return parseInt(perPage)
 
-  const initialData = {
-    source,
-    type,
-    columns,
-    searchable,
-    query,
-    filters,
-    filterable,
-    sorts,
-    sortable,
-    actions,
-    actionable,
-    perPage,
-    currentPage: 1,
-  }
+  return perPage
+})
 
-  // eslint-disable-next-line no-console
-  console.log('initial data', initialData)
+// eslint-disable-next-line no-console
+console.log('initializing table')
 
-  // let's initialize the table now
-  useTable(initialData)
-}
-
-initializeTable()
+// let's initialize/use the table now by passing the default table state
+useTable({
+  source,
+  type,
+  columns: cols,
+  searchable,
+  query,
+  filters,
+  filterable,
+  sorts: sortDirections,
+  sortable,
+  actions,
+  actionable,
+  perPage: itemsPerPage,
+  currentPage: 1,
+})
 </script>
 
 <template>

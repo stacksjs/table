@@ -1,14 +1,19 @@
 <script setup lang="ts">
 const { columns, columnsExcludingLast } = $(useTable())
 // const sortOrders = $ref([])
-const tableHeads = $ref([''])
+let tableHeads = $ref([''])
 
 // eslint-disable-next-line no-console
 console.log('columns here', columns)
 
-// watch(columns, () => {
-//   setTableHeads()
-// })
+watch(columns, () => {
+  // eslint-disable-next-line no-console
+  console.log('test', columns)
+  // const cols = unref(columns)
+  tableHeads = ['test', 'test2']
+  // eslint-disable-next-line no-console
+  console.log('tableHeads', tableHeads)
+})
 
 // function isColumnUsedAsSort(col: string) {
 //   return sortOrders[col]
@@ -17,17 +22,6 @@ console.log('columns here', columns)
 // function toggleSort(col: string) {
 //   sortOrders[col] = !sortOrders[col]
 // }
-
-function setTableHeads() {
-  // eslint-disable-next-line no-console
-  console.log('columns is', columns)
-
-  // if (!columns)
-  //   return
-
-  // columns = columns
-}
-
 onMounted(() => {
   // eslint-disable-next-line no-console
   console.log('columnsExcludingLast is', columnsExcludingLast)

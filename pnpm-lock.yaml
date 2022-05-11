@@ -847,7 +847,7 @@ packages:
       '@unocss/inspector': 0.33.2
       '@unocss/scope': 0.33.2
       '@unocss/transformer-directives': 0.33.2
-      magic-string: 0.26.1
+      magic-string: 0.26.2
       vite: 2.9.9
     dev: true
 
@@ -3678,8 +3678,8 @@ packages:
     dependencies:
       sourcemap-codec: 1.4.8
 
-  /magic-string/0.26.1:
-    resolution: {integrity: sha512-ndThHmvgtieXe8J/VGPjG+Apu7v7ItcD5mhEIvOscWjPF/ccOiLxHaSuCAS2G+3x4GKsAbT8u7zdyamupui8Tg==}
+  /magic-string/0.26.2:
+    resolution: {integrity: sha512-NzzlXpclt5zAbmo6h6jNc8zl2gNRGHvmsZW4IvZhTC4W7k4OlLP+S5YLussa/r3ixNT66KOQfNORlXHSOy/X4A==}
     engines: {node: '>=12'}
     dependencies:
       sourcemap-codec: 1.4.8
@@ -3989,7 +3989,7 @@ packages:
       destr: 1.1.1
       node-fetch: 3.2.4
       ufo: 0.8.4
-      undici: 5.1.1
+      undici: 5.2.0
     dev: true
 
   /once/1.4.0:
@@ -5027,8 +5027,8 @@ packages:
       jiti: 1.13.0
     dev: true
 
-  /undici/5.1.1:
-    resolution: {integrity: sha512-CmK9JzLSMGx+2msOao8LhkKn3J7eKo2M50v0KZQ2XbiHcGqLS1HiIj01ceIm3jbUYlspw/FTSb6nMdSNyvVyaQ==}
+  /undici/5.2.0:
+    resolution: {integrity: sha512-XY6+NS3WH9b3TKOHeNz2CjR+qrVz/k4fO9g3etPpLozRvULoQmZ1+dk9JbIz40ehn27xzFk4jYVU2MU3Nle62A==}
     engines: {node: '>=12.18'}
     dev: true
 
@@ -5084,7 +5084,7 @@ packages:
       '@rollup/pluginutils': 4.2.1
       '@vueuse/core': 8.4.2_vue@3.2.33
       local-pkg: 0.4.1
-      magic-string: 0.26.1
+      magic-string: 0.26.2
       resolve: 1.22.0
       unplugin: 0.6.3_vite@2.9.9
     transitivePeerDependencies:
@@ -5113,7 +5113,7 @@ packages:
       debug: 4.3.4
       fast-glob: 3.2.11
       local-pkg: 0.4.1
-      magic-string: 0.26.1
+      magic-string: 0.26.2
       minimatch: 5.0.1
       resolve: 1.22.0
       unplugin: 0.6.3_vite@2.9.9

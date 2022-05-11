@@ -1,18 +1,48 @@
 import { isBoolean, isObject, isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
-export function useTable(initialState?: TableStore) {
+export async function useTable(initialState?: TableStore) {
   const { search } = $(useSearch())
   const store = $(useStorage('table-store', initialState))
 
-  const results = store?.results
-  const hits = store?.results?.hits
-  const columns = store?.columns
-  const sorts = store?.sorts
-  const columnsExcludingLast = store?.columns?.slice(0, -1)
-  const lastColumn = store?.columns ? store.columns[store.columns.length - 1] : []
-  const currentPage = store?.currentPage || 1
-  const perPage = store?.perPage || 20
+  await search()
+
+  const results = $computed({
+    get: () => store?.results,
+    set: (val) => {
+      if (store)
+        store.results = val
+    },
+  })
+
+  const hits = $computed({
+    get: () => store?.results?.hits,
+    set: (val) => {
+      if (store?.results?.hits && val)
+        store.results.hits = val
+    },
+  })
+
+  const columns = $computed({
+    get: () => store?.columns,
+    set: (val) => {
+      if (store?.columns && val)
+        store.columns = val
+    },
+  })
+
+  const sorts = $computed({
+    get: () => store?.sorts,
+    set: (val) => {
+      if (store?.sorts && val)
+        store.sorts = val
+    },
+  })
+
+  const columnsExcludingLast = $computed(() => store?.columns?.slice(0, -1))
+  const lastColumn = $computed(() => store?.columns ? store.columns[store.columns.length - 1] : [])
+  const currentPage = $computed(() => store?.currentPage || 1)
+  const perPage = $computed(() => store?.perPage || 20)
 
   function isColumnSortable(col: string): Boolean {
     if (isString(store?.sorts) || isObject(store?.sorts)) {
