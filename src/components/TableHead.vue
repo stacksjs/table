@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isObject } from '@vueuse/core'
 import { useTable } from '~/composables/table'
 
 interface Props {
@@ -6,30 +7,29 @@ interface Props {
   sorts: string[]
 }
 
-const { columns, sorts } = defineProps<Props>()
+const { columns } = defineProps<Props>()
 const { isColumnSortable, lastColumn } = $(useTable())
 const columnsExcludingLast = $computed(() => columns.slice(0, -1))
+const readableLastColumn = $computed(() => (lastColumn as string).includes(':') ? (lastColumn as string).split(':')[1].trim() : (lastColumn as string))
 const sortOrders = $ref([])
-// let tableHeads = $ref([''])
 
-// eslint-disable-next-line no-console
-// console.log('columns here', columns)
+function isColumnUsedAsSort(col: string | object) {
+  // eslint-disable-next-line no-console
+  console.log('isColumnUsedAsSort', col)
+  let k
 
-// watch(columns, (cols) => {
-//   // eslint-disable-next-line no-console
-//   console.log('test', cols)
-//   // const cols = unref(columns)
-//   tableHeads = ['test', 'test2']
-//   // eslint-disable-next-line no-console
-//   console.log('tableHeads', tableHeads)
-// })
+  if (isObject(col))
+    k = col[0].includes(':') ? col[0].split(':')[0].trim() : col[0]
 
-function isColumnUsedAsSort(col: string) {
-  return sortOrders[col]
+  else
+    k = col.includes(':') ? col.split(':')[0].trim() : col
+
+  return sortOrders[k]
 }
 
 function toggleSort(col: string) {
-  sortOrders[col] = !sortOrders[col]
+  const k = col.includes(':') ? col.split(':')[0].trim() : col
+  sortOrders[k] = !sortOrders[k]
 }
 </script>
 
@@ -45,27 +45,30 @@ function toggleSort(col: string) {
         <a href="#" class="group inline-flex">
           {{ col.includes(':') ? col.split(':')[1].trim() : col }}
           <span
-            v-if="isColumnSortable(sorts)"
+            v-if="isColumnSortable(col)"
             class="rounded flex-none ml-2 "
-            :class="isColumnUsedAsSort(col.includes(':') ? col.split(':')[0].trim() : col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-            @click="toggleSort(col.includes(':') ? col.split(':')[0].trim() : col)"
+            :class="isColumnUsedAsSort(col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+            @click="toggleSort(col)"
           >
             <span
               class="rounded flex-none ml-2 "
             >
               <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
             </span>
-          </span></a>
+          </span>
+
+          <!-- <span v-else>he</span> -->
+        </a>
       </th>
 
       <th scope="col" class="font-semibold text-sm text-right py-3.5 pr-4 pl-3 text-gray-900 sm:pr-6">
         <a href="#" class="group inline-flex">
-          {{ lastColumn.includes(':') ? lastColumn.split(':')[1].trim() : lastColumn }}
+          {{ readableLastColumn }}
           <span
-            v-if="isColumnSortable(lastColumn?.includes(':') ? lastColumn.split(':')[0].trim() : lastColumn)"
+            v-if="isColumnSortable(lastColumn as string)"
             class="rounded flex-none ml-2"
-            :class="isColumnUsedAsSort(lastColumn?.includes(':') ? lastColumn.split(':')[0].trim() : lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-            @click="toggleSort(lastColumn?.includes(':') ? lastColumn.split(':')[0].trim() : lastColumn)"
+            :class="isColumnUsedAsSort(lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+            @click="toggleSort(lastColumn)"
           >
             <span
               class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible"

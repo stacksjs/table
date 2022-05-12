@@ -1,4 +1,4 @@
-import { isBoolean, isObject, isString, useStorage } from '@vueuse/core'
+import { isObject, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
 export function useTable(initialState?: TableStore) {
@@ -54,17 +54,14 @@ export function useTable(initialState?: TableStore) {
   const query = $computed(() => table?.query || '')
 
   function isColumnSortable(col: string): Boolean {
-    if (isString(table?.sorts) || isObject(table?.sorts)) {
-      if (!table)
-        return false
-      return table.sorts.includes(col)
-    }
+    if (table === undefined)
+      return false
 
-    else if (isBoolean(table?.sortable)) {
-      if (!table)
-        return false
-      return table.sortable
-    }
+    if (col.includes(':'))
+      col = col.split(':')[0]
+
+    if (table.sorts?.includes(col))
+      return true
 
     return false
   }
