@@ -42,6 +42,7 @@
     "meilisearch",
     "typecheck",
     "iconify",
-    "laravel"
+    "laravel",
+    "unref"
   ]
 }

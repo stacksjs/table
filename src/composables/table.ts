@@ -1,11 +1,16 @@
-import { isObject, useStorage } from '@vueuse/core'
+import { isObject, isString, useStorage } from '@vueuse/core'
+import type { SearchParams } from 'meilisearch'
 import type { TableStore } from '~/types'
 
 export function useTable(initialState?: TableStore) {
+  // eslint-disable-next-line no-console
+  console.log('useTable is triggered with initialState of:', initialState, typeof initialState)
   let state = initialState
 
   // in case the initial state is not provided
-  if (!initialState) {
+  if (state === undefined) {
+    // eslint-disable-next-line no-console
+    console.log('state is undefined so localStorage should have data')
     const ls = localStorage.getItem('table')
     state = isObject(ls) ? JSON.parse(ls) : {}
   }
@@ -38,6 +43,14 @@ export function useTable(initialState?: TableStore) {
     },
   })
 
+  const sort = $computed({
+    get: () => table?.sort,
+    set: (val) => {
+      if (table?.sort && val)
+        table.sort = val
+    },
+  })
+
   const sorts = $computed({
     get: () => table?.sorts,
     set: (val) => {
@@ -52,6 +65,14 @@ export function useTable(initialState?: TableStore) {
   const currentPage = $computed(() => table?.currentPage || 1)
   const perPage = $computed(() => table?.perPage || 20)
   const query = $computed(() => table?.query || '')
+
+  const searchParams: SearchParams = $computed(() => {
+    return {
+      offset: (currentPage - 1) * perPage,
+      limit: perPage,
+      sort: isString(sort) ? [sort] : [''],
+    }
+  })
 
   function isColumnSortable(col: string): Boolean {
     if (table === undefined)
@@ -98,6 +119,7 @@ export function useTable(initialState?: TableStore) {
     columnsExcludingLast,
     lastColumn,
     isColumnSortable,
+    sort,
     sorts,
     query,
     results,
@@ -106,5 +128,6 @@ export function useTable(initialState?: TableStore) {
     currentPage,
     goToPrevPage,
     goToNextPage,
+    searchParams,
   })
 }

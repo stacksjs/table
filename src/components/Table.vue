@@ -3,6 +3,7 @@ import { isString } from '@vueuse/core'
 import TableBody from './TableBody.vue'
 import TableHead from './TableHead.vue'
 import { useTable } from '~/composables/table'
+import { useSearch } from '~/composables/search'
 
 interface Props {
   source?: string
@@ -11,6 +12,7 @@ interface Props {
   searchable?: string | boolean
   query?: string
   sortable?: string | boolean
+  sort?: string
   sorts?: string | string[]
   filterable?: string | boolean
   filters?: string | string[]
@@ -29,6 +31,7 @@ const {
   query,
   filters = [],
   filterable = true,
+  sort = '',
   sorts = [],
   sortable = true,
   perPage = 20,
@@ -71,7 +74,7 @@ console.log('initializing table')
 
 // onBeforeMount(() => {
 // let's initialize/use the table by passing the default state
-useTable({
+const { searchParams, query: q } = useTable({
   source,
   type,
   columns: cols,
@@ -80,6 +83,7 @@ useTable({
   query,
   filters: facetFilters,
   filterable,
+  sort,
   sorts: sortDirections,
   sortable,
   actions,
@@ -87,7 +91,20 @@ useTable({
   perPage: itemsPerPage,
   currentPage: 1,
 })
-// })
+
+// let's run the initial search to populate the table
+const { search } = $(useSearch())
+
+// eslint-disable-next-line no-console
+console.log('beforeSearch values should be filled', unref(q), unref(searchParams))
+
+search(unref(q), unref(searchParams))
+
+watchEffect(async () => {
+  // eslint-disable-next-line no-console
+  console.log('watcheffect values should be filled', q, searchParams)
+  search(unref(q), unref(searchParams)) // are searchParams updates picked up by the watcher? Need to investigate
+})
 </script>
 
 <template>

@@ -1,3 +1,4 @@
+import { isString } from '@vueuse/core'
 import type { SearchParams } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
 import { useTable } from './table'
@@ -7,8 +8,11 @@ export function useSearch() {
   function getClient(apiKey = '') {
     const { table } = $(useTable())
 
-    if (!table)
+    if (!table?.source)
       return
+
+    // eslint-disable-next-line no-console
+    console.log('host', table)
 
     return new MeiliSearch({
       host: table.source,
@@ -16,19 +20,30 @@ export function useSearch() {
     })
   }
 
-  async function search() {
-    const { currentPage, perPage, query, type } = $(useTable())
-    const options: SearchParams = {
-      offset: (currentPage - 1) * perPage,
-      limit: perPage,
-    }
+  async function search(q?: string, params?: SearchParams) {
+    // eslint-disable-next-line no-console
+    console.log('search is called with', q, params)
+
+    const { table, searchParams } = $(useTable())
+
+    // eslint-disable-next-line no-console
+    console.log('table', table)
+
+    const query = isString(q) ? q : table?.query
+    const options = params || searchParams
+
+    if (table === undefined)
+      return
 
     const client = (await getClient())
+
+    // eslint-disable-next-line no-console
+    console.log('client', client)
 
     if (!client)
       return
 
-    const index = client.index(type)
+    const index = client.index(table.type)
     const results = await index.search(query, options)
 
     return results

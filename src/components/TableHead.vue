@@ -42,7 +42,7 @@ function toggleSort(col: string) {
         scope="col"
         :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
       >
-        <a href="#" class="group inline-flex">
+        <a href="#" class="text-red-400 group inline-flex">
           {{ col.includes(':') ? col.split(':')[1].trim() : col }}
           <span
             v-if="isColumnSortable(col)"

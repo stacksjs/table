@@ -12,7 +12,8 @@ export interface TableStore {
   searchable?: string | boolean
   query?: string
   sortable?: string | boolean
-  sorts?: string | string[]
+  sort?: string | string[] // there can only be one active sort at a time
+  sorts?: string | string[] // this is the list of all possible sort options
   filterable?: string | boolean
   filters?: string | string[]
   actionable?: string | boolean

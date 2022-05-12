@@ -1,18 +1,20 @@
 <script setup lang="ts">
-const { store } = $(useTable())
-const { search } = $(useSearch())
+const { table } = $(useTable())
+// const { search } = $(useSearch())
 
-const q = ref(store?.query)
+const q = $ref(table?.query ?? '')
 
 // let's debounce the search for 500ms
-watchDebounced(
-  q,
-  () => {
-    store.query = q.value
-    search()
-  },
-  { debounce: 500 },
-)
+// watchDebounced(
+//   q,
+//   () => {
+//     if (table === undefined)
+//       return
+//     table.query = q
+//     search()
+//   },
+//   { debounce: 500 },
+// )
 </script>
 
 <template>
