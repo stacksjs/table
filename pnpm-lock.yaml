@@ -37,7 +37,7 @@ specifiers:
   vitest: ^0.12.4
   vue: ^3.2.33
   vue-demi: ^0.12.5
-  vue-tsc: ^0.34.12
+  vue-tsc: ^0.34.13
 
 dependencies:
   '@unocss/reset': 0.33.2
