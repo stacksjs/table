@@ -28,7 +28,7 @@ const Configuration: UserConfig = {
     'scope-enum': [
       2, 'always',
       [
-        '', 'deps', 'example', 'release', 'tooling', 'cleanup', 'readme',
+        '', 'deps', 'release', 'cleanup', 'readme', 'meilisearch', 'algolia', 'typesense',
         ...composables.map(item => item.replace(/.ts/g, '')).filter(item => item !== 'index'),
       ],
     ],

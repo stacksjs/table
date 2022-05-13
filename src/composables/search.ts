@@ -1,6 +1,6 @@
 import { isString } from '@vueuse/core'
-import type { SearchParams } from 'meilisearch'
 import { MeiliSearch } from 'meilisearch'
+import type { SearchParams as MeiliSearchSearchParams } from 'meilisearch'
 import { useTable } from './table'
 
 // TODO: also separately push this as a composable to npm
@@ -20,7 +20,7 @@ export function useSearch() {
     })
   }
 
-  async function search(q?: string, params?: SearchParams) {
+  async function search(q?: string, params?: MeiliSearchSearchParams) {
     // eslint-disable-next-line no-console
     console.log('search is called with', q, params)
 
@@ -30,7 +30,6 @@ export function useSearch() {
     console.log('table', table)
 
     const query = isString(q) ? q : table?.query
-    const options = params || searchParams
 
     if (table === undefined)
       return
@@ -44,7 +43,7 @@ export function useSearch() {
       return
 
     const index = client.index(table.type)
-    const results = await index.search(query, options)
+    const results = await index.search(query, searchParams)
 
     return results
   }

@@ -1,22 +1,23 @@
-import { isObject, isString, useStorage } from '@vueuse/core'
-import type { SearchParams } from 'meilisearch'
+import { isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
-export function useTable(initialState?: TableStore) {
+export function useTable(store?: TableStore) {
   // eslint-disable-next-line no-console
-  console.log('useTable is triggered with initialState of:', initialState, typeof initialState)
-  let state = initialState
+  console.log('useTable is triggered with a store of:', store)
 
   // in case the initial state is not provided
-  if (state === undefined) {
+  if (store === undefined) {
     // eslint-disable-next-line no-console
-    console.log('state is undefined so localStorage should have data')
+    console.log('there is no state provided, so getting it from localStorage')
     const ls = localStorage.getItem('table')
-    state = isObject(ls) ? JSON.parse(ls) : {}
+    store = ls ? JSON.parse(ls) : {}
   }
 
+  // eslint-disable-next-line no-console
+  console.log('store is:', store)
+
   // here, we need to either set the "initial state" or the "current state" from localStorage
-  const table = $(useStorage('table', state))
+  const table = $(useStorage('table', store))
   const { search } = $(useSearch())
 
   const results = $computed({
@@ -66,11 +67,11 @@ export function useTable(initialState?: TableStore) {
   const perPage = $computed(() => table?.perPage || 20)
   const query = $computed(() => table?.query || '')
 
-  const searchParams: SearchParams = $computed(() => {
+  const searchParams = $computed(() => {
     return {
       offset: (currentPage - 1) * perPage,
       limit: perPage,
-      sort: isString(sort) ? [sort] : [''],
+      sort: isString(sort) ? sort : '',
     }
   })
 
@@ -112,7 +113,7 @@ export function useTable(initialState?: TableStore) {
   }
 
   return $$({
-    state,
+    store,
     table,
     type,
     columns,

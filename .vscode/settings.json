@@ -43,6 +43,7 @@
     "typecheck",
     "iconify",
     "laravel",
-    "unref"
+    "unref",
+    "typesense"
   ]
 }

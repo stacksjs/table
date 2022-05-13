@@ -12,7 +12,7 @@ export interface TableStore {
   searchable?: string | boolean
   query?: string
   sortable?: string | boolean
-  sort?: string | string[] // there can only be one active sort at a time
+  sort?: string // there can only be one active sort at a time
   sorts?: string | string[] // this is the list of all possible sort options
   filterable?: string | boolean
   filters?: string | string[]

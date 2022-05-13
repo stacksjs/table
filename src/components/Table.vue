@@ -102,7 +102,7 @@ search(unref(q), unref(searchParams))
 
 watchEffect(async () => {
   // eslint-disable-next-line no-console
-  console.log('watcheffect values should be filled', q, searchParams)
+  console.log('watchEffect values should be filled', q, searchParams)
   search(unref(q), unref(searchParams)) // are searchParams updates picked up by the watcher? Need to investigate
 })
 </script>
