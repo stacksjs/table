@@ -14,8 +14,6 @@ const readableLastColumn = $computed(() => (lastColumn as string).includes(':') 
 const sortOrders = $ref([])
 
 function isColumnUsedAsSort(col: string | object) {
-  // eslint-disable-next-line no-console
-  console.log('isColumnUsedAsSort', col)
   let k
 
   if (isObject(col))
@@ -75,7 +73,8 @@ function toggleSort(col: string) {
             >
               <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
             </span>
-          </span></a>
+          </span>
+        </a>
       </th>
     </tr>
   </thead>

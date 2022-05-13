@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
+import { deepUnref } from '@ow3/deep-unref-vue'
 import TableBody from './TableBody.vue'
 import TableHead from './TableHead.vue'
 import { useTable } from '~/composables/table'
@@ -98,12 +99,12 @@ const { search } = $(useSearch())
 // eslint-disable-next-line no-console
 console.log('beforeSearch values should be filled', unref(q), unref(searchParams))
 
-search(unref(q), unref(searchParams))
+search(unref(q), deepUnref(searchParams))
 
 watchEffect(async () => {
   // eslint-disable-next-line no-console
   console.log('watchEffect values should be filled', q, searchParams)
-  search(unref(q), unref(searchParams)) // are searchParams updates picked up by the watcher? Need to investigate
+  search(unref(q), deepUnref(searchParams)) // are searchParams updates picked up by the watcher? Need to investigate
 })
 </script>
 

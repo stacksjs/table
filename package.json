@@ -18,7 +18,7 @@
   "license": "MIT",
   "author": "Open Web Labs",
   "contributors": [
-    "Chris Breuer <chris@meema.xyz>"
+    "Chris Breuer <chris@ow3.org>"
   ],
   "exports": {
     ".": {

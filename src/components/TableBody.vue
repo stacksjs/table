@@ -1,13 +1,5 @@
 <script setup lang="ts">
 const { lastColumn, hits } = $(useTable())
-
-// eslint-disable-next-line no-console
-console.log('hits', hits)
-
-onMounted(() => {
-  // eslint-disable-next-line no-console
-  console.log('hits2', hits)
-})
 </script>
 
 <template>

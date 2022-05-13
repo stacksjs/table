@@ -1,24 +1,16 @@
 import { isString, useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
+const { search } = $(useSearch())
+
+// here, we need to either set the "initial state" or the "current state" from localStorage
+const table = $(useStorage('table', determineState(store)))
+
 export function useTable(store?: TableStore) {
   // eslint-disable-next-line no-console
   console.log('useTable is triggered with a store of:', store)
 
-  // in case the initial state is not provided
-  if (store === undefined) {
-    // eslint-disable-next-line no-console
-    console.log('there is no state provided, so getting it from localStorage')
-    const ls = localStorage.getItem('table')
-    store = ls ? JSON.parse(ls) : {}
-  }
-
   // eslint-disable-next-line no-console
-  console.log('store is:', store)
-
-  // here, we need to either set the "initial state" or the "current state" from localStorage
-  const table = $(useStorage('table', store))
-  const { search } = $(useSearch())
 
   const results = $computed({
     get: () => table?.results,
@@ -27,7 +19,6 @@ export function useTable(store?: TableStore) {
         table.results = val
     },
   })
-
   const hits = $computed({
     get: () => table?.results?.hits,
     set: (val) => {
@@ -35,7 +26,6 @@ export function useTable(store?: TableStore) {
         table.results.hits = val
     },
   })
-
   const columns = $computed({
     get: () => table?.columns,
     set: (val) => {
@@ -43,7 +33,6 @@ export function useTable(store?: TableStore) {
         table.columns = val
     },
   })
-
   const sort = $computed({
     get: () => table?.sort,
     set: (val) => {
@@ -51,7 +40,6 @@ export function useTable(store?: TableStore) {
         table.sort = val
     },
   })
-
   const sorts = $computed({
     get: () => table?.sorts,
     set: (val) => {
@@ -59,14 +47,12 @@ export function useTable(store?: TableStore) {
         table.sorts = val
     },
   })
-
   const type = $computed(() => table?.type || '')
   const columnsExcludingLast = $computed(() => table?.columns?.slice(0, -1))
   const lastColumn = $computed(() => table?.columns ? table.columns[table.columns.length - 1] : [])
   const currentPage = $computed(() => table?.currentPage || 1)
   const perPage = $computed(() => table?.perPage || 20)
   const query = $computed(() => table?.query || '')
-
   const searchParams = $computed(() => {
     return {
       offset: (currentPage - 1) * perPage,
@@ -88,30 +74,6 @@ export function useTable(store?: TableStore) {
     return false
   }
 
-  function goToPrevPage() {
-    if (currentPage === undefined || table === undefined)
-      return
-
-    table.currentPage--
-
-    if (currentPage < 1)
-      table.currentPage = 1
-
-    search()
-  }
-
-  function goToNextPage() {
-    if (currentPage === undefined || table === undefined)
-      return
-
-    table.currentPage++
-
-    if (table.currentPage <= 1)
-      table.currentPage = 1
-
-    search()
-  }
-
   return $$({
     store,
     table,
@@ -131,4 +93,43 @@ export function useTable(store?: TableStore) {
     goToNextPage,
     searchParams,
   })
+}
+
+function determineState(store?: TableStore): TableStore {
+  if (store !== undefined)
+    return store
+
+  // eslint-disable-next-line no-console
+  console.log('there is no state provided, getting it from localStorage', store)
+
+  const ls = localStorage.getItem('table')
+
+  // eslint-disable-next-line no-console
+  console.log('ls', ls)
+
+  return ls ? JSON.parse(ls) : {}
+}
+
+function goToPrevPage() {
+  if (currentPage === undefined || table === undefined)
+    return
+
+  table.currentPage--
+
+  if (currentPage < 1)
+    table.currentPage = 1
+
+  search()
+}
+
+function goToNextPage() {
+  if (currentPage === undefined || table === undefined)
+    return
+
+  table.currentPage++
+
+  if (table.currentPage <= 1)
+    table.currentPage = 1
+
+  search()
 }
