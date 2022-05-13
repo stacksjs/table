@@ -7,7 +7,10 @@ interface Props {
   sorts: string[]
 }
 
-const { columns } = defineProps<Props>()
+const { columns, sorts } = defineProps<Props>()
+
+// eslint-disable-next-line no-console
+console.log('columns and sorts are', columns, sorts)
 const { isColumnSortable, lastColumn } = $(useTable())
 const columnsExcludingLast = $computed(() => columns.slice(0, -1))
 const readableLastColumn = $computed(() => (lastColumn as string).includes(':') ? (lastColumn as string).split(':')[1].trim() : (lastColumn as string))

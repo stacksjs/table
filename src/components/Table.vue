@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
-import { deepUnref } from '@ow3/deep-unref-vue'
 import TableBody from './TableBody.vue'
 import TableHead from './TableHead.vue'
 import { useTable } from '~/composables/table'
@@ -13,7 +12,7 @@ interface Props {
   searchable?: string | boolean
   query?: string
   sortable?: string | boolean
-  sort?: string
+  sort?: string // TODO: we could validate for whether :asd or :desc is used, or if not provided, default to asc (or desc?)
   sorts?: string | string[]
   filterable?: string | boolean
   filters?: string | string[]
@@ -75,7 +74,7 @@ console.log('initializing table')
 
 // onBeforeMount(() => {
 // let's initialize/use the table by passing the default state
-const { searchParams, query: q } = useTable({
+const { query: q, table } = useTable({
   source,
   type,
   columns: cols,
@@ -96,15 +95,14 @@ const { searchParams, query: q } = useTable({
 // let's run the initial search to populate the table
 const { search } = $(useSearch())
 
-// eslint-disable-next-line no-console
-console.log('beforeSearch values should be filled', unref(q), unref(searchParams))
+const results = await search(unref(q))
+table.value.results = results
 
-search(unref(q), deepUnref(searchParams))
-
+// this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial session
 watchEffect(async () => {
   // eslint-disable-next-line no-console
-  console.log('watchEffect values should be filled', q, searchParams)
-  search(unref(q), deepUnref(searchParams)) // are searchParams updates picked up by the watcher? Need to investigate
+  console.log('query changed', q)
+  await search(unref(q))
 })
 </script>
 
@@ -116,7 +114,7 @@ watchEffect(async () => {
           <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
             <table class="divide-y min-w-full divide-gray-300">
               <TableHead :columns="cols" :sorts="sortDirections" />
-              <TableBody />
+              <TableBody :hits="hits" />
             </table>
           </div>
         </div>

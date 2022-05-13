@@ -1,63 +1,30 @@
-import { isString, useStorage } from '@vueuse/core'
+import { useStorage } from '@vueuse/core'
 import type { TableStore } from '~/types'
 
+// global table state
 const { search } = $(useSearch())
 
-// here, we need to either set the "initial state" or the "current state" from localStorage
-const table = $(useStorage('table', determineState(store)))
-
 export function useTable(store?: TableStore) {
-  // eslint-disable-next-line no-console
-  console.log('useTable is triggered with a store of:', store)
-
-  // eslint-disable-next-line no-console
-
-  const results = $computed({
-    get: () => table?.results,
-    set: (val) => {
-      if (table)
-        table.results = val
-    },
-  })
-  const hits = $computed({
-    get: () => table?.results?.hits,
-    set: (val) => {
-      if (table?.results?.hits && val)
-        table.results.hits = val
-    },
-  })
-  const columns = $computed({
-    get: () => table?.columns,
-    set: (val) => {
-      if (table?.columns && val)
-        table.columns = val
-    },
-  })
-  const sort = $computed({
-    get: () => table?.sort,
-    set: (val) => {
-      if (table?.sort && val)
-        table.sort = val
-    },
-  })
-  const sorts = $computed({
-    get: () => table?.sorts,
-    set: (val) => {
-      if (table?.sorts && val)
-        table.sorts = val
-    },
-  })
-  const type = $computed(() => table?.type || '')
-  const columnsExcludingLast = $computed(() => table?.columns?.slice(0, -1))
-  const lastColumn = $computed(() => table?.columns ? table.columns[table.columns.length - 1] : [])
-  const currentPage = $computed(() => table?.currentPage || 1)
-  const perPage = $computed(() => table?.perPage || 20)
-  const query = $computed(() => table?.query || '')
+  // here, we need to either set the "initial state" or the "current state" from localStorage
+  // eslint-disable-next-line prefer-const
+  let table = $(useStorage('table', determineState(store)))
+  const results = $ref(table?.results)
+  const hits = $ref(results?.hits)
+  const columns = $ref(table?.columns)
+  const sort = $ref(table?.sort)
+  const sorts = $ref(table?.sorts)
+  const type = $ref(table?.type || '')
+  const columnsExcludingLast = $computed(() => columns.slice(0, -1))
+  const lastColumn = $computed(() => columns ? columns[columns.length - 1] : [])
+  const currentPage = $ref(table?.currentPage || 1)
+  const perPage = $ref(table?.perPage || 20)
+  const query = $ref(table?.query || '')
   const searchParams = $computed(() => {
     return {
       offset: (currentPage - 1) * perPage,
       limit: perPage,
-      sort: isString(sort) ? sort : '',
+      sort: ['name:asc'],
+      // sort: isString(sort) ? [sort] : null,
     }
   })
 
@@ -72,6 +39,30 @@ export function useTable(store?: TableStore) {
       return true
 
     return false
+  }
+
+  async function goToPrevPage() {
+    if (currentPage === undefined || table === undefined)
+      return
+
+    table.currentPage--
+
+    if (currentPage < 1)
+      table.currentPage = 1
+
+    await search()
+  }
+
+  async function goToNextPage() {
+    if (currentPage === undefined || table === undefined)
+      return
+
+    table.currentPage++
+
+    if (table.currentPage <= 1)
+      table.currentPage = 1
+
+    await search()
   }
 
   return $$({
@@ -95,12 +86,14 @@ export function useTable(store?: TableStore) {
   })
 }
 
-function determineState(store?: TableStore): TableStore {
-  if (store !== undefined)
-    return store
+function determineState(state?: TableStore): TableStore {
+  // eslint-disable-next-line no-console
+  console.log('determining state', state)
+  if (state !== undefined)
+    return state
 
   // eslint-disable-next-line no-console
-  console.log('there is no state provided, getting it from localStorage', store)
+  console.log('there is no state provided, getting it from localStorage', state)
 
   const ls = localStorage.getItem('table')
 
@@ -108,28 +101,4 @@ function determineState(store?: TableStore): TableStore {
   console.log('ls', ls)
 
   return ls ? JSON.parse(ls) : {}
-}
-
-function goToPrevPage() {
-  if (currentPage === undefined || table === undefined)
-    return
-
-  table.currentPage--
-
-  if (currentPage < 1)
-    table.currentPage = 1
-
-  search()
-}
-
-function goToNextPage() {
-  if (currentPage === undefined || table === undefined)
-    return
-
-  table.currentPage++
-
-  if (table.currentPage <= 1)
-    table.currentPage = 1
-
-  search()
 }

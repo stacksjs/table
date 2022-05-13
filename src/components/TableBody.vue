@@ -1,5 +1,18 @@
 <script setup lang="ts">
-const { lastColumn, hits } = $(useTable())
+interface Props {
+  hits: any
+}
+
+const { hits } = defineProps<Props>()
+
+const hitsRef = $ref(hits)
+
+// eslint-disable-next-line no-console
+console.log('hits are', hits)
+// eslint-disable-next-line no-console
+console.log('hitsRef are', hitsRef)
+
+const { lastColumn } = $(useTable())
 </script>
 
 <template>

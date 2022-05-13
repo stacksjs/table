@@ -1,28 +1,19 @@
 import { isString } from '@vueuse/core'
 import { MeiliSearch } from 'meilisearch'
-import type { SearchParams as MeiliSearchSearchParams } from 'meilisearch'
-import { deepUnref } from '@ow3/deep-unref-vue'
 import { useTable } from './table'
 
-const { table, searchParams } = $(useTable())
-// eslint-disable-next-line no-console
-console.log('tabless', table)
+const { table } = $(useTable())
+
+function client(apiKey = ''): MeiliSearch {
+  return new MeiliSearch({
+    host: table.source,
+    apiKey,
+  })
+}
 
 // TODO: also separately push this as a composable to npm
 export function useSearch() {
-  function client(apiKey = '') {
-    // eslint-disable-next-line no-console
-    console.log('table.source', table.source)
-    return new MeiliSearch({
-      host: table.source,
-      apiKey,
-    })
-  }
-
-  async function search(q?: string, params?: MeiliSearchSearchParams) {
-    // eslint-disable-next-line no-console
-    console.log('search is called with', q, params)
-
+  async function search(q?: string) {
     if (table === undefined)
       return
 
@@ -31,13 +22,19 @@ export function useSearch() {
     if (!client)
       return
 
-    const index = client.index(table.type)
-    const results = await index.search(query, deepUnref(searchParams))
+    const index = client().index(table.type)
 
-    // eslint-disable-next-line no-console
-    console.log('results', results)
+    try {
+      const results = await index.search(query)
 
-    return results
+      // eslint-disable-next-line no-console
+      console.log('results', results)
+
+      return results
+    }
+    catch (error) {
+      console.error('error when performing search', error)
+    }
   }
 
   return $$({
