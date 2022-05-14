@@ -5,8 +5,6 @@ import { useTable } from './table'
 const { table } = $(useTable())
 
 function client(apiKey = ''): MeiliSearch {
-  // eslint-disable-next-line no-console
-  console.log('table.source', table.source)
   return new MeiliSearch({
     host: table.source,
     apiKey,

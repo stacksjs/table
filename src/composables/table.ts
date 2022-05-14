@@ -54,10 +54,19 @@ export function useTable(store?: TableStore) {
   }
 
   async function goToNextPage() {
+    // eslint-disable-next-line no-console
+    console.log('currentPage', currentPage)
+
+    // eslint-disable-next-line no-console
+    console.log('table', table)
+
     if (currentPage === undefined || table === undefined)
       return
 
     table.currentPage++
+
+    // eslint-disable-next-line no-console
+    console.log('currentPage after adding?', currentPage)
 
     if (table.currentPage <= 1)
       table.currentPage = 1

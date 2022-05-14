@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     TableFilters: typeof import('./components/TableFilters.vue')['default']
     TableHead: typeof import('./components/TableHead.vue')['default']
     TablePagination: typeof import('./components/TablePagination.vue')['default']
+    TableRow: typeof import('./components/TableRow.vue')['default']
     TableSearch: typeof import('./components/TableSearch.vue')['default']
   }
 }
