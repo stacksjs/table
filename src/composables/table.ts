@@ -87,18 +87,10 @@ export function useTable(store?: TableStore) {
 }
 
 function determineState(state?: TableStore): TableStore {
-  // eslint-disable-next-line no-console
-  console.log('determining state', state)
   if (state !== undefined)
     return state
 
-  // eslint-disable-next-line no-console
-  console.log('there is no state provided, getting it from localStorage', state)
-
   const ls = localStorage.getItem('table')
-
-  // eslint-disable-next-line no-console
-  console.log('ls', ls)
 
   return ls ? JSON.parse(ls) : {}
 }
