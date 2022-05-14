@@ -5,6 +5,8 @@ import { useTable } from './table'
 const { table } = $(useTable())
 
 function client(apiKey = ''): MeiliSearch {
+  // eslint-disable-next-line no-console
+  console.log('table.source', table.source)
   return new MeiliSearch({
     host: table.source,
     apiKey,
@@ -14,17 +16,12 @@ function client(apiKey = ''): MeiliSearch {
 // TODO: also separately push this as a composable to npm
 export function useSearch() {
   async function search(q?: string) {
-    if (table === undefined)
-      return
-
-    const query = isString(q) ? q : table?.query
-
-    if (!client)
-      return
-
-    const index = client().index(table.type)
-
     try {
+      if (table === undefined)
+        return
+
+      const query = isString(q) ? q : (table?.query ? table.query : '')
+      const index = client().index(table.type)
       const results = await index.search(query)
 
       // eslint-disable-next-line no-console

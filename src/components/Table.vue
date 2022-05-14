@@ -93,9 +93,11 @@ const { query: q, table } = useTable({
 })
 
 // let's run the initial search to populate the table
-const { search } = $(useSearch())
+const { search } = $(await useSearch())
 
 const results = await search(unref(q))
+// eslint-disable-next-line no-console
+console.log('results', results)
 table.value.results = results
 
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial session
@@ -114,7 +116,7 @@ watchEffect(async () => {
           <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
             <table class="divide-y min-w-full divide-gray-300">
               <TableHead :columns="cols" :sorts="sortDirections" />
-              <TableBody :hits="hits" />
+              <TableBody />
             </table>
           </div>
         </div>

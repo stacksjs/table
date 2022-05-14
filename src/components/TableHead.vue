@@ -2,18 +2,15 @@
 import { isObject } from '@vueuse/core'
 import { useTable } from '~/composables/table'
 
-interface Props {
-  columns: string[]
-  sorts: string[]
-}
-
-const { columns, sorts } = defineProps<Props>()
-
+const { isColumnSortable, lastColumn, columns, sorts } = $(useTable())
 // eslint-disable-next-line no-console
 console.log('columns and sorts are', columns, sorts)
-const { isColumnSortable, lastColumn } = $(useTable())
 const columnsExcludingLast = $computed(() => columns.slice(0, -1))
+// eslint-disable-next-line no-console
+console.log('columnsExcludingLast', columnsExcludingLast)
 const readableLastColumn = $computed(() => (lastColumn as string).includes(':') ? (lastColumn as string).split(':')[1].trim() : (lastColumn as string))
+// eslint-disable-next-line no-console
+console.log('readableLastColumn', readableLastColumn)
 const sortOrders = $ref([])
 
 function isColumnUsedAsSort(col: string | object) {

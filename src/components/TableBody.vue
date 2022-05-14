@@ -1,32 +1,26 @@
 <script setup lang="ts">
-interface Props {
-  hits: any
-}
+const { lastColumn, table, columns } = $(useTable())
 
-const { hits } = defineProps<Props>()
+const hits = $ref(table?.results?.hits)
 
-const hitsRef = $ref(hits)
-
-// eslint-disable-next-line no-console
-console.log('hits are', hits)
-// eslint-disable-next-line no-console
-console.log('hitsRef are', hitsRef)
-
-const { lastColumn } = $(useTable())
+watch(hits, (newHits) => {
+  // eslint-disable-next-line no-console
+  console.log(`newHits is ${newHits}`)
+})
 </script>
 
 <template>
   <tbody class="divide-y bg-white divide-gray-200">
     <tr
-      v-for="(hit, i) in hits"
-      :key="i"
       scope="row"
     >
       <td
+        v-for="(hit, i) in hits"
+        :key="i"
         class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6"
       >
-        {{ hit }}
-        <!-- {{ hit[columns[0].includes(':') ? columns[0].split(':')[0].trim() : columns[0]] }} -->
+        {{ i }}
+        {{ hit[columns[0].includes(':') ? columns[0].split(':')[0].trim() : columns[0]] }}
       </td>
 
       <td
@@ -40,8 +34,7 @@ const { lastColumn } = $(useTable())
       <td
         class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
       >
-        world
-        <!-- {{ hit[(lastColumn as string).includes(':') ? lastColumn.split(':')[0].trim() : lastColumn] }} -->
+        {{ hit[(lastColumn as string).includes(':') ? lastColumn.split(':')[0].trim() : lastColumn] }}
       </td>
     </tr>
   </tbody>
