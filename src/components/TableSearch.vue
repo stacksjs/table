@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { table } = $(useTable())
-// const { search } = $(useSearch())
+// const { search } = $(useTable())
 
 const q = $ref(table?.query ?? '')
 

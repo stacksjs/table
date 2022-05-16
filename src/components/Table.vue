@@ -3,7 +3,6 @@ import { isString } from '@vueuse/core'
 import TableBody from './TableBody.vue'
 import TableHead from './TableHead.vue'
 import { useTable } from '~/composables/table'
-import { useSearch } from '~/composables/search'
 
 interface Props {
   source?: string
@@ -72,7 +71,6 @@ const itemsPerPage = $computed(() => {
 // eslint-disable-next-line no-console
 console.log('initializing table')
 
-// onBeforeMount(() => {
 // let's initialize/use the table by passing the default state
 const { query: q, table } = useTable({
   source,
@@ -92,9 +90,9 @@ const { query: q, table } = useTable({
   currentPage: 1,
 })
 
-// let's run the initial search to populate the table
-const { search } = $(await useSearch())
+const { search } = $(await useTable())
 
+// let's run the initial search to populate the table
 const results = await search(unref(q))
 // eslint-disable-next-line no-console
 console.log('results', results)

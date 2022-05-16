@@ -41,7 +41,6 @@ const config = {
     AutoImport({
       imports: ['vue', '@vueuse/core', {
         '~/composables/dark': ['isDark', 'toggleDark'],
-        '~/composables/search': ['useSearch'],
         '~/composables/table': ['useTable'],
       }],
       dts: 'src/auto-imports.d.ts',

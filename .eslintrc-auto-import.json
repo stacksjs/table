@@ -185,7 +185,6 @@
     "useScriptTag": true,
     "useScroll": true,
     "useScrollLock": true,
-    "useSearch": true,
     "useSessionStorage": true,
     "useShare": true,
     "useSlots": true,
