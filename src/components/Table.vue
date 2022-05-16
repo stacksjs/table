@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { isString } from '@vueuse/core'
-import TableBody from './TableBody.vue'
-import TableHead from './TableHead.vue'
+// import TableBody from './TableBody.vue'
+// import TableHead from './TableHead.vue'
 import { useTable } from '~/composables/table'
 
 interface Props {
@@ -72,7 +72,7 @@ const itemsPerPage = $computed(() => {
 console.log('initializing table')
 
 // let's initialize/use the table by passing the default state
-const { query: q, table } = useTable({
+const { query: q, search } = $(useTable({
   source,
   type,
   columns: cols,
@@ -88,12 +88,12 @@ const { query: q, table } = useTable({
   actionable,
   perPage: itemsPerPage,
   currentPage: 1,
-})
-
-const { search } = $(useTable())
+}))
 
 // let's run the initial search to populate the table
-const results = await search(unref(q))
+// eslint-disable-next-line no-console
+console.log('asdsadad')
+const results = await search(q)
 // eslint-disable-next-line no-console
 console.log('results', results)
 // table.value.results = results
@@ -102,7 +102,7 @@ console.log('results', results)
 watchEffect(async () => {
   // eslint-disable-next-line no-console
   console.log('query changed', q)
-  await search(unref(q))
+  await search(q)
 })
 </script>
 

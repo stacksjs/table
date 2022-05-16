@@ -6,17 +6,17 @@ import type { TableStore } from '~/types'
 // global table state
 const table = $(useStorage('table', determineState()))
 
-const results = $ref(table.results)
+const results = $ref(table?.results)
 const hits = $ref(results?.hits)
-const columns = $ref(table.columns)
-const sort = $ref(table.sort)
-const sorts = $ref(table.sorts)
-const type = $ref(table.type)
-const currentPage = $ref(table.currentPage)
-const perPage = $ref(table.perPage)
-const query = $ref(table.query)
+const columns = $ref(table?.columns)
+const sort = $ref(table?.sort)
+const sorts = $ref(table?.sorts)
+const type = $ref(table?.type)
+const currentPage = $ref(table?.currentPage)
+const perPage = $ref(table?.perPage)
+const query = $ref(table?.query)
 
-const columnsExcludingLast = $computed(() => columns.slice(0, -1))
+const columnsExcludingLast = $computed(() => columns?.slice(0, -1))
 const lastColumn = $computed(() => columns ? columns[columns.length - 1] : [])
 const searchParams = $computed(() => {
   return {
@@ -79,6 +79,7 @@ async function goToNextPage() {
   await search()
 }
 
+// search methods
 function client(apiKey = ''): MeiliSearch {
   // eslint-disable-next-line no-console
   console.log('table.source', table.source)
@@ -92,14 +93,16 @@ async function search(q?: string | Ref<string>) {
   try {
     q = isRef(q) ? unref(q) : q
 
-    // eslint-disable-next-line no-console
-    console.log('table', table)
-
     if (!isString(table.type)) // a lazy way to check if the table is loaded
       return
 
+    // eslint-disable-next-line no-console
+    console.log('is table set?', table)
+
     const query = isString(q) ? q : (table?.query ? table.query : '')
     const index = client().index(table.type)
+    // eslint-disable-next-line no-console
+    console.log('what is query', query)
     const results = await index.search(query)
 
     // eslint-disable-next-line no-console
