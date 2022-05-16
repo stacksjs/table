@@ -65,9 +65,6 @@ async function goToNextPage() {
   // eslint-disable-next-line no-console
   console.log('currentPage', currentPage)
 
-  // eslint-disable-next-line no-console
-  console.log('table', table)
-
   if (currentPage === undefined || table === undefined)
     return
 
@@ -83,6 +80,8 @@ async function goToNextPage() {
 }
 
 function client(apiKey = ''): MeiliSearch {
+  // eslint-disable-next-line no-console
+  console.log('table.source', table.source)
   return new MeiliSearch({
     host: table.source,
     apiKey,
@@ -90,11 +89,13 @@ function client(apiKey = ''): MeiliSearch {
 }
 
 async function search(q?: string | Ref<string>) {
-  if (isRef(q))
-    q = unref(q)
-
   try {
-    if (table === undefined)
+    q = isRef(q) ? unref(q) : q
+
+    // eslint-disable-next-line no-console
+    console.log('table', table)
+
+    if (!isString(table.type)) // a lazy way to check if the table is loaded
       return
 
     const query = isString(q) ? q : (table?.query ? table.query : '')
