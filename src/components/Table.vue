@@ -67,7 +67,7 @@ console.log('initializing table')
 
 // let's run the initial search to populate the table
 const { search, query: q } = $(useTable())
-const results = await search(q)
+// const results = await search(q)
 
 // let's use (init) the table by passing the default state
 const table = $(useTable({
@@ -87,13 +87,6 @@ const table = $(useTable({
   perPage: itemsPerPage,
   currentPage: 1,
 }))
-
-// eslint-disable-next-line no-console
-console.log('table initialized', table)
-
-// eslint-disable-next-line no-console
-console.log('results', results)
-// table.value.results = results
 
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
 // watchEffect(async () => {
