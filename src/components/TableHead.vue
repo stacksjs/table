@@ -3,9 +3,11 @@ import { isObject } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { useTable } from '~/composables/table'
 
-const { isColumnSortable, lastColumn, columnsExcludingLast } = $(useTable())
+// eslint-disable-next-line no-console
+console.log('TableHead.vue')
+
+const { isColumnSortable, lastColumn, columnsExcludingLast, readableLastColumn } = $(useTable())
 const sortOrders = $ref([])
-const readableLastColumn = $computed(() => (lastColumn as string).includes(':') ? (lastColumn as string).split(':')[1].trim() : (lastColumn as string))
 
 function isColumnUsedAsSort(col: string | object) {
   let k
@@ -20,6 +22,9 @@ function isColumnUsedAsSort(col: string | object) {
 }
 
 function toggleSort(col: string | Ref<string>) {
+  if (isRef(col))
+    col = unref(col)
+
   const k = col.includes(':') ? col.split(':')[0].trim() : col
   sortOrders[k] = !sortOrders[k]
 }
@@ -57,10 +62,10 @@ function toggleSort(col: string | Ref<string>) {
         <a href="#" class="group inline-flex">
           {{ readableLastColumn }}
           <span
-            v-if="isColumnSortable(lastColumn as string)"
+            v-if="isColumnSortable(lastColumn[0])"
             class="rounded flex-none ml-2"
             :class="isColumnUsedAsSort(lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-            @click="toggleSort(lastColumn as string)"
+            @click="toggleSort(lastColumn[0])"
           >
             <span
               class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible"

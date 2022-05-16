@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const { hit } = defineProps<{ hit: any }>()
 const { lastColumn, columnsExcludingLast } = $(useTable())
+
+// eslint-disable-next-line no-console
+console.log('TableRow.vue')
 </script>
 
 <template>

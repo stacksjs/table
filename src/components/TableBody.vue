@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import TableRow from './TableRow.vue'
+// eslint-disable-next-line no-console
+console.log('TableBody.vue')
 
 const { hits } = $(useTable())
 
-watch(hits, (newHits) => {
-  // eslint-disable-next-line no-console
-  console.log(`newHits is ${newHits}`)
-})
+// watch(hits, (newHits) => {
+//   // eslint-disable-next-line no-console
+//   console.log(`newHits is ${newHits}`)
+// })
 </script>
 
 <template>

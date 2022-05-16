@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { TablePagination, TableSearch, Table as TableV2 } from './main'
+import { Table as TableV2 } from './main'
+// import { TablePagination, TableSearch, Table as TableV2 } from './main'
 </script>
 
 <template>
   <div class="font-sans">
-    <TableSearch />
+    <!-- <TableSearch /> -->
     <Suspense>
       <TableV2
         source="http://127.0.0.1:7700"
@@ -17,6 +18,6 @@ import { TablePagination, TableSearch, Table as TableV2 } from './main'
         per-page="10"
       />
     </Suspense>
-    <TablePagination />
+    <!-- <TablePagination /> -->
   </div>
 </template>
