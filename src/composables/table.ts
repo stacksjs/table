@@ -96,10 +96,7 @@ async function search(q = ''): Promise<void | SearchResponse<Record<string, any>
       return
 
     const query = isString(q) ? q : (table?.query ? table.query : '')
-    let results
-
-    if (type)
-      results = await client().index(type).search(query) // TODO: add search params (filters, sorts, etc)
+    const results = await client().index(type).search(query) // TODO: add search params (filters, sorts, etc)
 
     // eslint-disable-next-line no-console
     console.log('results', results)
