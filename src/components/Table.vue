@@ -66,8 +66,10 @@ const itemsPerPage = $computed(() => {
 console.log('initializing table')
 
 // let's run the initial search to populate the table
-const { search, query: q } = $(useTable())
-// const results = await search(q)
+const { search, query: q } = await useTable()
+const results = await search(q)
+// eslint-disable-next-line no-console
+console.log('results', results)
 
 // let's use (init) the table by passing the default state
 const table = $(useTable({

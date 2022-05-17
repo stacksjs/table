@@ -1,20 +1,39 @@
 import { isString, useStorage } from '@vueuse/core'
 import MeiliSearch from 'meilisearch'
-import type { Ref } from 'vue'
 import type { TableStore } from '~/types'
 
-export function useTable(store?: TableStore) {
-  const table = $(useStorage('table', determineState(store)))
+const table = $(useStorage('table', determineState()))
 
-  const results = $ref(table.results)
+function determineState(state?: TableStore): TableStore {
+  // eslint-disable-next-line no-console
+  console.log('state', state)
+  if (state !== undefined)
+    return state
+
+  // eslint-disable-next-line no-console
+  console.log('here?')
+
+  const ls = localStorage.getItem('table')
+
+  return ls ? JSON.parse(ls) : {}
+}
+
+export async function useTable(store?: TableStore) {
+  const t = $ref(hasTableLoaded() ? table : determineState(store))
+
+  const results = $ref(t.results)
+  // eslint-disable-next-line no-console
+  console.log('results', results)
   const hits = $ref(results?.hits)
-  const columns = $ref(table.columns)
-  const sort = $ref(table.sort)
-  const sorts = $ref(table.sorts)
-  const type = $ref(table.type)
-  const currentPage = $ref(table.currentPage)
-  const perPage = $ref(table.perPage)
-  const query = $ref(table.query)
+  // eslint-disable-next-line no-console
+  console.log('hits', hits)
+  const columns = $ref(t.columns)
+  const sort = $ref(t.sort)
+  const sorts = $ref(t.sorts)
+  const type = $ref(t.type)
+  const currentPage = $ref(t.currentPage)
+  const perPage = $ref(t.perPage)
+  const query = $ref(t.query)
 
   const columnsExcludingLast = $computed(() => columns?.slice(0, -1))
   const lastColumn = $computed(() => columns ? [columns[columns.length - 1]] : [])
@@ -27,20 +46,6 @@ export function useTable(store?: TableStore) {
     // sort: isString(sort) ? [sort] : null,
     }
   })
-
-  function determineState(state?: TableStore): TableStore {
-  // eslint-disable-next-line no-console
-    console.log('state', state)
-    if (state !== undefined)
-      return state
-
-    // eslint-disable-next-line no-console
-    console.log('here?')
-
-    const ls = localStorage.getItem('table')
-
-    return ls ? JSON.parse(ls) : {}
-  }
 
   function isColumnSortable(col: string): Boolean {
     if (!table?.type)
@@ -65,17 +70,19 @@ export function useTable(store?: TableStore) {
     })
   }
 
-  async function search(q?: string | Ref<string>) {
-    try {
-      if (!isString(table.type)) // a lazy way to check if the table is loaded
-        return
+  function hasTableLoaded() {
+    return isString(table.type) // a lazy way to check if the table is loaded
+  }
 
-      q = isRef(q) ? unref(q) : q
+  async function search(q: string): Promise<void> {
+    try {
+      if (!hasTableLoaded)
+        return
 
       const query = isString(q) ? q : (table?.query ? table.query : '')
       // eslint-disable-next-line no-console
       console.log('query', query)
-      const results = await client().index('hoodratz').search('')
+      const results = client().index('hoodratz').search('')
 
       // eslint-disable-next-line no-console
       console.log('results', results)
