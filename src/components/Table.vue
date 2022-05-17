@@ -84,11 +84,8 @@ const { table, search, query: q } = await useTable({
   currentPage: 1,
 })
 
+// let's run the initial search upon page view/load
 const results = await search(q)
-// eslint-disable-next-line no-console
-console.log('results is', results)
-// eslint-disable-next-line no-console
-console.log('table is', table)
 
 // now that we have the search results, let's update/set the state of the table
 table.value.results = results
@@ -108,11 +105,11 @@ table.value.actions = actions
 table.value.actionable = actionable
 
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
-// watchEffect(async () => {
-//   // eslint-disable-next-line no-console
-//   console.log('query changed', q)
-//   await search(q)
-// })
+watchEffect(async () => {
+  // eslint-disable-next-line no-console
+  console.log('query changed', q)
+  await search()
+})
 </script>
 
 <template>

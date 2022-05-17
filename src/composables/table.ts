@@ -87,7 +87,7 @@ function client(apiKey = ''): MeiliSearch {
 }
 
 function hasTableLoaded(state?: any): Boolean {
-  if (isString(state?.type))
+  if (state?.type !== '')
     return true
 
   // eslint-disable-next-line no-console
@@ -102,9 +102,10 @@ async function search(q = ''): Promise<void | SearchResponse<Record<string, any>
       return
 
     const query = isString(q) ? q : (table?.query ? table.query : '')
-    // eslint-disable-next-line no-console
-    console.log('query', query)
-    const results = client().index('hoodratz').search('')
+    let results
+
+    if (type)
+      results = client().index(type).search(query) // TODO: add search params (filters, sorts, etc)
 
     // eslint-disable-next-line no-console
     console.log('results', results)
@@ -125,7 +126,7 @@ async function goToPrevPage() {
   if (currentPage < 1)
     table.currentPage = 1
 
-  await search()
+  await search() // TODO: add search params (filters, sorts, etc)
 }
 
 async function goToNextPage() {
@@ -143,7 +144,7 @@ async function goToNextPage() {
   if (table.currentPage <= 1)
     table.currentPage = 1
 
-  await search()
+  await search() // TODO: add search params (filters, sorts, etc)
 }
 
 export async function useTable(store?: TableStore) {
