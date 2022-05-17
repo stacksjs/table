@@ -16,6 +16,8 @@ const type = $ref(table.type)
 const currentPage = $ref(table.currentPage)
 const perPage = $ref(table.perPage)
 const query = $ref(table.query)
+const actions = $ref(table.actions)
+const actionable = $ref(table.actionable)
 
 const searchParams = $computed(() => {
   return {
@@ -163,5 +165,7 @@ export async function useTable(store?: TableStore) {
     sortOrders,
     toggleSort,
     isColumnUsedAsSort,
+    actionable,
+    actions,
   })
 }

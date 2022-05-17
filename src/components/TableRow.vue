@@ -3,7 +3,7 @@ const { hit } = defineProps<{ hit: any }>()
 // eslint-disable-next-line no-console
 console.log('TableRow.vue')
 
-const { table } = $(await useTable())
+const { table, actionable, actions } = $(await useTable())
 
 const columnsExceptLast = $computed(() => {
   if (table.actionable || table.actions?.length)
@@ -30,9 +30,11 @@ const lastColumn = $computed(() => {
     </td>
 
     <td
+      v-if="actionable || actions.length"
       class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
     >
-      {{ hit[lastColumn.includes(':') ? lastColumn.split(':')[0].trim() : lastColumn] }}
+      test {{ lastColumn }}
+      <!-- {{ hit[lastColumn[0].includes(':') ? lastColumn[0].split(':')[0].trim() : 'lastColumn'] }} -->
     </td>
   </tr>
 </template>

@@ -1,6 +1,6 @@
 # Table Elements
 
-The easiest way to integrate Meilisearch into your frontend as a data source for your tables. These components will allow you to kick-start the development of feature-rich & configurable table UIs, including a beautiful, blazing-fast (!) UX.
+The easiest way to work with tables, and, in particular, data tables. Without much effort, configure a search engine in your frontend as the data source for your tables. These components will allow you to kick-start the development of a feature-rich & configurable table UI, including a beautiful, blazing-fast (!) UX.
 
 ## 🐙 Features
 
@@ -11,7 +11,7 @@ This Vue component library comes with the following features, improvements to th
   - "facet-filtering" & "table head sorting" natively built-in
   - Meilisearch & Laravel Scout API compatible
   - Enterprise-ready
-  - _Soon: Algolia integration_
+  - _Soon: Algolia & Typesense integration_
 
 Get granular control over the table appearance & behavior, with the following (optional) components:
 
