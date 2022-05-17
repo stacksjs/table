@@ -36,26 +36,26 @@ const {
   actionable = false,
 } = defineProps<Props>()
 
-const cols = $computed(() => {
+const cols = $computed((): string[] => {
   if (isString(columns))
     return columns.split(',').map(col => col.trim())
 
   return columns
 })
-const columnsExcludingLast = $computed(() => cols?.slice(0, -1))
-const sortDirections = $computed(() => {
+const columnsExcludingLast = $computed((): string[] => cols?.slice(0, -1))
+const sortDirections = $computed((): string[] => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
 
   return sorts
 })
-const facetFilters = $computed(() => {
+const facetFilters = $computed((): string[] => {
   if (isString(filters))
     return filters.split(',').map(col => col.trim())
 
   return filters
 })
-const itemsPerPage = $computed(() => {
+const itemsPerPage = $computed((): number => {
   if (isString(perPage))
     return parseInt(perPage)
 
@@ -65,14 +65,8 @@ const itemsPerPage = $computed(() => {
 // eslint-disable-next-line no-console
 console.log('initializing table')
 
-// let's run the initial search to populate the table
-const { search, query: q } = await useTable()
-const results = await search(q)
-// eslint-disable-next-line no-console
-console.log('results', results)
-
 // let's use (init) the table by passing the default state
-const table = $(useTable({
+const { table, search, query: q } = await useTable({
   source,
   type,
   columns: cols,
@@ -88,7 +82,12 @@ const table = $(useTable({
   actionable,
   perPage: itemsPerPage,
   currentPage: 1,
-}))
+})
+
+const results = await search(q)
+// eslint-disable-next-line no-console
+console.log('results is', results)
+table.value.results = results
 
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
 // watchEffect(async () => {

@@ -4,14 +4,12 @@ import type { TableStore } from '~/types'
 
 const table = $(useStorage('table', determineState()))
 
+// eslint-disable-next-line no-console
+console.log('table', table)
+
 function determineState(state?: TableStore): TableStore {
-  // eslint-disable-next-line no-console
-  console.log('state', state)
   if (state !== undefined)
     return state
-
-  // eslint-disable-next-line no-console
-  console.log('here?')
 
   const ls = localStorage.getItem('table')
 
@@ -26,7 +24,7 @@ export async function useTable(store?: TableStore) {
   console.log('results', results)
   const hits = $ref(results?.hits)
   // eslint-disable-next-line no-console
-  console.log('hits', hits)
+  console.log('hits is', hits)
   const columns = $ref(t.columns)
   const sort = $ref(t.sort)
   const sorts = $ref(t.sorts)
