@@ -10,6 +10,9 @@ console.log('TableHead.vue')
 const { isColumnSortable, lastColumn, columnsExcludingLast, readableLastColumn } = await useTable()
 const sortOrders = $ref([])
 
+// eslint-disable-next-line no-console
+console.log('columnsExcludingLast', columnsExcludingLast)
+
 function isColumnUsedAsSort(col: string | object) {
   let k
 
@@ -63,10 +66,10 @@ function toggleSort(col: string | Ref<string>) {
         <a href="#" class="group inline-flex">
           {{ readableLastColumn }}
           <span
-            v-if="isColumnSortable(lastColumn)"
+            v-if="isColumnSortable(lastColumn[0])"
             class="rounded flex-none ml-2"
             :class="isColumnUsedAsSort(lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-            @click="toggleSort(lastColumn)"
+            @click="toggleSort(lastColumn[0])"
           >
             <span
               class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible"

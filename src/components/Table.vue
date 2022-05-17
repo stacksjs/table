@@ -87,7 +87,25 @@ const { table, search, query: q } = await useTable({
 const results = await search(q)
 // eslint-disable-next-line no-console
 console.log('results is', results)
+// eslint-disable-next-line no-console
+console.log('table is', table)
+
+// now that we have the search results, let's update/set the state of the table
 table.value.results = results
+table.value.source = source
+table.value.type = type
+table.value.columns = cols
+table.value.columnsExcludingLast = columnsExcludingLast
+table.value.searchable = searchable
+table.value.query = query
+table.value.filters = facetFilters
+table.value.filterable = filterable
+table.value.sort = sort
+table.value.sorts = sortDirections
+table.value.sortable = sortable
+table.value.perPage = itemsPerPage
+table.value.actions = actions
+table.value.actionable = actionable
 
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
 // watchEffect(async () => {
@@ -104,7 +122,7 @@ table.value.results = results
         <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
           <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
             <table class="divide-y min-w-full divide-gray-300">
-              <TableHead :columns="cols" :sorts="sortDirections" />
+              <TableHead />
               <TableBody />
             </table>
           </div>
