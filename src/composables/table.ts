@@ -1,6 +1,7 @@
-import { isString, useStorage } from '@vueuse/core'
+import { isObject, isString, useStorage } from '@vueuse/core'
 import type { SearchResponse } from 'meilisearch'
 import MeiliSearch from 'meilisearch'
+import type { Ref } from 'vue'
 import type { TableStore } from '~/types'
 
 const table = $(useStorage('table', determineState()))
@@ -16,6 +17,7 @@ const columns = $ref(table.columns)
 console.log('columns', columns)
 const sort = $ref(table.sort)
 const sorts = $ref(table.sorts)
+const sortOrders = $ref([])
 const type = $ref(table.type)
 const currentPage = $ref(table.currentPage)
 const perPage = $ref(table.perPage)
@@ -147,6 +149,26 @@ async function goToNextPage() {
   await search() // TODO: add search params (filters, sorts, etc)
 }
 
+function isColumnUsedAsSort(col: string | object) {
+  let k
+
+  if (isObject(col))
+    k = col[0].includes(':') ? col[0].split(':')[0].trim() : col[0]
+
+  else
+    k = col.includes(':') ? col.split(':')[0].trim() : col
+
+  return sortOrders[k]
+}
+
+function toggleSort(col: string | Ref<string>) {
+  if (isRef(col))
+    col = unref(col)
+
+  const k = col.includes(':') ? col.split(':')[0].trim() : col
+  sortOrders[k] = !sortOrders[k]
+}
+
 export async function useTable(store?: TableStore) {
   // if (hasTableLoaded() ? table : determineState(store))
   return $$({
@@ -169,5 +191,8 @@ export async function useTable(store?: TableStore) {
     goToNextPage,
     search,
     searchParams,
+    sortOrders,
+    toggleSort,
+    isColumnUsedAsSort,
   })
 }

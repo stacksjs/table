@@ -1,37 +1,14 @@
 <script setup lang="ts">
-import { isObject } from '@vueuse/core'
-import type { Ref } from 'vue'
 import { useTable } from '~/composables/table'
 
 // eslint-disable-next-line no-console
 console.log('TableHead.vue')
 
 // eslint-disable-next-line no-console
-const { isColumnSortable, lastColumn, columnsExcludingLast, readableLastColumn } = await useTable()
-const sortOrders = $ref([])
+const { isColumnSortable, lastColumn, columnsExcludingLast, readableLastColumn, isColumnUsedAsSort, toggleSort } = await useTable()
 
 // eslint-disable-next-line no-console
 console.log('columnsExcludingLast', columnsExcludingLast)
-
-function isColumnUsedAsSort(col: string | object) {
-  let k
-
-  if (isObject(col))
-    k = col[0].includes(':') ? col[0].split(':')[0].trim() : col[0]
-
-  else
-    k = col.includes(':') ? col.split(':')[0].trim() : col
-
-  return sortOrders[k]
-}
-
-function toggleSort(col: string | Ref<string>) {
-  if (isRef(col))
-    col = unref(col)
-
-  const k = col.includes(':') ? col.split(':')[0].trim() : col
-  sortOrders[k] = !sortOrders[k]
-}
 </script>
 
 <template>
