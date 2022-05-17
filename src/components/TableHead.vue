@@ -6,8 +6,18 @@ console.log('TableHead.vue')
 
 const { isColumnSortable, isColumnUsedAsSort, toggleSort, table } = $(await useTable())
 
-const columnsExceptLast = $computed(() => table.columns.slice(0, -1))
-const lastColumn = $computed(() => table.columns ? [table.columns[table.columns.length - 1]] : [])
+const columnsExceptLast = $computed(() => {
+  if (table.actionable || table.actions?.length)
+    return table.columns
+
+  return table.columns.slice(0, -1)
+})
+const lastColumn = $computed(() => {
+  if (table.actionable || table.actions?.length)
+    return [''] // actions-columns have no table-head
+
+  return []
+})
 const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
 </script>
 

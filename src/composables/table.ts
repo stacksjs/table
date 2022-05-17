@@ -7,11 +7,7 @@ import type { TableStore } from '~/types'
 const table = $(useStorage('table', determineState()))
 
 const results = $ref(table.results)
-// eslint-disable-next-line no-console
-console.log('results', results)
-const hits = $ref(table.results?.hits)
-// eslint-disable-next-line no-console
-console.log('hits is', hits)
+const hits = $ref(results)
 const columns = $ref(table.columns)
 const sort = $ref(table.sort)
 const sorts = $ref(table.sorts)
@@ -30,14 +26,8 @@ const searchParams = $computed(() => {
   }
 })
 
-// eslint-disable-next-line no-console
-console.log('table', table)
-
 function determineState(): TableStore {
   const ls = localStorage.getItem('table')
-
-  // eslint-disable-next-line no-console
-  console.log('ls', ls)
 
   // initial default state
   let table: TableStore = {
@@ -72,8 +62,6 @@ function isColumnSortable(col: string): Boolean {
 
 // search methods
 function client(apiKey = ''): MeiliSearch {
-  // eslint-disable-next-line no-console
-  console.log('table.source is', table.source)
   return new MeiliSearch({
     host: 'http://127.0.0.1:7700',
     apiKey,
@@ -84,24 +72,20 @@ function hasTableLoaded(state?: any): Boolean {
   if (state?.type !== '')
     return true
 
-  // eslint-disable-next-line no-console
-  console.log('table?.type', table)
-
-  return isString(table?.type) // a lazy way to check if the table is loaded
+  return isString(table?.type) && table.type !== '' // a lazy way to check if the table is loaded
 }
 
-async function search(q = ''): Promise<void | SearchResponse<Record<string, any>>> {
+async function search(q = '', searchParams = {}): Promise<void | SearchResponse<Record<string, any>>> {
+  // eslint-disable-next-line no-console
+  console.log('searchParams', searchParams)
+
+  if (!hasTableLoaded(table))
+    return
+
   try {
-    if (!hasTableLoaded(table))
-      return
-
     const query = isString(q) ? q : (table?.query ? table.query : '')
-    const results = await client().index(type).search(query) // TODO: add search params (filters, sorts, etc)
 
-    // eslint-disable-next-line no-console
-    console.log('results', results)
-
-    return results
+    return await client().index(table.type).search(query) // TODO: add search params (filters, sorts, etc)
   }
   catch (error) {
     console.error('error when performing search', error)

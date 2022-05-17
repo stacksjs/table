@@ -2,7 +2,7 @@
  * This file is used to define the types/interfaces used in the project.
  */
 
-import type { SearchResponse } from 'meilisearch'
+import type { Hits, SearchResponse } from 'meilisearch'
 
 export interface TableStore {
   source: string
@@ -20,6 +20,7 @@ export interface TableStore {
   perPage: number
   currentPage: number
   results?: SearchResponse<Record<string, any>>
+  hits?: Hits
   // stickyHeader?: string | boolean
   // stickyFooter?: string | boolean
 }

@@ -1,11 +1,22 @@
 <script setup lang="ts">
+const { hit } = defineProps<{ hit: any }>()
 // eslint-disable-next-line no-console
 console.log('TableRow.vue')
 
 const { table } = $(await useTable())
 
-const columnsExceptLast = $computed(() => table.columns.slice(0, -1))
-const lastColumn = $computed(() => table.columns ? [table.columns[table.columns.length - 1]] : [])
+const columnsExceptLast = $computed(() => {
+  if (table.actionable || table.actions?.length)
+    return table.columns
+
+  return table.columns.slice(0, -1)
+})
+const lastColumn = $computed(() => {
+  if (table.actionable || table.actions?.length)
+    return ['actions']
+
+  return []
+})
 </script>
 
 <template>

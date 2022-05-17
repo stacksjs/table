@@ -88,6 +88,7 @@ const results = await search(q)
 
 // now that we have the search results, let's update/set the state of the table
 table.value.results = results
+table.value.hits = results?.hits
 table.value.source = source
 table.value.type = type
 table.value.columns = cols
@@ -104,9 +105,10 @@ table.value.actionable = actionable
 
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
 watchEffect(async () => {
-  // eslint-disable-next-line no-console
-  console.log('query changed', q)
-  await search()
+  const results = await search(q)
+
+  table.value.results = results
+  table.value.hits = results?.hits
 })
 </script>
 

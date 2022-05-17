@@ -2,16 +2,11 @@
 // eslint-disable-next-line no-console
 console.log('TableBody.vue')
 
-const { hits } = $(useTable())
-
-// watch(hits, (newHits) => {
-//   // eslint-disable-next-line no-console
-//   console.log(`newHits is ${newHits}`)
-// })
+const { table } = $(await useTable())
 </script>
 
 <template>
   <tbody class="divide-y bg-white divide-gray-200">
-    <TableRow v-for="hit in hits" :key="hit.id" :hit="hit" />
+    <TableRow v-for="(hit, index) in table.results?.hits" :key="index" :hit="hit" />
   </tbody>
 </template>
