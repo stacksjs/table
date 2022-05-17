@@ -9,12 +9,10 @@ const table = $(useStorage('table', determineState()))
 const results = $ref(table.results)
 // eslint-disable-next-line no-console
 console.log('results', results)
-const hits = $ref(results?.hits)
+const hits = $ref(table.results?.hits)
 // eslint-disable-next-line no-console
 console.log('hits is', hits)
 const columns = $ref(table.columns)
-// eslint-disable-next-line no-console
-console.log('columns', columns)
 const sort = $ref(table.sort)
 const sorts = $ref(table.sorts)
 const sortOrders = $ref([])
@@ -23,9 +21,6 @@ const currentPage = $ref(table.currentPage)
 const perPage = $ref(table.perPage)
 const query = $ref(table.query)
 
-const columnsExcludingLast = $computed(() => columns?.slice(0, -1))
-const lastColumn = $computed(() => columns ? [columns[columns.length - 1]] : [])
-const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
 const searchParams = $computed(() => {
   return {
     offset: (currentPage - 1) * perPage,
@@ -38,26 +33,20 @@ const searchParams = $computed(() => {
 // eslint-disable-next-line no-console
 console.log('table', table)
 
-function determineState(state?: TableStore): TableStore {
-  // eslint-disable-next-line no-console
-  console.log('state', state)
-
-  if (state !== undefined)
-    return state
-
+function determineState(): TableStore {
   const ls = localStorage.getItem('table')
-
-  let table: TableStore = {
-    source: '',
-    type: '',
-    columns: [''],
-    columnsExcludingLast: [''],
-    perPage: 20, // default to 20
-    currentPage: 1,
-  }
 
   // eslint-disable-next-line no-console
   console.log('ls', ls)
+
+  // initial default state
+  let table: TableStore = {
+    source: '',
+    type: '',
+    columns: [],
+    perPage: 20, // default to 20
+    currentPage: 1,
+  }
 
   if (isString(ls))
     table = JSON.parse(ls)
@@ -66,7 +55,10 @@ function determineState(state?: TableStore): TableStore {
 }
 
 function isColumnSortable(col: string): Boolean {
-  if (!table?.type)
+  if (!hasTableLoaded(table))
+    return false
+
+  if (col === undefined)
     return false
 
   if (col.includes(':'))
@@ -81,7 +73,7 @@ function isColumnSortable(col: string): Boolean {
 // search methods
 function client(apiKey = ''): MeiliSearch {
   // eslint-disable-next-line no-console
-  console.log('table.source', table.source)
+  console.log('table.source is', table.source)
   return new MeiliSearch({
     host: 'http://127.0.0.1:7700',
     apiKey,
@@ -107,7 +99,7 @@ async function search(q = ''): Promise<void | SearchResponse<Record<string, any>
     let results
 
     if (type)
-      results = client().index(type).search(query) // TODO: add search params (filters, sorts, etc)
+      results = await client().index(type).search(query) // TODO: add search params (filters, sorts, etc)
 
     // eslint-disable-next-line no-console
     console.log('results', results)
@@ -170,15 +162,11 @@ function toggleSort(col: string | Ref<string>) {
 }
 
 export async function useTable(store?: TableStore) {
-  // if (hasTableLoaded() ? table : determineState(store))
   return $$({
     store,
     table,
     type,
     columns,
-    columnsExcludingLast,
-    lastColumn,
-    readableLastColumn,
     isColumnSortable,
     sort,
     sorts,

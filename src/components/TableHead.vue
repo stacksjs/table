@@ -4,18 +4,18 @@ import { useTable } from '~/composables/table'
 // eslint-disable-next-line no-console
 console.log('TableHead.vue')
 
-// eslint-disable-next-line no-console
-const { isColumnSortable, lastColumn, columnsExcludingLast, readableLastColumn, isColumnUsedAsSort, toggleSort } = await useTable()
+const { isColumnSortable, isColumnUsedAsSort, toggleSort, table } = $(await useTable())
 
-// eslint-disable-next-line no-console
-console.log('columnsExcludingLast', columnsExcludingLast)
+const columnsExceptLast = $computed(() => table.columns.slice(0, -1))
+const lastColumn = $computed(() => table.columns ? [table.columns[table.columns.length - 1]] : [])
+const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
 </script>
 
 <template>
   <thead class="bg-gray-50">
     <tr>
       <th
-        v-for="(col, index) in columnsExcludingLast"
+        v-for="(col, index) in columnsExceptLast"
         :key="index"
         scope="col"
         :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"

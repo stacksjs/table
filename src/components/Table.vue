@@ -42,7 +42,7 @@ const cols = $computed((): string[] => {
 
   return columns
 })
-const columnsExcludingLast = $computed((): string[] => cols?.slice(0, -1))
+
 const sortDirections = $computed((): string[] => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
@@ -70,7 +70,6 @@ const { table, search, query: q } = await useTable({
   source,
   type,
   columns: cols,
-  columnsExcludingLast,
   searchable,
   query,
   filters: facetFilters,
@@ -92,7 +91,6 @@ table.value.results = results
 table.value.source = source
 table.value.type = type
 table.value.columns = cols
-table.value.columnsExcludingLast = columnsExcludingLast
 table.value.searchable = searchable
 table.value.query = query
 table.value.filters = facetFilters

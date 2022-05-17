@@ -8,7 +8,6 @@ export interface TableStore {
   source: string
   type: string
   columns: string[]
-  columnsExcludingLast: string[]
   searchable?: string | boolean
   query?: string
   sortable?: string | boolean
