@@ -30,6 +30,33 @@ const searchParams = $computed(() => {
 // eslint-disable-next-line no-console
 console.log('searchParams', searchParams)
 
+// let's debounce the search for 500ms
+// this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
+watchEffect(async () => {
+  // eslint-disable-next-line no-console
+  console.log('watchEffect', query, searchParams)
+  const results = await search(query, searchParams)
+
+  if (results) {
+    table.results = results
+    table.hits = results.hits
+  }
+})
+
+watchDebounced(
+  query,
+  () => {
+    // eslint-disable-next-line no-console
+    console.log('watchDebounced')
+
+    if (table === undefined)
+      return
+
+    table.query = query
+  },
+  { debounce: 500 },
+)
+
 function determineState(): TableStore {
   const ls = localStorage.getItem('table')
 
@@ -165,33 +192,6 @@ function toggleSort(col: string | Ref<string>) {
   sortOrders[k] = !sortOrders[k]
   table.sort = sortOrders[k]
 }
-
-// let's debounce the search for 500ms
-// this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
-watchEffect(async () => {
-  // eslint-disable-next-line no-console
-  console.log('watchEffect', query, searchParams)
-  const results = await search(query, searchParams)
-
-  if (results) {
-    table.results = results
-    table.hits = results.hits
-  }
-})
-
-watchDebounced(
-  query,
-  () => {
-    // eslint-disable-next-line no-console
-    console.log('watchDebounced')
-
-    if (table === undefined)
-      return
-
-    table.query = query
-  },
-  { debounce: 500 },
-)
 
 export async function useTable(store?: TableStore) {
   return $$({

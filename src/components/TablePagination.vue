@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const emit = defineEmits(['prevPage', 'nextPage'])
 
-const { goToNextPage, goToPrevPage, perPage, currentPage, results } = $(useTable())
+const { goToNextPage, goToPrevPage, table } = $(await useTable())
 
 function next() {
   goToNextPage()
@@ -31,12 +31,12 @@ function back() {
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-sm text-gray-700">
-          Showing {{ ((perPage * currentPage) - perPage) + 1 }}
+          Showing {{ ((table.perPage * table.currentPage) - table.perPage) + 1 }}
           <span class="font-medium" />
           to
-          <span class="font-medium"> {{ perPage * currentPage }} </span>
+          <span class="font-medium"> {{ table.perPage * table.currentPage }} </span>
           of
-          <span class="font-medium"> {{ results?.nbHits ?? 0 }} </span>
+          <span class="font-medium"> {{ table.results?.nbHits ?? 0 }} </span>
           results
         </p>
       </div>

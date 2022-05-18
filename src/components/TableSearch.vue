@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const { table } = $(await useTable())
+const { query } = $(await useTable())
 </script>
 
 <template>
-  <input v-model="table.query" type="text" class="">
+  <input v-model="query" type="text" class="">
 </template>

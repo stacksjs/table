@@ -22,6 +22,9 @@ import { Table as TableV2 } from './main'
         per-page="10"
       />
     </Suspense>
-    <!-- <TablePagination /> -->
+
+    <Suspense>
+      <TablePagination />
+    </Suspense>
   </div>
 </template>
