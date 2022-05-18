@@ -63,9 +63,6 @@ const itemsPerPage = $computed((): number => {
   return perPage
 })
 
-// eslint-disable-next-line no-console
-console.log('initializing table')
-
 // let's use (init) the table by passing the default state
 const { table, search } = await useTable({
   source,
@@ -89,9 +86,10 @@ const { table, search } = await useTable({
 const results = await search()
 
 // now that we have the search results, let's update/set the state of the table
+table.value.source = source
+table.value.password = password
 table.value.results = results
 table.value.hits = results?.hits
-table.value.source = source
 table.value.type = type
 table.value.columns = cols
 table.value.searchable = searchable

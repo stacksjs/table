@@ -48,7 +48,7 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
           {{ col.includes(':') ? col.split(':')[1].trim() : col }}
           <span
             v-if="isColumnSortable(col)"
-            class="rounded flex-none ml-2 "
+            class="rounded flex-none ml-2"
             :class="isColumnUsedAsSort(col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
             @click="toggleSort(col)"
           >

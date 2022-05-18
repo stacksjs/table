@@ -64,9 +64,15 @@ function isColumnSortable(col: string): Boolean {
 
 // search methods
 function client(): MeiliSearch {
+  // eslint-disable-next-line no-console
+  console.log('table', table)
+
+  if (!table.source)
+    table.source = ''
+
   return new MeiliSearch({
-    host: 'http://3.85.80.143',
-    apiKey: 'NtUvZv5Q87e355b807622149c350ac38679645b4e2603a1d3eb48cda080f977e76329aeb',
+    host: table.source, // http://3.85.80.143
+    apiKey: table.password, // NtUvZv5Q87e355b807622149c350ac38679645b4e2603a1d3eb48cda080f977e76329aeb
   })
 }
 
@@ -159,19 +165,21 @@ function toggleSort(col: string | Ref<string>) {
 // let's debounce the search for 500ms
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
 watchEffect(async () => {
+  // eslint-disable-next-line no-console
+  console.log('watchEffect')
   const results = await search(query, searchParams)
 
-  if (results)
+  if (results) {
     table.results = results
-
-  table.hits = results?.hits
+    table.hits = results.hits
+  }
 })
 
 watchDebounced(
   query,
   async () => {
     // eslint-disable-next-line no-console
-    console.log('here?')
+    console.log('watchDebounced')
 
     if (table === undefined)
       return
@@ -182,7 +190,7 @@ watchDebounced(
 
     if (results) {
       table.results = results
-      table.hits = results?.hits
+      table.hits = results.hits
     }
   },
   { debounce: 500 },
