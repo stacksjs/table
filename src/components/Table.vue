@@ -44,7 +44,6 @@ const cols = $computed((): string[] => {
 
   return columns
 })
-
 const sortDirections = $computed((): string[] => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
@@ -87,7 +86,7 @@ const { table, search, query: q } = await useTable({
 })
 
 // let's run the initial search upon page view/load
-const results = await search(q)
+const results = await search()
 
 // now that we have the search results, let's update/set the state of the table
 table.value.results = results
@@ -105,14 +104,6 @@ table.value.sortable = sortable
 table.value.perPage = itemsPerPage
 table.value.actions = actions
 table.value.actionable = actionable
-
-// this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
-watchEffect(async () => {
-  const results = await search(q)
-
-  table.value.results = results
-  table.value.hits = results?.hits
-})
 </script>
 
 <template>

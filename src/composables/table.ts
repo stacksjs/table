@@ -38,6 +38,7 @@ function determineState(): TableStore {
     columns: [],
     perPage: 20, // default to 20
     currentPage: 1,
+    query: '',
   }
 
   if (isString(ls))
@@ -77,15 +78,13 @@ function hasTableLoaded(state?: any): Boolean {
   return isString(table?.type) && table.type !== '' // a lazy way to check if the table is loaded
 }
 
-async function search(q = '', searchParams = {}): Promise<void | SearchResponse<Record<string, any>>> {
-  // eslint-disable-next-line no-console
-  console.log('searchParams', searchParams)
-
+async function search(q?: string): Promise<void | SearchResponse<Record<string, any>>> {
   if (!hasTableLoaded(table))
     return
 
   try {
-    const query = isString(q) ? q : (table?.query ? table.query : '')
+    // if the query is provided as a param, it will trump what there would be otherwise in local storage
+    const query = isString(q) ? q : (isString(table.query) ? table.query : '')
 
     return await client().index(table.type).search(query) // TODO: add search params (filters, sorts, etc)
   }
@@ -143,6 +142,38 @@ function toggleSort(col: string | Ref<string>) {
   const k = col.includes(':') ? col.split(':')[0].trim() : col
   sortOrders[k] = !sortOrders[k]
 }
+
+// let's debounce the search for 500ms
+// this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
+watchEffect(async () => {
+  const results = await search(query)
+  // const results = await search(q, searchParams)
+
+  table.results = results
+  table.hits = results?.hits
+})
+
+watchDebounced(
+  query,
+  async () => {
+    // eslint-disable-next-line no-console
+    console.log('here?')
+
+    if (table === undefined)
+      return
+
+    const results = await search(query)
+    // const results = await search(q, searchParams)
+
+    table.query = query
+
+    if (results) {
+      table.results = results
+      table.hits = results?.hits
+    }
+  },
+  { debounce: 500 },
+)
 
 export async function useTable(store?: TableStore) {
   return $$({

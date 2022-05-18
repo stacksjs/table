@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { isObject } from '@vueuse/core'
-
 const { hit } = defineProps<{ hit: any }>()
+
 // eslint-disable-next-line no-console
 console.log('TableRow.vue')
 
@@ -9,14 +8,10 @@ const { table } = $(await useTable())
 
 // let's generate the value of the row
 function generateValue(hit: any, col: any) {
-  // eslint-disable-next-line no-console
-  console.log('generating value', col, typeof col)
   if (col.includes(':'))
     return hit[col.split(':')[0].trim()]
 
-  // eslint-disable-next-line no-console
-  console.log('typeof hit[col]', typeof hit[col])
-  return hit[col]
+  return JSON.parse(hit[col])
 }
 </script>
 
