@@ -33,6 +33,7 @@ function determineState(): TableStore {
   // initial default state
   let table: TableStore = {
     source: '',
+    password: '',
     type: '',
     columns: [],
     perPage: 20, // default to 20
