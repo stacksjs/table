@@ -25,6 +25,7 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
         scope="col"
         class="font-semibold text-left text-sm py-3.5 text-gray-900"
         :class="index === 0 ? `pr-3 pl-4 sm:pl-6` : `px-3`"
+        @click="toggleSort(col)"
       >
         <!-- the last column is oftentimes styled slightly different -->
         <a v-if="(index === table.columns.length - 1)" href="#" class="group inline-flex">

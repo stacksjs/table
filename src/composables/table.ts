@@ -23,8 +23,7 @@ const searchParams = $computed(() => {
   return {
     offset: (currentPage - 1) * perPage,
     limit: perPage,
-    sort: ['name:asc'],
-    // sort: isString(sort) ? [sort] : null,
+    sort: isString(sort) ? [sort] : null,
   }
 })
 
@@ -78,7 +77,9 @@ function hasTableLoaded(state?: any): Boolean {
   return isString(table?.type) && table.type !== '' // a lazy way to check if the table is loaded
 }
 
-async function search(q?: string): Promise<void | SearchResponse<Record<string, any>>> {
+async function search(q?: string, searchParams?: object): Promise<void | SearchResponse<Record<string, any>>> {
+  // eslint-disable-next-line no-console
+  console.log('searching', q, searchParams)
   if (!hasTableLoaded(table))
     return
 
@@ -86,7 +87,16 @@ async function search(q?: string): Promise<void | SearchResponse<Record<string, 
     // if the query is provided as a param, it will trump what there would be otherwise in local storage
     const query = isString(q) ? q : (isString(table.query) ? table.query : '')
 
-    return await client().index(table.type).search(query) // TODO: add search params (filters, sorts, etc)
+    // eslint-disable-next-line no-console
+    console.log('table is', table)
+
+    if (!table.type) {
+      // eslint-disable-next-line no-console
+      console.error('no type provided')
+      return
+    }
+
+    return await client().index(table.type).search(query, searchParams) // TODO: add search params (filters, sorts, etc)
   }
   catch (error) {
     console.error('error when performing search', error)
@@ -101,8 +111,6 @@ async function goToPrevPage() {
 
   if (currentPage < 1)
     table.currentPage = 1
-
-  await search() // TODO: add search params (filters, sorts, etc)
 }
 
 async function goToNextPage() {
@@ -119,8 +127,6 @@ async function goToNextPage() {
 
   if (table.currentPage <= 1)
     table.currentPage = 1
-
-  await search() // TODO: add search params (filters, sorts, etc)
 }
 
 function isColumnUsedAsSort(col: string | object) {
@@ -136,20 +142,28 @@ function isColumnUsedAsSort(col: string | object) {
 }
 
 function toggleSort(col: string | Ref<string>) {
+  // eslint-disable-next-line no-console
+  console.log('togggling sort', col)
   if (isRef(col))
     col = unref(col)
 
   const k = col.includes(':') ? col.split(':')[0].trim() : col
+
+  // eslint-disable-next-line no-console
+  console.log('k', k)
+
   sortOrders[k] = !sortOrders[k]
+  table.sort = sortOrders[k]
 }
 
 // let's debounce the search for 500ms
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
 watchEffect(async () => {
-  const results = await search(query)
-  // const results = await search(q, searchParams)
+  const results = await search(query, searchParams)
 
-  table.results = results
+  if (results)
+    table.results = results
+
   table.hits = results?.hits
 })
 
@@ -162,8 +176,7 @@ watchDebounced(
     if (table === undefined)
       return
 
-    const results = await search(query)
-    // const results = await search(q, searchParams)
+    const results = await search(query, searchParams)
 
     table.query = query
 
