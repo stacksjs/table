@@ -41,7 +41,7 @@ Next up, we need to make use of the components.
 
 ```vue
 <script setup>
-import { TableConfigure, TableV2 } from 'table-vue'
+import { TableV2 } from 'table-vue'
 </script>
 
 <template>
@@ -61,7 +61,7 @@ import { TableConfigure, TableV2 } from 'table-vue'
 </template>
 ```
 
-To learn more about what's possible, check out our documentation. Alternatively, the `index.html` & `App.vue` will help you get an understanding as well on how to implement a modern table.
+To learn more about what's possible, check out our documentation. Alternatively, the `index.html` & `App.vue` will help you get an understanding as well on how to get started with a "modern table."
 
 ## 🧪 Testing
 
