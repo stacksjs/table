@@ -4,13 +4,13 @@ import { useTable } from '~/composables/table'
 // eslint-disable-next-line no-console
 console.log('TableHead.vue')
 
-const { isColumnSortable, isColumnUsedAsSort, toggleSort, table } = $(await useTable())
+const { table, isColumnSortable, isColumnUsedAsSort, toggleSort } = $(await useTable())
 
 const lastColumn = $computed(() => {
   if (table.actionable || table.actions?.length)
     return [''] // actions-columns have no table-head
 
-  return []
+  return table.columns[table.columns.length - 1]
 })
 
 const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
@@ -23,10 +23,11 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
         v-for="(col, index) in table.columns"
         :key="index"
         scope="col"
-        :class="index === 0 ? `font-semibold text-left text-sm py-3.5 pr-3 pl-4 text-gray-900 sm:pl-6` : `font-semibold text-left text-sm py-3.5 px-3 text-gray-900`"
+        class="font-semibold text-left text-sm py-3.5 text-gray-900"
+        :class="index === 0 ? `pr-3 pl-4 sm:pl-6` : `px-3`"
       >
-        <!-- last columns oftentimes are styled slightly different -->
-        <a v-if="(table.columns.length === index + 1) && (table.actionable || table.actions)" href="#" class="group inline-flex">
+        <!-- the last column is oftentimes styled slightly different -->
+        <a v-if="(index === table.columns.length - 1)" href="#" class="group inline-flex">
           {{ readableLastColumn }}
           <span
             v-if="isColumnSortable(lastColumn[0])"

@@ -67,7 +67,7 @@ const itemsPerPage = $computed((): number => {
 console.log('initializing table')
 
 // let's use (init) the table by passing the default state
-const { table, search, query: q } = await useTable({
+const { table, search } = await useTable({
   source,
   password,
   type,
