@@ -5,7 +5,10 @@ import { Table as TableV2 } from './main'
 
 <template>
   <div class="font-sans">
-    <!-- <TableSearch /> -->
+    <Suspense>
+      <TableSearch />
+    </Suspense>
+
     <Suspense>
       <TableV2
         source="http://127.0.0.1:7700"

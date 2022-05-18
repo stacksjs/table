@@ -1,20 +1,19 @@
 <script setup lang="ts">
-const { table } = $(useTable())
-// const { search } = $(useTable())
+const { table, search } = $(await useTable())
 
 const q = $ref(table?.query ?? '')
 
 // let's debounce the search for 500ms
-// watchDebounced(
-//   q,
-//   () => {
-//     if (table === undefined)
-//       return
-//     table.query = q
-//     search()
-//   },
-//   { debounce: 500 },
-// )
+watchDebounced(
+  q,
+  async () => {
+    if (table === undefined)
+      return
+    table.query = q
+    await search()
+  },
+  { debounce: 500 },
+)
 </script>
 
 <template>

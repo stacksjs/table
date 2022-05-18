@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { hit } = defineProps<{ hit: any }>()
 // eslint-disable-next-line no-console
-console.log('TableRow.vue', hit)
+console.log('TableRow.vue')
 
 const { table, actionable, actions } = $(await useTable())
 
