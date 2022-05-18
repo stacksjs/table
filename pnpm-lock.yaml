@@ -30,7 +30,7 @@ specifiers:
   sort-package-json: ^1.57.0
   typescript: ^4.6.4
   unocss: ^0.33.5
-  unplugin-auto-import: ^0.7.1
+  unplugin-auto-import: ^0.7.2
   unplugin-vue-components: ^0.19.5
   upath: ^2.0.1
   vite: ^2.9.9
