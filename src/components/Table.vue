@@ -38,6 +38,9 @@ const {
   actionable = false,
 } = defineProps<Props>()
 
+// eslint-disable-next-line no-console
+console.log('perPage', perPage)
+
 const cols = $computed((): string[] => {
   if (isString(columns))
     return columns.split(',').map(col => col.trim())
@@ -62,6 +65,9 @@ const itemsPerPage = $computed((): number => {
 
   return perPage
 })
+
+// eslint-disable-next-line no-console
+console.log('itemsPerPage', itemsPerPage)
 
 // let's use (init) the table by passing the default state
 const { table, search } = await useTable({

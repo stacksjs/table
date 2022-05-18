@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { table } = $$(await useTable())
+const { table } = $(await useTable())
 </script>
 
 <template>

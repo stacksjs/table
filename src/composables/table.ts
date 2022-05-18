@@ -21,28 +21,31 @@ const actionable = $ref(table.actionable)
 
 const searchParams = $computed(() => {
   return {
-    offset: (currentPage - 1) * perPage,
-    limit: perPage,
-    sort: isString(sort) ? [sort] : null,
+    offset: (table.currentPage - 1) * table.perPage,
+    limit: table.perPage,
+    sort: isString(table.sort) ? [table.sort] : null,
   }
 })
+
+// eslint-disable-next-line no-console
+console.log('searchParams', searchParams)
 
 function determineState(): TableStore {
   const ls = localStorage.getItem('table')
 
-  // initial default state
-  let table: TableStore = {
+  if (isString(ls))
+    return JSON.parse(ls)
+
+  // initial default state - overwrite with properties passed down from parent component
+  const table: TableStore = {
     source: '',
     password: '',
     type: '',
     columns: [],
-    perPage: 20, // default to 20
+    perPage: 20,
     currentPage: 1,
     query: '',
   }
-
-  if (isString(ls))
-    table = JSON.parse(ls)
 
   return table
 }
@@ -167,7 +170,7 @@ function toggleSort(col: string | Ref<string>) {
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
 watchEffect(async () => {
   // eslint-disable-next-line no-console
-  console.log('watchEffect')
+  console.log('watchEffect', query, searchParams)
   const results = await search(query, searchParams)
 
   if (results) {
@@ -178,21 +181,14 @@ watchEffect(async () => {
 
 watchDebounced(
   query,
-  async () => {
+  () => {
     // eslint-disable-next-line no-console
     console.log('watchDebounced')
 
     if (table === undefined)
       return
 
-    const results = await search(query, searchParams)
-
     table.query = query
-
-    if (results) {
-      table.results = results
-      table.hits = results.hits
-    }
   },
   { debounce: 500 },
 )
