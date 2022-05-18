@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     TableHead: typeof import('./components/TableHead.vue')['default']
     TablePagination: typeof import('./components/TablePagination.vue')['default']
     TableRow: typeof import('./components/TableRow.vue')['default']
+    TableRowActionItems: typeof import('./components/TableRowActionItems.vue')['default']
     TableSearch: typeof import('./components/TableSearch.vue')['default']
   }
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { hit } = defineProps<{ hit: any }>()
 // eslint-disable-next-line no-console
-console.log('TableRow.vue')
+console.log('TableRow.vue', hit)
 
 const { table, actionable, actions } = $(await useTable())
 
@@ -13,7 +13,7 @@ const columnsExceptLast = $computed(() => {
 })
 const lastColumn = $computed(() => {
   if (table.actionable || table.actions?.length)
-    return ['actions']
+    return table.actions
 
   return []
 })
@@ -33,8 +33,7 @@ const lastColumn = $computed(() => {
       v-if="actionable || actions.length"
       class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
     >
-      test {{ lastColumn }}
-      <!-- {{ hit[lastColumn[0].includes(':') ? lastColumn[0].split(':')[0].trim() : 'lastColumn'] }} -->
+      <TableRowActionItems :action-items="lastColumn" />
     </td>
   </tr>
 </template>
