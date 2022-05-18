@@ -45,7 +45,7 @@ import { TableConfigure, TableV2 } from 'table-vue'
 </script>
 
 <template>
-  <!-- the `type`-property indicates to Meilisearch the "index" you want to target   -->
+  <!-- the `type`-property indicates to to the search engine the "index" you want to target -->
   <TableV2 type="movies" />
 
   <!-- these are the default properties (all of them are optional)  -->
@@ -58,25 +58,10 @@ import { TableConfigure, TableV2 } from 'table-vue'
     :actionable="true"
     :per-page="20"
   />
-
-  <!-- alternatively, you may configure your table by using these 2 components in combination -->
-  <TableV2
-    columns="id, title, poster, overview, release_date"
-    sortable="release_date"
-    actionable="Edit"
-    per-page="20"
-  />
-
-  <TableConfigure
-    source="search.ow3.org/api"
-    type="movies"
-    searchable="title, overview"
-    filterable="genre, director"
-  />
 </template>
 ```
 
-Check out the `index.html` & `App.vue` to get an idea how to implement a modern table.
+To learn more about what's possible, check out our documentation. Alternatively, the `index.html` & `App.vue` will help you get an understanding as well on how to implement a modern table.
 
 ## 🧪 Testing
 
