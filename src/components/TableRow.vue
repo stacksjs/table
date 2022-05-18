@@ -1,39 +1,41 @@
 <script setup lang="ts">
+import { isObject } from '@vueuse/core'
+
 const { hit } = defineProps<{ hit: any }>()
 // eslint-disable-next-line no-console
 console.log('TableRow.vue')
 
-const { table, actionable, actions } = $(await useTable())
+const { table } = $(await useTable())
 
-const columnsExceptLast = $computed(() => {
-  if (table.actionable || table.actions?.length)
-    return table.columns
+// let's generate the value of the row
+function generateValue(hit: any, col: any) {
+  // eslint-disable-next-line no-console
+  console.log('generating value', col, typeof col)
+  if (col.includes(':'))
+    return hit[col.split(':')[0].trim()]
 
-  return table.columns.slice(0, -1)
-})
-const lastColumn = $computed(() => {
-  if (table.actionable || table.actions?.length)
-    return table.actions
-
-  return []
-})
+  // eslint-disable-next-line no-console
+  console.log('typeof hit[col]', typeof hit[col])
+  return hit[col]
+}
 </script>
 
 <template>
   <tr scope="row">
     <td
-      v-for="(col, x) in columnsExceptLast"
+      v-for="(col, x) in table.columns"
       :key="x"
-      class="font-medium text-sm py-4 pr-3 pl-4 text-gray-900 whitespace-nowrap sm:pl-6"
+      class="font-medium text-sm py-4 text-gray-900 whitespace-nowrap "
+      :class="table.columns.length === x - 1 ? 'table-last-column pr-4 text-right sm:pr-6' : 'pr-3 pl-4 sm:pl-6'"
     >
-      {{ hit[col.includes(':') ? col.split(':')[0].trim() : col] }}
-    </td>
+      <!-- last columns oftentimes are styled slightly different -->
+      <span v-if="(table.columns.length === x + 1) && (table.actionable || table.actions)">
+        <TableRowActionItems action-items="Edit" />
+      </span>
 
-    <td
-      v-if="actionable || actions.length"
-      class="font-medium text-right text-sm py-4 pr-4 pl-3 relative whitespace-nowrap sm:pr-6"
-    >
-      <TableRowActionItems :action-items="lastColumn" />
+      <span v-else>
+        {{ generateValue(hit, col) }}
+      </span>
     </td>
   </tr>
 </template>
