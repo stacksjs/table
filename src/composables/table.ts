@@ -63,10 +63,10 @@ function isColumnSortable(col: string): Boolean {
 }
 
 // search methods
-function client(apiKey = ''): MeiliSearch {
+function client(): MeiliSearch {
   return new MeiliSearch({
-    host: 'http://127.0.0.1:7700',
-    apiKey,
+    host: 'http://3.85.80.143',
+    apiKey: 'NtUvZv5Q87e355b807622149c350ac38679645b4e2603a1d3eb48cda080f977e76329aeb',
   })
 }
 

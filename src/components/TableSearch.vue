@@ -6,11 +6,15 @@ const q = $ref(table?.query ?? '')
 // let's debounce the search for 500ms
 watchDebounced(
   q,
-  async () => {
+  () => {
+    // eslint-disable-next-line no-console
+    console.log('here?')
+
     if (table === undefined)
       return
+
     table.query = q
-    await search()
+    search()
   },
   { debounce: 500 },
 )

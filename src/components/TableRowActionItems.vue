@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { actionItems } = defineProps<{ actionItems: any }>()
+const { actionItems } = defineProps<{ actionItems: string }>()
 </script>
 
 <template>

@@ -4,6 +4,7 @@ import { useTable } from '~/composables/table'
 
 interface Props {
   source?: string
+  password?: string
   type: string
   columns: string | string[]
   searchable?: string | boolean
@@ -22,6 +23,7 @@ interface Props {
 
 const {
   source = 'http://127.0.0.1:7700',
+  password = '',
   type,
   columns,
   searchable = true,
@@ -68,6 +70,7 @@ console.log('initializing table')
 // let's use (init) the table by passing the default state
 const { table, search, query: q } = await useTable({
   source,
+  password,
   type,
   columns: cols,
   searchable,

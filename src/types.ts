@@ -5,7 +5,8 @@
 import type { Hits, SearchResponse } from 'meilisearch'
 
 export interface TableStore {
-  source: string
+  source?: string
+  password?: string
   type: string
   columns: string[]
   searchable?: string | boolean
