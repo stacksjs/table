@@ -184,28 +184,27 @@ function toggleSort(col: string | Ref<string>) {
   console.log('sortKey', sortKey)
 
   if (table.sort?.includes('asc')) {
+    table.sort = `${sortKey}:desc`
+
     // eslint-disable-next-line no-console
     console.log('sort included asc it is now desc for', sortKey)
 
-    table.sort = `${sortKey}:desc`
     return
   }
 
   if (table.sort?.includes('desc')) {
+    table.sort = undefined
+
     // eslint-disable-next-line no-console
     console.log('sort included desc it is now "" for', sortKey)
 
-    table.sort = ''
     return
   }
 
-  if (table.sort === '') {
-    // eslint-disable-next-line no-console
-    console.log('sort included "" it is now asc for', sortKey)
+  // eslint-disable-next-line no-console
+  console.log('there was no sort. Setting it now in asc order for', sortKey)
 
-    table.sort = `${sortKey}:asc`
-    return
-  }
+  table.sort = `${sortKey}:asc`
 
   // eslint-disable-next-line no-console
   console.log('table.sort', table.sort)

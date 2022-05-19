@@ -32,15 +32,10 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
           {{ readableLastColumn }}
           <span
             v-if="isColumnSortable(lastColumn[0])"
-            class="rounded flex-none ml-2"
             :class="isColumnUsedAsSort(lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
             @click="toggleSort(lastColumn[0])"
           >
-            <span
-              class="rounded flex-none ml-2 text-gray-400 invisible group-hover:visible group-focus:visible"
-            >
-              <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
-            </span>
+            <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
           </span>
         </a>
 
@@ -52,11 +47,7 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
             :class="isColumnUsedAsSort(col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
             @click="toggleSort(col)"
           >
-            <span
-              class="rounded flex-none ml-2 "
-            >
-              <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
-            </span>
+            <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
           </span>
         </a>
       </th>
