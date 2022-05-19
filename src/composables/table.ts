@@ -178,14 +178,8 @@ function toggleSort(col: string | Ref<string>) {
 
   const sortKey = col.includes(':') ? col.split(':')[0].trim() : col
 
-  // eslint-disable-next-line no-console
-  console.log('col is', col)
-
-  // eslint-disable-next-line no-console
-  console.log('sortKey', sortKey)
-
-  if (table.sort?.includes('asc')) {
-    table.sort = `${sortKey}:desc`
+  if (table.sort?.includes('desc')) {
+    table.sort = `${sortKey}:asc`
 
     // eslint-disable-next-line no-console
     console.log('sort included asc it is now desc for', sortKey)
@@ -193,7 +187,7 @@ function toggleSort(col: string | Ref<string>) {
     return
   }
 
-  if (table.sort?.includes('desc')) {
+  if (table.sort?.includes('asc')) {
     table.sort = undefined
 
     // eslint-disable-next-line no-console
@@ -205,7 +199,7 @@ function toggleSort(col: string | Ref<string>) {
   // eslint-disable-next-line no-console
   console.log('there was no sort. Setting it now in asc order for', sortKey)
 
-  table.sort = `${sortKey}:asc`
+  table.sort = `${sortKey}:desc`
 
   // eslint-disable-next-line no-console
   console.log('table.sort', table.sort)
