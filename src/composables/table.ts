@@ -26,11 +26,11 @@ const searchParams = $computed(() => {
   }
 })
 
-// let's debounce the search for 500ms
-// this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
+// this watchEffect picks up any reactivity changes from `query` and `searchParams` and it will then trigger a search
 watchEffect(async () => {
   // eslint-disable-next-line no-console
   console.log('watchEffect', query, searchParams)
+
   const results = await search(query, searchParams)
 
   if (results) {
@@ -110,6 +110,7 @@ function hasTableLoaded(state?: any): Boolean {
   return isString(table?.type) && table.type !== '' // a lazy way to check if the table is loaded
 }
 
+// we have to accept the query and searchParams because those params are watched in the watchEffect
 async function search(q?: string, searchParams?: object): Promise<void | SearchResponse<Record<string, any>>> {
   // eslint-disable-next-line no-console
   console.log('searching', q, searchParams)
