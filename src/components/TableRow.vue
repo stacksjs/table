@@ -10,6 +10,10 @@ function generateValue(hit: any, col: any) {
 
   return JSON.parse(hit[col])
 }
+
+function colName(col: any) {
+  return col.split(':')[0].trim()
+}
 </script>
 
 <template>
@@ -31,7 +35,9 @@ function generateValue(hit: any, col: any) {
       </span>
 
       <span v-else>
-        {{ generateValue(hit, col) }}
+        <slot :name="colName(col)" :col-data="generateValue(hit, col)">
+          {{ generateValue(hit, col) }}
+        </slot>
       </span>
     </td>
   </tr>
