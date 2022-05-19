@@ -19,6 +19,10 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
 <template>
   <thead class="bg-gray-50">
     <tr>
+      <th scope="col" class="px-6 w-12 relative sm:px-8 sm:w-16">
+        <input type="checkbox" class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500" :checked="true" :indeterminate="true">
+      </th>
+
       <th
         v-for="(col, index) in table.columns"
         :key="index"

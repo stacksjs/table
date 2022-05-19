@@ -22,6 +22,7 @@ export interface TableStore {
   currentPage: number
   results?: SearchResponse<Record<string, any>>
   hits?: Hits
+  checkable?: string | boolean
   // stickyHeader?: string | boolean
   // stickyFooter?: string | boolean
 }

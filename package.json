@@ -43,7 +43,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
-    "release": "npx bumpp package.json --execute 'pnpm run changelog' --commit 'chore(release): %s' --tag --push --all",
+    "release": "npx bumpp package.json --execute 'pnpm run changelog' --commit 'chore(release): %s' --tag --push --all && npm publish",
     "test": "vitest",
     "test:e2e": "cypress open",
     "test:unit": "vitest",

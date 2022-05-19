@@ -14,6 +14,11 @@ function generateValue(hit: any, col: any) {
 
 <template>
   <tr scope="row">
+    <td class="px-6 w-12 relative sm:px-8 sm:w-16">
+      <div class="bg-indigo-600 inset-y-0 left-0 w-0.5 absolute" />
+      <input type="checkbox" class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500">
+    </td>
+
     <td
       v-for="(col, x) in table.columns"
       :key="x"

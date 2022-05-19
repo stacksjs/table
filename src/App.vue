@@ -20,6 +20,7 @@ import { Table as TableV2 } from './main'
         filters="created_at, customer_name, customer_po, document_types, due_at, id, invoice_number, part_name, stage_name, vendor_name"
         actions="Info Icon"
         per-page="10"
+        checkable="true"
       />
     </Suspense>
 
