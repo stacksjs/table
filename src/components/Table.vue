@@ -46,6 +46,7 @@ const cols = $computed((): string[] => {
 
   return columns
 })
+
 const sortDirections = $computed((): string[] => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
@@ -106,6 +107,10 @@ table.value.perPage = itemsPerPage
 table.value.actions = actions
 table.value.actionable = actionable
 table.value.checkable = checkable
+
+function colName(col: string) {
+  return col.split(':')[0].trim()
+}
 </script>
 
 <template>
@@ -116,7 +121,12 @@ table.value.checkable = checkable
           <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
             <table class="divide-y min-w-full divide-gray-300">
               <TableHead />
-              <TableBody />
+              <TableBody>
+                <template v-for="(col, x) in cols" :key="x" #[colName(col)]="tableBodyData">
+                  <!-- {{ tableBodyData }} -->
+                  <slot :name="colName(col)" :value="tableBodyData.tableRowData" />
+                </template>
+              </TableBody>
             </table>
           </div>
         </div>
