@@ -41,7 +41,7 @@ Next up, we need to make use of the components.
 
 ```vue
 <script setup>
-import { TableV2 } from 'table-vue'
+import { Table as TableV2 } from 'table-vue'
 </script>
 
 <template>
