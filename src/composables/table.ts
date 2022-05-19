@@ -20,6 +20,7 @@ const actionable = $ref(table.actionable)
 const selectedHits = $ref([]) // aka selectedRows
 const checked = $ref(false)
 
+const totalPages = $computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
 const indeterminate = $computed(() => selectedHits.length > 0 && selectedHits.length < hits.length)
 const searchParams = $computed(() => {
   return {
@@ -145,7 +146,7 @@ async function search(q?: string, searchParams?: object): Promise<void | SearchR
 }
 
 async function goToPrevPage() {
-  if (currentPage === undefined || table === undefined)
+  if (table.currentPage === 1 || currentPage === undefined || table === undefined)
     return
 
   table.currentPage--
@@ -158,7 +159,7 @@ async function goToNextPage() {
   // eslint-disable-next-line no-console
   console.log('currentPage', currentPage)
 
-  if (currentPage === undefined || table === undefined)
+  if (table.currentPage === totalPages || currentPage === undefined || table === undefined)
     return
 
   table.currentPage++
