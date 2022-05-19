@@ -35,7 +35,8 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
             :class="isColumnUsedAsSort(lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
             @click="toggleSort(lastColumn[0])"
           >
-            <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
+            <div v-if="table.sort?.includes('desc')" class="h-5 w-5 i-heroicons-solid-chevron-down" />
+            <div v-if="table.sort?.includes('asc')" class="h-5 w-5 i-heroicons-solid-chevron-up" />
           </span>
         </a>
 
@@ -47,7 +48,8 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
             :class="isColumnUsedAsSort(col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
             @click="toggleSort(col)"
           >
-            <div class="h-5 w-5 i-heroicons-solid-chevron-down" />
+            <div v-if="table.sort?.includes('desc')" class="h-5 w-5 i-heroicons-solid-chevron-down" />
+            <div v-if="table.sort?.includes('asc')" class="h-5 w-5 i-heroicons-solid-chevron-up" />
           </span>
         </a>
       </th>
