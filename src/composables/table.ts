@@ -11,7 +11,6 @@ const hits = $ref(results)
 const columns = $ref(table.columns)
 const sort = $ref(table.sort)
 const sorts = $ref(table.sorts)
-const sortOrders = $ref([])
 const type = $ref(table.type)
 const currentPage = $ref(table.currentPage)
 const perPage = $ref(table.perPage)
@@ -26,9 +25,6 @@ const searchParams = $computed(() => {
     sort: isString(table.sort) ? [table.sort] : null,
   }
 })
-
-// eslint-disable-next-line no-console
-console.log('searchParams', searchParams)
 
 // let's debounce the search for 500ms
 // this unfortunately triggers an initial "double search" scenario. Unsure if it persists beyond the initial "session"
@@ -124,9 +120,6 @@ async function search(q?: string, searchParams?: object): Promise<void | SearchR
     // if the query is provided as a param, it will trump what there would be otherwise in local storage
     const query = isString(q) ? q : (isString(table.query) ? table.query : '')
 
-    // eslint-disable-next-line no-console
-    console.log('table is', table)
-
     if (!table.type) {
       // eslint-disable-next-line no-console
       console.error('no type provided')
@@ -167,30 +160,55 @@ async function goToNextPage() {
 }
 
 function isColumnUsedAsSort(col: string | object) {
-  let k
+  let sortKey
 
   if (isObject(col))
-    k = col[0].includes(':') ? col[0].split(':')[0].trim() : col[0]
+    sortKey = col[0].includes(':') ? col[0].split(':')[0].trim() : col[0]
 
   else
-    k = col.includes(':') ? col.split(':')[0].trim() : col
+    sortKey = col.includes(':') ? col.split(':')[0].trim() : col
 
-  return sortOrders[k]
+  return table.sort?.includes(sortKey)
 }
 
 function toggleSort(col: string | Ref<string>) {
-  // eslint-disable-next-line no-console
-  console.log('togggling sort', col)
   if (isRef(col))
     col = unref(col)
 
-  const k = col.includes(':') ? col.split(':')[0].trim() : col
+  const sortKey = col.includes(':') ? col.split(':')[0].trim() : col
 
   // eslint-disable-next-line no-console
-  console.log('k', k)
+  console.log('col is', col)
 
-  sortOrders[k] = !sortOrders[k]
-  table.sort = sortOrders[k]
+  // eslint-disable-next-line no-console
+  console.log('sortKey', sortKey)
+
+  if (table.sort?.includes('asc')) {
+    // eslint-disable-next-line no-console
+    console.log('sort included asc it is now desc for', sortKey)
+
+    table.sort = `${sortKey}:desc`
+    return
+  }
+
+  if (table.sort?.includes('desc')) {
+    // eslint-disable-next-line no-console
+    console.log('sort included desc it is now "" for', sortKey)
+
+    table.sort = ''
+    return
+  }
+
+  if (table.sort === '') {
+    // eslint-disable-next-line no-console
+    console.log('sort included "" it is now asc for', sortKey)
+
+    table.sort = `${sortKey}:asc`
+    return
+  }
+
+  // eslint-disable-next-line no-console
+  console.log('table.sort', table.sort)
 }
 
 export async function useTable(store?: TableStore) {
@@ -211,7 +229,6 @@ export async function useTable(store?: TableStore) {
     goToNextPage,
     search,
     searchParams,
-    sortOrders,
     toggleSort,
     isColumnUsedAsSort,
     actionable,
