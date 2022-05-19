@@ -7,7 +7,7 @@ import type { TableStore } from '~/types'
 const table = $(useStorage('table', determineState()))
 
 const results = $ref(table.results)
-const hits = $ref(results)
+const hits = $ref(results?.hits)
 const columns = $ref(table.columns)
 const sort = $ref(table.sort)
 const sorts = $ref(table.sorts)
@@ -17,7 +17,10 @@ const perPage = $ref(table.perPage)
 const query = $ref(table.query)
 const actions = $ref(table.actions)
 const actionable = $ref(table.actionable)
+const selectedHits = $ref([]) // aka selectedRows
+const checked = $ref(false)
 
+const indeterminate = $computed(() => selectedHits.length > 0 && selectedHits.length < hits.length)
 const searchParams = $computed(() => {
   return {
     offset: (table.currentPage - 1) * table.perPage,
@@ -25,6 +28,13 @@ const searchParams = $computed(() => {
     sort: isString(table.sort) ? [table.sort] : null,
   }
 })
+const lastColumn = $computed(() => {
+  if (table.actionable || table.actions?.length)
+    return [''] // actions-columns have no table-head
+
+  return table.columns[table.columns.length - 1]
+})
+const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
 
 // this watchEffect picks up any reactivity changes from `query` and `searchParams` and it will then trigger a search
 watchEffect(async () => {
@@ -232,5 +242,10 @@ export async function useTable(store?: TableStore) {
     actionable,
     actions,
     colName,
+    selectedHits,
+    checked,
+    indeterminate,
+    lastColumn,
+    readableLastColumn,
   })
 }
