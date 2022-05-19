@@ -1,4 +1,13 @@
-## 0.0.1 (2022-05-19)
+## [0.0.2](https://github.com/openweblabs/table-vue/compare/v0.0.1...v0.0.2) (2022-05-19)
+
+
+### Features
+
+* scoped slots ([739667d](https://github.com/openweblabs/table-vue/commit/739667dbb251def70d58be579602f1122e21f508))
+
+
+
+## [0.0.1](https://github.com/openweblabs/table-vue/compare/a7b29c9c89e0057c91c8ce0bcea2d5069dd09d23...v0.0.1) (2022-05-19)
 
 
 ### Features
