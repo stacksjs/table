@@ -31,10 +31,10 @@ Read more about these features in their respective [docs](https://ow3.org/docs).
 
 ## 💡 Get Started
 
-To get started, you simply need to install the `@openweb/table-vue` npm package.
+To get started, you simply need to install the `@ow3/table-vue` npm package.
 
 ```bash
-npm install @openweb/table-vue
+npm install @ow3/table-vue
 ```
 
 Next up, we need to make use of the components.
