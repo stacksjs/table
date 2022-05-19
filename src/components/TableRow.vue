@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { hit } = defineProps<{ hit: any }>()
 
-const { table } = $(await useTable())
+const { table, colName } = $(await useTable())
 
 // let's generate the value of the row
 function generateValue(hit: any, col: any) {
@@ -9,10 +9,6 @@ function generateValue(hit: any, col: any) {
     return hit[col.split(':')[0].trim()]
 
   return JSON.parse(hit[col])
-}
-
-function colName(col: any) {
-  return col.split(':')[0].trim()
 }
 </script>
 

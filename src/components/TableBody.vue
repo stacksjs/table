@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { isString } from '@vueuse/core'
 // eslint-disable-next-line no-console
 console.log('TableBody.vue')
 
-const { table } = $(await useTable())
-
-function colName(col: any) {
-  return col.split(':')[0].trim()
-}
+const { table, colName } = $(await useTable())
 </script>
 
 <template>

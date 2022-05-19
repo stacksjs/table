@@ -67,7 +67,7 @@ const itemsPerPage = $computed((): number => {
 })
 
 // let's use (init) the table by passing the default state
-const { table, search } = await useTable({
+const { table, search, colName } = await useTable({
   source,
   password,
   type,
@@ -107,10 +107,6 @@ table.value.perPage = itemsPerPage
 table.value.actions = actions
 table.value.actionable = actionable
 table.value.checkable = checkable
-
-function colName(col: string) {
-  return col.split(':')[0].trim()
-}
 </script>
 
 <template>
