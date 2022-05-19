@@ -50,18 +50,33 @@ import { Table as TableV2 } from 'table-vue'
 
   <!-- these are the default properties (all of them are optional)  -->
   <TableV2
-    src="127.0.0.1:7700"
-    cols="*"
+    source="127.0.0.1:7700"
+    columns="*"
     :searchable="true"
     :filterable="true"
     :sortable="true"
     :actionable="true"
+    :checkable="false"
     :per-page="20"
+  />
+
+  <!-- another "data table" example -->
+  <TableV2
+    source="127.0.0.1:7700"
+    password="NtUvZv5Q87e355b807622149c350ac38679645b4e2603a1d3eb48cda080f977e76329aeb"
+    type="orders"
+    columns="id: Order, customer_name: Customer, customer_po: PO#, part_name: Part, created_at: Ordered, due_at: Due, stage_name: Status"
+    sort="id:desc"
+    sorts="id, customer_name, customer_po, part_name, stage_name, due_at, created_at"
+    filters="customer_name, vendor_name, part_name, document_types"
+    actions="Edit"
+    per-page="10"
+    checkable="true"
   />
 </template>
 ```
 
-To learn more about what's possible, check out our documentation. Alternatively, the `index.html` & `App.vue` will help you get an understanding as well on how to get started with a "modern table."
+To learn more about what's possible & how to best build modern data tables, check out our documentation.
 
 ## 🧪 Testing
 
