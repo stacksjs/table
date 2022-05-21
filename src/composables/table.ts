@@ -36,6 +36,7 @@ const lastColumn = $computed(() => {
   return table.columns[table.columns.length - 1]
 })
 const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
+const lastPageNumber = $computed(() => Math.ceil((table.results?.nbHits ?? 1) / table.perPage))
 
 // this watchEffect picks up any reactivity changes from `query` and `searchParams` and it will then trigger a search
 watchEffect(async () => {
@@ -145,7 +146,7 @@ async function search(q?: string, searchParams?: object): Promise<void | SearchR
   }
 }
 
-async function goToPrevPage() {
+function goToPrevPage() {
   if (table.currentPage === 1 || currentPage === undefined || table === undefined)
     return
 
@@ -155,20 +156,30 @@ async function goToPrevPage() {
     table.currentPage = 1
 }
 
-async function goToNextPage() {
+function goToNextPage() {
   // eslint-disable-next-line no-console
-  console.log('currentPage', currentPage)
+  console.log('currentPage before going to next page', currentPage)
 
   if (table.currentPage === totalPages || currentPage === undefined || table === undefined)
     return
 
-  table.currentPage++
+  if (table.currentPage < 1)
+    table.currentPage = 1
+  else
+    table.currentPage++
+}
 
+function goToPage(page: number) {
   // eslint-disable-next-line no-console
-  console.log('currentPage after adding?', currentPage)
+  console.log('currentPage', currentPage)
+
+  if (table.currentPage === page || currentPage === undefined || table === undefined)
+    return
 
   if (table.currentPage <= 1)
     table.currentPage = 1
+
+  table.currentPage = page
 }
 
 function isColumnUsedAsSort(col: string | object) {
@@ -236,6 +247,7 @@ export async function useTable(store?: TableStore) {
     currentPage,
     goToPrevPage,
     goToNextPage,
+    goToPage,
     search,
     searchParams,
     toggleSort,
@@ -248,5 +260,6 @@ export async function useTable(store?: TableStore) {
     indeterminate,
     lastColumn,
     readableLastColumn,
+    lastPageNumber,
   })
 }

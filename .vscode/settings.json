@@ -44,6 +44,8 @@
     "iconify",
     "laravel",
     "unref",
-    "typesense"
+    "typesense",
+    "headlessui",
+    "nums"
   ]
 }
