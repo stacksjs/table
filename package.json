@@ -105,12 +105,12 @@
     "unplugin-vue-components": "^0.19.5",
     "upath": "^2.0.1",
     "vite": "^2.9.9",
-    "vitest": "^0.12.7",
+    "vitest": "^0.12.9",
     "vue-demi": "^0.12.5",
     "vue-tsc": "^0.34.15"
   },
   "engines": {
     "node": ">=v18.0.0",
-    "pnpm": ">=7.1.2"
+    "pnpm": ">=7.1.3"
   }
 }
