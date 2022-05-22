@@ -29,11 +29,11 @@ import { Table as TableV2 } from './main'
         sort="id:desc"
         sorts="created_at, customer_name, customer_po, due_at, id, part_name, stage_name"
         filters="
-          created_at: date,
+          created_at: date-range,
           customer_name: multi-select,
           customer_po: multi-select,
           document_types: multi-select,
-          due_at: date,
+          due_at: date-range,
           id: multi-select,
           invoice_number: multi-select,
           part_name: multi-select,
