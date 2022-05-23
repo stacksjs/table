@@ -46,6 +46,8 @@
     "unref",
     "typesense",
     "headlessui",
-    "nums"
+    "nums",
+    "focusring",
+    "textareas"
   ]
 }
