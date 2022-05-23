@@ -9,6 +9,7 @@ const table = $(useStorage('table', determineState()))
 const results = $ref(table.results)
 const hits = $ref(results?.hits)
 const columns = $ref(table.columns)
+const filters = $ref(table.filters)
 const sort = $ref(table.sort)
 const sorts = $ref(table.sorts)
 const type = $ref(table.type)
@@ -17,9 +18,27 @@ const perPage = $ref(table.perPage)
 const query = $ref(table.query)
 const actions = $ref(table.actions)
 const actionable = $ref(table.actionable)
-const selectedHits = $ref([]) // aka selectedRows
+const selectedHits: number[] = $ref([]) // aka selectedRows
 const checked = $ref(false)
 
+// const parsedFilters = $computed(() => {
+//   let parsed: string[] = []
+
+//   if (filters === undefined || !filters.length)
+//     return []
+
+//   if (isString(filters))
+//     parsed = filters.split(',')
+
+//   return parsed.map((filter) => {
+//     const [key, value] = filter.split(':')
+
+//     return {
+//       key,
+//       value,
+//     }
+//   })
+// })
 const totalPages = $computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
 const indeterminate = $computed(() => selectedHits.length > 0 && selectedHits.length < hits.length)
 const searchParams = $computed(() => {
@@ -65,6 +84,11 @@ watchDebounced(
   { debounce: 500 },
 )
 
+watch(selectedHits, (oldValue, newValue) => {
+  // eslint-disable-next-line no-console
+  console.log('selectedHits oldValue, newValue', oldValue, newValue)
+})
+
 function determineState(): TableStore {
   const ls = localStorage.getItem('table')
 
@@ -77,6 +101,7 @@ function determineState(): TableStore {
     password: '',
     type: '',
     columns: [],
+    filters: [],
     perPage: 20,
     currentPage: 1,
     query: '',
@@ -238,6 +263,7 @@ export async function useTable(store?: TableStore) {
     type,
     columns,
     isColumnSortable,
+    filters,
     sort,
     sorts,
     query,

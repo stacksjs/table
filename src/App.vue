@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Table as TableV2 } from './main'
-// import { TablePagination, TableSearch, Table as TableV2 } from './main'
 </script>
 
 <template>

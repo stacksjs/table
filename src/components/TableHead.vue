@@ -23,10 +23,17 @@ const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastCo
         <input
           type="checkbox"
           class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500"
+          :checked="indeterminate || selectedHits.length === hits.length"
+          :indeterminate="indeterminate"
+          @change="selectedHits = $event?.target?.checked ? hits.map((h) => h.id) : []"
+        >
+        <!-- <input
+          type="checkbox"
+          class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500"
           :checked="indeterminate || selectedHits?.length === hits?.length"
           :indeterminate="indeterminate"
           @change="selectedHits = []"
-        >
+        > -->
       </th>
 
       <th
