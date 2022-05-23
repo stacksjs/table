@@ -40,7 +40,7 @@ import { Table as TableV2 } from './main'
           vendor_name: multi-select"
         actions="Info Icon"
         per-page="10"
-        checkable="true"
+        selectable="true"
       >
         <template #part_name="partNameProps">
           <div v-for="(part, x) in partNameProps.value" :key="x" class="text-yellow-600">

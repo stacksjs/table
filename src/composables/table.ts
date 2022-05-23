@@ -19,26 +19,9 @@ const perPage = ref(table.perPage)
 const query = ref(table.query)
 const actions = ref(table.actions)
 const actionable = ref(table.actionable)
-const selectedHits: any[''] = ref([]) // the selected/checked rows
-const checked = ref(false)
+const selectedRows = ref(table.selectedRows || [])
+const selectedAll = ref(table.selectedAll)
 
-const totalPages = computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
-const pages = computed(() => [...Array(totalPages).keys()].map(i => i + 1))
-const isFirstPage = computed(() => {
-  if (table.currentPage === 1)
-    return true
-
-  return false
-})
-
-const isLastPage = computed(() => {
-  if (table.currentPage === totalPages.value)
-    return true
-
-  return false
-})
-
-const indeterminate = computed(() => selectedHits.value.length > 0 && selectedHits.value.length < hits.value.length)
 const searchParams = computed(() => {
   return {
     offset: (table.currentPage - 1) * table.perPage,
@@ -46,6 +29,13 @@ const searchParams = computed(() => {
     sort: isString(table.sort) ? [table.sort] : undefined,
   }
 })
+const totalPages = computed(() => {
+  if (table.results === undefined)
+    return 0
+
+  return Math.ceil(table.results.nbHits / table.perPage)
+})
+const indeterminate = computed(() => selectedRows.value.length > 0 && selectedRows.value.length < hits.value.length)
 const lastColumn = computed(() => {
   if (table.actionable || table.actions?.length)
     return [''] // actions-columns have no table-head
@@ -280,14 +270,11 @@ export async function useTable(store?: TableStore) {
     actionable,
     actions,
     colName,
-    selectedHits,
-    checked,
     indeterminate,
     lastColumn,
     readableLastColumn,
     lastPageNumber,
-    pages,
-    isFirstPage,
-    isLastPage,
+    selectedRows,
+    selectedAll,
   }
 }

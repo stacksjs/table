@@ -56,7 +56,7 @@ import { Table as TableV2 } from 'table-vue'
     :filterable="true"
     :sortable="true"
     :actionable="true"
-    :checkable="false"
+    :selectable="false"
     :per-page="20"
   />
 
@@ -71,7 +71,7 @@ import { Table as TableV2 } from 'table-vue'
     filters="customer_name, vendor_name, part_name, document_types"
     actions="Edit"
     per-page="10"
-    checkable="true"
+    selectable="true"
   />
 </template>
 ```

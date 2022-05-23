@@ -17,7 +17,7 @@ interface Props {
   actionable?: string | boolean
   actions?: string | string[]
   perPage?: string | number
-  checkable?: string | boolean
+  selectable?: string | boolean
   // stickyHeader?: string | boolean
   // stickyFooter?: string | boolean
 }
@@ -37,7 +37,7 @@ const {
   perPage = 20,
   actions = [],
   actionable = false,
-  checkable = false,
+  selectable = false,
 } = defineProps<Props>()
 
 const cols = computed((): string[] => {
@@ -83,7 +83,7 @@ const { table, search, colName } = await useTable({
   actionable,
   perPage: itemsPerPage.value,
   currentPage: 1,
-  checkable,
+  selectable,
 })
 
 // let's run the initial search upon page view/load
@@ -112,7 +112,7 @@ table.sortable = sortable
 table.perPage = itemsPerPage.value
 table.actions = actions
 table.actionable = actionable
-table.checkable = checkable
+table.selectable = selectable
 </script>
 
 <template>
