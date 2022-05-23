@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-console
 console.log('TableBody.vue')
 
-const { table, colName } = $(await useTable())
+const { table, colName } = await useTable()
 </script>
 
 <template>

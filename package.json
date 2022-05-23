@@ -69,8 +69,8 @@
     }
   },
   "dependencies": {
-    "meilisearch": "0.25.1",
-    "vue": "^3.2.35"
+    "meilisearch": "^0.25.1",
+    "vue-demi": "^0.12.5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.23.1",
@@ -106,8 +106,17 @@
     "upath": "^2.0.1",
     "vite": "^2.9.9",
     "vitest": "^0.12.9",
-    "vue-demi": "^0.12.5",
+    "vue": "^3.2.35",
     "vue-tsc": "^0.34.15"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "vue": "^2.0.0 || >=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=v18.0.0",

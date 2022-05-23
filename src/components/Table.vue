@@ -40,26 +40,26 @@ const {
   checkable = false,
 } = defineProps<Props>()
 
-const cols = $computed((): string[] => {
+const cols = computed((): string[] => {
   if (isString(columns))
     return columns.split(',').map(col => col.trim())
 
   return columns
 })
 
-const sortDirections = $computed((): string[] => {
+const sortDirections = computed((): string[] => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
 
   return sorts
 })
-const facetFilters = $computed((): string[] => {
+const facetFilters = computed((): string[] => {
   if (isString(filters))
     return filters.split(',').map(col => col.trim())
 
   return filters
 })
-const itemsPerPage = $computed((): number => {
+const itemsPerPage = computed((): number => {
   if (isString(perPage))
     return parseInt(perPage)
 
@@ -71,17 +71,17 @@ const { table, search, colName } = await useTable({
   source,
   password,
   type,
-  columns: cols,
+  columns: cols.value,
   searchable,
   query,
-  filters: facetFilters,
+  filters: facetFilters.value,
   filterable,
   sort,
-  sorts: sortDirections,
+  sorts: sortDirections.value,
   sortable,
   actions,
   actionable,
-  perPage: itemsPerPage,
+  perPage: itemsPerPage.value,
   currentPage: 1,
   checkable,
 })
@@ -89,24 +89,26 @@ const { table, search, colName } = await useTable({
 // let's run the initial search upon page view/load
 const results = await search()
 
+if (results)
+  table.results = results
+
 // now that we have the search results, let's update/set the state of the table
-table.value.source = source
-table.value.password = password
-table.value.results = results
-table.value.hits = results?.hits
-table.value.type = type
-table.value.columns = cols
-table.value.searchable = searchable
-table.value.query = query
-table.value.filters = facetFilters
-table.value.filterable = filterable
-table.value.sort = sort
-table.value.sorts = sortDirections
-table.value.sortable = sortable
-table.value.perPage = itemsPerPage
-table.value.actions = actions
-table.value.actionable = actionable
-table.value.checkable = checkable
+table.source = source
+table.password = password
+table.hits = results?.hits
+table.type = type
+table.columns = cols.value
+table.searchable = searchable
+table.query = query
+table.filters = facetFilters.value
+table.filterable = filterable
+table.sort = sort
+table.sorts = sortDirections.value
+table.sortable = sortable
+table.perPage = itemsPerPage.value
+table.actions = actions
+table.actionable = actionable
+table.checkable = checkable
 </script>
 
 <template>

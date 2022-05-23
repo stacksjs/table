@@ -4,16 +4,16 @@ import { useTable } from '~/composables/table'
 // eslint-disable-next-line no-console
 console.log('TableHead.vue')
 
-const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, selectedHits, hits } = $(await useTable())
+const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, selectedHits, hits } = await useTable()
 
-const lastColumn = $computed(() => {
+const lastColumn = computed(() => {
   if (table.actionable || table.actions?.length)
     return [''] // actions-columns have no table-head
 
   return table.columns[table.columns.length - 1]
 })
 
-const readableLastColumn = $computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
+const readableLastColumn = computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
 </script>
 
 <template>

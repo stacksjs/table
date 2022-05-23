@@ -9,7 +9,7 @@ import Components from 'unplugin-vue-components/vite'
 /** @type {import('vite').UserConfig} */
 const config = {
   resolve: {
-    dedupe: ['vue'],
+    // dedupe: ['vue'],
     alias: {
       '~': resolve(__dirname, 'src'),
     },
@@ -20,9 +20,7 @@ const config = {
   },
 
   plugins: [
-    Vue({
-      reactivityTransform: true, // https://vuejs.org/guide/extras/reactivity-transform.html
-    }),
+    Vue(),
 
     Unocss({
       mode: 'vue-scoped',

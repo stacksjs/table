@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const emit = defineEmits(['paginateToNextPage', 'paginateToPreviousPage', 'paginateToPage'])
 
-const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber, pages, isFirstPage, isLastPage } = $(await useTable())
+const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber, pages, isFirstPage, isLastPage } = await useTable()
 
 function next() {
   goToNextPage()

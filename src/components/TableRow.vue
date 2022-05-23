@@ -3,7 +3,7 @@ import type { Hit } from 'meilisearch'
 
 const { hit } = defineProps<{ hit: Hit }>()
 
-const { table, colName, selectedHits } = $(await useTable())
+const { table, colName, selectedHits } = await useTable()
 
 // let's generate the value of the row
 function generateValue(hit: any, col: any) {
