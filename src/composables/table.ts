@@ -1,5 +1,5 @@
 import { isObject, isString, useStorage } from '@vueuse/core'
-import type { SearchResponse } from 'meilisearch'
+import type { SearchParams, SearchResponse } from 'meilisearch'
 import MeiliSearch from 'meilisearch'
 import type { Ref } from 'vue'
 import { computed, ref } from 'vue-demi'
@@ -32,7 +32,7 @@ const isFirstPage = computed(() => {
 })
 
 const isLastPage = computed(() => {
-  if (table.currentPage === totalPages)
+  if (table.currentPage === totalPages.value)
     return true
 
   return false
@@ -60,7 +60,7 @@ watchEffect(async () => {
   // eslint-disable-next-line no-console
   console.log('watchEffect', query, searchParams)
 
-  const results = await search(query.value, searchParams)
+  const results = await search(query.value, searchParams.value)
 
   if (results) {
     table.results = results
@@ -141,8 +141,8 @@ function hasTableLoaded(state?: any): Boolean {
   return isString(table?.type) && table.type !== '' // a lazy way to check if the table is loaded
 }
 
-// we have to accept the query and searchParams because those params are watched in the watchEffect
-async function search(q?: string): Promise<void | SearchResponse<Record<string, any>>> {
+// we have to accept `query` and `searchParams` because those params are watched from within a watchEffect
+async function search(q?: string, options?: SearchParams): Promise<void | SearchResponse<Record<string, any>>> {
   // eslint-disable-next-line no-console
   console.log('searching', q, searchParams)
 
@@ -159,7 +159,11 @@ async function search(q?: string): Promise<void | SearchResponse<Record<string, 
       return
     }
 
-    return await client().index(table.type).search(query, searchParams.value) // TODO: add search params (filters, sorts, etc)
+    // we w
+    if (options === undefined)
+      return await client().index(table.type).search(query, searchParams.value)
+
+    return await client().index(table.type).search(query, options)
   }
   catch (error) {
     console.error('error when performing search', error)
