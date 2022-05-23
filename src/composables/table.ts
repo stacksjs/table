@@ -84,11 +84,6 @@ watchDebounced(
   { debounce: 500 },
 )
 
-watch(selectedHits, (oldValue, newValue) => {
-  // eslint-disable-next-line no-console
-  console.log('selectedHits oldValue, newValue', oldValue, newValue)
-})
-
 function determineState(): TableStore {
   const ls = localStorage.getItem('table')
 
