@@ -43,7 +43,7 @@ const searchParams = computed(() => {
   return {
     offset: (table.currentPage - 1) * table.perPage,
     limit: table.perPage,
-    sort: isString(table.sort) ? [table.sort] : null,
+    sort: isString(table.sort) ? [table.sort] : undefined,
   }
 })
 const lastColumn = computed(() => {
@@ -142,9 +142,10 @@ function hasTableLoaded(state?: any): Boolean {
 }
 
 // we have to accept the query and searchParams because those params are watched in the watchEffect
-async function search(q?: string, searchParams?: object): Promise<void | SearchResponse<Record<string, any>>> {
+async function search(q?: string): Promise<void | SearchResponse<Record<string, any>>> {
   // eslint-disable-next-line no-console
   console.log('searching', q, searchParams)
+
   if (!hasTableLoaded(table))
     return
 
@@ -158,7 +159,7 @@ async function search(q?: string, searchParams?: object): Promise<void | SearchR
       return
     }
 
-    return await client().index(table.type).search(query, searchParams) // TODO: add search params (filters, sorts, etc)
+    return await client().index(table.type).search(query, searchParams.value) // TODO: add search params (filters, sorts, etc)
   }
   catch (error) {
     console.error('error when performing search', error)
