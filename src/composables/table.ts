@@ -29,6 +29,7 @@ const searchParams = computed(() => {
     sort: isString(table.sort) ? [table.sort] : undefined,
   }
 })
+
 const totalPages = computed(() => {
   if (table.results === undefined)
     return 0
