@@ -21,25 +21,22 @@ const actionable = $ref(table.actionable)
 const selectedHits: number[] = $ref([]) // aka selectedRows
 const checked = $ref(false)
 
-// const parsedFilters = $computed(() => {
-//   let parsed: string[] = []
-
-//   if (filters === undefined || !filters.length)
-//     return []
-
-//   if (isString(filters))
-//     parsed = filters.split(',')
-
-//   return parsed.map((filter) => {
-//     const [key, value] = filter.split(':')
-
-//     return {
-//       key,
-//       value,
-//     }
-//   })
-// })
 const totalPages = $computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
+const pages = $computed(() => [...Array(totalPages).keys()].map(i => i + 1))
+const isFirstPage = $computed(() => {
+  if (table.currentPage === 1)
+    return true
+
+  return false
+})
+
+const isLastPage = $computed(() => {
+  if (table.currentPage === totalPages)
+    return true
+
+  return false
+})
+
 const indeterminate = $computed(() => selectedHits.length > 0 && selectedHits.length < hits.length)
 const searchParams = $computed(() => {
   return {
@@ -130,8 +127,8 @@ function client(): MeiliSearch {
     table.source = ''
 
   return new MeiliSearch({
-    host: table.source, // http://3.85.80.143
-    apiKey: table.password, // NtUvZv5Q87e355b807622149c350ac38679645b4e2603a1d3eb48cda080f977e76329aeb
+    host: table.source,
+    apiKey: table.password,
   })
 }
 
@@ -282,5 +279,8 @@ export async function useTable(store?: TableStore) {
     lastColumn,
     readableLastColumn,
     lastPageNumber,
+    pages,
+    isFirstPage,
+    isLastPage,
   })
 }

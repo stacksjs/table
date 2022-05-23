@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const emit = defineEmits(['paginateToNextPage', 'paginateToPreviousPage', 'paginateToPage'])
 
-const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber } = $(await useTable())
+const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber, pages, isFirstPage, isLastPage } = $(await useTable())
 
 function next() {
   goToNextPage()
@@ -70,11 +70,19 @@ function paginateTo(page: number) {
           </a>
 
           <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-          <a href="#" aria-current="page" class="border font-medium text-sm py-2 px-4 z-10 relative inline-flex items-center underline-transparent"> 1 </a>
-          <a href="#" class="bg-white border font-medium border-gray-300 text-sm py-2 px-4 text-gray-500 relative inline-flex items-center underline-transparent hover:bg-gray-50"> 2 </a>
+          <a
+            v-for="page in pages"
+            :key="page"
+            href="#"
+            aria-current="page"
+            class="border font-medium text-sm py-2 px-4 z-10 relative inline-flex items-center underline-transparent"
+          >
+            {{ page }}
+          </a>
+          <!-- <a href="#" class="bg-white border font-medium border-gray-300 text-sm py-2 px-4 text-gray-500 relative inline-flex items-center underline-transparent hover:bg-gray-50"> 2 </a>
           <a href="#" class="bg-white border font-medium border-gray-300 text-sm py-2 px-4 text-gray-500 hidden relative items-center underline-transparent md:inline-flex hover:bg-gray-50"> 3 </a>
           <a href="#" class="bg-white border font-medium border-gray-300 text-sm py-2 px-4 text-gray-500 hidden relative items-center underline-transparent md:inline-flex hover:bg-gray-50"> 4 </a>
-          <a href="#" class="bg-white border font-medium border-gray-300 text-sm py-2 px-4 text-gray-500 hidden relative items-center underline-transparent md:inline-flex hover:bg-gray-50"> 5 </a>
+          <a href="#" class="bg-white border font-medium border-gray-300 text-sm py-2 px-4 text-gray-500 hidden relative items-center underline-transparent md:inline-flex hover:bg-gray-50"> 5 </a> -->
 
           <a
             href="#"
