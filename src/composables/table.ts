@@ -19,7 +19,7 @@ const perPage = ref(table.perPage)
 const query = ref(table.query)
 const actions = ref(table.actions)
 const actionable = ref(table.actionable)
-const selectedHits = ref([]) // the selected/checked rows
+const selectedHits: any[''] = ref([]) // the selected/checked rows
 const checked = ref(false)
 
 const totalPages = computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
