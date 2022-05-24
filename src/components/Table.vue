@@ -74,7 +74,7 @@ const itemsPerPage = computed((): number => {
 })
 
 // let's use (init) the table by passing the default state
-const { table, search, colName } = await useTable({
+const { table, search, columnName } = await useTable({
   source,
   password,
   type,
@@ -131,9 +131,9 @@ table.results = results as SearchResponse
             <table class="divide-y min-w-full divide-gray-300">
               <TableHead />
               <TableBody>
-                <template v-for="(col, x) in parsedColumns" :key="x" #[colName(col)]="tableBodyData">
+                <template v-for="(col, x) in parsedColumns" :key="x" #[columnName(col)]="tableBodyData">
                   <!-- {{ tableBodyData }} -->
-                  <slot :name="colName(col)" :value="tableBodyData.tableRowData" />
+                  <slot :name="columnName(col)" :value="tableBodyData.tableRowData" />
                 </template>
               </TableBody>
             </table>

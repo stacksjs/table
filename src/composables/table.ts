@@ -240,7 +240,7 @@ function toggleSort(col: string | Ref<string>) {
   console.log('table.sort', table.sort)
 }
 
-function colName(col: string) {
+function columnName(col: string) {
   return col.split(':')[0].trim()
 }
 
@@ -268,7 +268,7 @@ export async function useTable(store?: TableStore) {
     isColumnUsedAsSort,
     actionable,
     actions,
-    colName,
+    columnName,
     indeterminate,
     lastColumn,
     readableLastColumn,

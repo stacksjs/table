@@ -3,9 +3,6 @@ const emit = defineEmits(['paginateToNextPage', 'paginateToPreviousPage', 'pagin
 
 const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber } = await useTable()
 
-// eslint-disable-next-line no-console
-console.log('table', table)
-
 const totalPages = computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
 const pages = computed(() => [...Array(totalPages).keys()].map(i => i + 1))
 // const isFirstPage = computed(() => {

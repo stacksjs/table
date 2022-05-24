@@ -3,7 +3,7 @@ import type { Hit } from 'meilisearch'
 
 const { hit } = defineProps<{ hit: Hit }>()
 
-const { table, colName } = await useTable()
+const { table, columnName } = await useTable()
 
 // let's generate the value of the row
 function generateValue(hit: any, col: any) {
@@ -38,7 +38,7 @@ function generateValue(hit: any, col: any) {
       </span>
 
       <span v-else>
-        <slot :name="colName(col)" :col-data="generateValue(hit, col)">
+        <slot :name="columnName(col)" :col-data="generateValue(hit, col)">
           {{ generateValue(hit, col) }}
         </slot>
       </span>
