@@ -20,7 +20,7 @@ const query = ref(table.query)
 const actions = ref(table.actions)
 const actionable = ref(table.actionable)
 const selectedRows = ref(table.selectedRows || [])
-const selectedAll = ref(table.selectedAll)
+const selectedAll = ref(table.selectedAll || false)
 
 const searchParams = computed(() => {
   return {
@@ -36,7 +36,7 @@ const totalPages = computed(() => {
 
   return Math.ceil(table.results.nbHits / table.perPage)
 })
-const indeterminate = computed(() => selectedRows.value.length > 0 && selectedRows.value.length < hits.value.length)
+const indeterminate = computed(() => (table?.selectedRows?.length ?? 0) > 0 && (table?.selectedRows?.length ?? 0) < hits.value.length)
 const lastColumn = computed(() => {
   if (table.actionable || table.actions?.length)
     return [''] // actions-columns have no table-head

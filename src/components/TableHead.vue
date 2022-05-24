@@ -4,7 +4,7 @@ import { useTable } from '~/composables/table'
 // eslint-disable-next-line no-console
 console.log('TableHead.vue')
 
-const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, selectedRows, hits } = await useTable()
+const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, hits } = await useTable()
 
 const lastColumn = computed(() => {
   if (table.actionable || table.actions?.length)
@@ -23,9 +23,9 @@ const readableLastColumn = computed(() => lastColumn[0]?.includes(':') ? lastCol
         <input
           type="checkbox"
           class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500"
-          :checked="indeterminate || selectedRows.length === hits.length"
+          :checked="indeterminate || table.selectedRows?.length === hits.length"
           :indeterminate="indeterminate"
-          @change="selectedRows = $event?.target?.checked ? hits.map((h) => h.id) : []"
+          @change="table.selectedRows = $event?.target?.checked ? hits.map((h) => h.id) : []"
         >
         <!-- <input
           type="checkbox"
