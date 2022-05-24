@@ -48,20 +48,19 @@ const {
   selectedAll = false,
 } = defineProps<Props>()
 
-const cols = computed((): string[] => {
+const parsedColumns = computed((): string[] => {
   if (isString(columns))
     return columns.split(',').map(col => col.trim())
 
   return columns
 })
-
-const sortDirections = computed((): string[] => {
+const parsedSorts = computed((): string[] => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
 
   return sorts
 })
-const facetFilters = computed((): string[] => {
+const parsedFilters = computed((): string[] => {
   if (isString(filters))
     return filters.split(',').map(col => col.trim())
 
@@ -79,13 +78,13 @@ const { table, search, colName } = await useTable({
   source,
   password,
   type,
-  columns: cols.value,
+  columns: parsedColumns.value,
   searchable,
   query,
-  filters: facetFilters.value,
+  filters: parsedFilters.value,
   filterable,
   sort,
-  sorts: sortDirections.value,
+  sorts: parsedSorts.value,
   sortable,
   actions,
   actionable,
@@ -101,28 +100,26 @@ const results = await search()
 // eslint-disable-next-line no-console
 console.log('initial search complete', results)
 
-if (results)
-  table.results = results
-
 // now that we have the search results, let's update/set the state of the table
 table.source = source
 table.password = password
 table.hits = results?.hits
 table.type = type
-table.columns = cols.value
+table.columns = parsedColumns.value
 table.searchable = searchable
 table.query = query
 table.filterable = filterable
-table.filters = facetFilters.value
+table.filters = parsedFilters.value
 table.sortable = sortable
 table.sort = sort
-table.sorts = sortDirections.value
+table.sorts = parsedSorts.value
 table.perPage = itemsPerPage.value
 table.actionable = actionable
 table.actions = actions
 table.selectable = selectable
 table.selectedRows = selectedRows
 table.selectedAll = selectedAll
+table.results = results as SearchResponse
 </script>
 
 <template>
@@ -134,7 +131,7 @@ table.selectedAll = selectedAll
             <table class="divide-y min-w-full divide-gray-300">
               <TableHead />
               <TableBody>
-                <template v-for="(col, x) in cols" :key="x" #[colName(col)]="tableBodyData">
+                <template v-for="(col, x) in parsedColumns" :key="x" #[colName(col)]="tableBodyData">
                   <!-- {{ tableBodyData }} -->
                   <slot :name="colName(col)" :value="tableBodyData.tableRowData" />
                 </template>

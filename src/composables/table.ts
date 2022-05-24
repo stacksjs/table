@@ -2,26 +2,25 @@ import { isObject, isString, useStorage } from '@vueuse/core'
 import type { SearchParams, SearchResponse } from 'meilisearch'
 import MeiliSearch from 'meilisearch'
 import type { Ref } from 'vue'
-import { computed, ref } from 'vue-demi'
+import { computed } from 'vue-demi'
 import type { TableStore } from '~/types'
 
 const table = (useStorage('table', determineState()).value as TableStore)
 
-const results = ref(table.results)
-const hits = ref(results.value?.hits || [])
-const columns = ref(table.columns)
-const filters = ref(table.filters)
-const sort = ref(table.sort)
-const sorts = ref(table.sorts)
-const type = ref(table.type)
-const currentPage = ref(table.currentPage)
-const perPage = ref(table.perPage)
-const query = ref(table.query)
-const actions = ref(table.actions)
-const actionable = ref(table.actionable)
-const selectedRows = ref(table.selectedRows || [])
-const selectedAll = ref(table.selectedAll || false)
-
+const results = computed(() => table.results)
+const hits = computed(() => results.value?.hits || [])
+const columns = computed(() => table.columns)
+const filters = computed(() => table.filters)
+const sort = computed(() => table.sort)
+const sorts = computed(() => table.sorts)
+const type = computed(() => table.type)
+const currentPage = computed(() => table.currentPage)
+const perPage = computed(() => table.perPage)
+const query = computed(() => table.query)
+const actions = computed(() => table.actions)
+const actionable = computed(() => table.actionable)
+const selectedRows = computed(() => table.selectedRows)
+const selectedAll = computed(() => table.selectedAll)
 const searchParams = computed(() => {
   return {
     offset: (table.currentPage - 1) * table.perPage,
@@ -29,7 +28,6 @@ const searchParams = computed(() => {
     sort: isString(table.sort) ? [table.sort] : undefined,
   }
 })
-
 const totalPages = computed(() => {
   if (table.results === undefined)
     return 0
