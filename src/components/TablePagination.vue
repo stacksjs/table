@@ -1,10 +1,8 @@
 <script setup lang="ts">
 const emit = defineEmits(['paginateToNextPage', 'paginateToPreviousPage', 'paginateToPage'])
 
-const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber } = await useTable()
+const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber, totalPages, pages } = await useTable()
 
-const totalPages = computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
-const pages = computed(() => [...Array(totalPages).keys()].map(i => i + 1))
 // const isFirstPage = computed(() => {
 //   if (table.currentPage === 1)
 //     return true

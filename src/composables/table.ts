@@ -28,12 +28,9 @@ const searchParams = computed(() => {
     sort: isString(table.sort) ? [table.sort] : undefined,
   }
 })
-const totalPages = computed(() => {
-  if (table.results === undefined)
-    return 0
+const totalPages = computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
+const pages = computed(() => [...Array(totalPages).keys()].map(i => i + 1))
 
-  return Math.ceil(table.results.nbHits / table.perPage)
-})
 const indeterminate = computed(() => (table?.selectedRows?.length ?? 0) > 0 && (table?.selectedRows?.length ?? 0) < hits.value.length)
 const lastColumn = computed(() => {
   if (table.actionable || table.actions?.length)
@@ -67,7 +64,7 @@ watchDebounced(
       return
 
     if (isRef(table.query))
-      table.query.value = query.value
+      table.query = query.value
   },
   { debounce: 500 },
 )
@@ -211,7 +208,7 @@ function toggleSort(col: string | Ref<string>) {
   if (isRef(col))
     col = unref(col)
 
-  const sortKey = col.includes(':') ? col.split(':')[0].trim() : col
+  const sortKey = (col as string).includes(':') ? (col as string).split(':')[0].trim() : col
 
   if (table.sort?.includes('desc')) {
     table.sort = `${sortKey}:asc`
@@ -275,5 +272,7 @@ export async function useTable(store?: TableStore) {
     lastPageNumber,
     selectedRows,
     selectedAll,
+    totalPages,
+    pages,
   }
 }
