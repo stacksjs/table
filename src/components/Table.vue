@@ -81,16 +81,18 @@ const { table, search, columnName } = await useTable({
   columns: parsedColumns.value,
   searchable,
   query,
-  filters: parsedFilters.value,
-  filterable,
+  sortable,
   sort,
   sorts: parsedSorts.value,
-  sortable,
-  actions,
+  filterable,
+  filters: parsedFilters.value,
   actionable,
+  actions,
   perPage: itemsPerPage.value,
   currentPage: 1,
-  selectable,
+  selectable: true,
+  selectedRows: [],
+  selectedAll: false,
 })
 
 // let's run the initial search upon page view/load

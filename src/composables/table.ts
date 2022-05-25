@@ -33,9 +33,6 @@ const pages = computed(() => [...Array(totalPages).keys()].map(i => i + 1))
 
 const indeterminate = computed(() => (table?.selectedRows?.length ?? 0) > 0 && (table?.selectedRows?.length ?? 0) < hits.value.length)
 const lastColumn = computed(() => {
-  if (table.actionable || table.actions?.length)
-    return [''] // actions-columns have no table-head
-
   return table.columns[table.columns.length - 1]
 })
 const readableLastColumn = computed(() => lastColumn[0]?.includes(':') ? lastColumn[0].split(':')[1].trim() : lastColumn[0])
