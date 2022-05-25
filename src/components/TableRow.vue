@@ -34,7 +34,7 @@ function generateValue(hit: any, col: any) {
     >
       <!-- last columns oftentimes are styled slightly different -->
       <span v-if="(table.columns.length === x + 1) && (table.actionable || table.actions)">
-        <TableCellActionItems action-items="Edit" />
+        <TableCellActionItems />
       </span>
 
       <span v-else>

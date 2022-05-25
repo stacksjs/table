@@ -38,7 +38,7 @@ import { Table as TableV2 } from './main'
           part_name: multi-select,
           stage_name: multi-select,
           vendor_name: multi-select"
-        actions="Info Icon"
+        actions="Info"
         per-page="10"
         selectable="true"
       >

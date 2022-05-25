@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const { actionItems } = defineProps<{ actionItems: string }>()
+import { useTable } from '~/composables/table'
+
+const { actions } = await useTable()
 </script>
 
 <template>
-  {{ actionItems }}
+  {{ actions }}
 </template>
