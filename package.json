@@ -1,6 +1,6 @@
 {
   "name": "@ow3/table-vue",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "The easy & modern way to work with tables. Facet filtering, searching, pagination, ...",
   "keywords": [
     "tables",
@@ -45,7 +45,6 @@
     "commit": "git-cz",
     "coverage": "vitest run --coverage",
     "dev": "vite dev --open --port 3333",
-    "preinstall": "node .scripts/check-for-pnpm.mjs && node .scripts/check-node-version.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
