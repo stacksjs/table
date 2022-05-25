@@ -1,3 +1,7 @@
+## [0.0.8](https://github.com/openwebstacks/table/compare/v0.0.7...v0.0.8) (2022-05-25)
+
+
+
 ## [0.0.7](https://github.com/openwebstacks/table/compare/v0.0.6...v0.0.7) (2022-05-25)
 
 
@@ -33,3 +37,6 @@
 ### Features
 
 * import table elements ([a7b29c9](https://github.com/openwebstacks/table/commit/a7b29c9c89e0057c91c8ce0bcea2d5069dd09d23))
+
+
+
