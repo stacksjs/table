@@ -1,6 +1,6 @@
 {
   "name": "@ow3/table-vue",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The easy & modern way to work with tables. Facet filtering, searching, pagination, ...",
   "keywords": [
     "tables",
