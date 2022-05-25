@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useTable } from '~/composables/table'
 
-// eslint-disable-next-line no-console
-console.log('TableHead.vue')
-
 const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, hits, lastColumn, readableLastColumn } = await useTable()
 </script>
 
@@ -16,7 +13,7 @@ const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, 
           class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500"
           :checked="indeterminate || table.selectedRows?.length === hits.length"
           :indeterminate="indeterminate"
-          @change="table.selectedRows = $event?.target?.checked ? hits.map((h) => h.id) : []"
+          @change="table.selectedRows = ($event?.target as any).checked ? hits.map((h) => h.id) : []"
         >
         <!-- <input
           type="checkbox"

@@ -58,7 +58,7 @@ const config = {
 
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(__dirname, 'src/main.ts'),
       name: 'table-vue',
       fileName: format => `table-vue.${format}.js`,
     },
@@ -75,7 +75,7 @@ const config = {
     },
 
     sourcemap: true,
-    minify: false,
+    minify: true,
   },
 
   test: {
