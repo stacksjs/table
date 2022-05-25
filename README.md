@@ -1,6 +1,6 @@
-# Table Elements
+# Table Stack
 
-The easiest way to work with tables, and, in particular, data tables. Without much effort, configure a search engine in your frontend as the data source for your tables. These components will allow you to kick-start the development of a feature-rich & configurable table UI, including a beautiful, blazing-fast (!) UX.
+The easy & modern way to work with tables of any size. Blazing-fast searching, filtering, sorting, and paginating. Powered by your search engine of choice. Kick-start the development of a feature-rich & configurable table UI, including a beautiful default UX.
 
 ## 🐙 Features
 
@@ -86,7 +86,7 @@ yarn test
 
 ## 📈 Changelog
 
-Please see our [releases](https://github.com/openweblabs/table-vue/releases) page for more information on what has changed recently.
+Please see our [releases](https://github.com/openwebstacks/table/releases) page for more information on what has changed recently.
 
 ## 💪🏼 Contributing
 
@@ -96,7 +96,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-[Table Elements on GitHub](https://github.com/openweblabs/table-vue/discussions)
+[Table Elements on GitHub](https://github.com/openwebstacks/table/discussions)
 
 For casual chit-chat with others using this package:
 
