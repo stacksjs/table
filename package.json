@@ -1,6 +1,6 @@
 {
   "name": "@ow3/table-vue",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "The easy & modern way to work with tables. Facet filtering, searching, pagination, ...",
   "keywords": [
     "tables",
@@ -119,7 +119,7 @@
     }
   },
   "engines": {
-    "node": ">=v18.0.0",
+    "node": ">=v16.14.2",
     "pnpm": ">=7.1.5"
   }
 }
