@@ -1,4 +1,4 @@
-## [0.0.9](https://github.com/openwebstacks/table/compare/v0.0.8...v0.0.9) (2022-05-27)
+## [0.0.10](https://github.com/openwebstacks/table/compare/v0.0.8...v0.0.10) (2022-05-27)
 
 
 ### Features
