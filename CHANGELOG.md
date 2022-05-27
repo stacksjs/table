@@ -1,3 +1,12 @@
+## [0.0.9](https://github.com/openwebstacks/table/compare/v0.0.8...v0.0.9) (2022-05-27)
+
+
+### Features
+
+* **release:** 0.0.9 ([fb9887f](https://github.com/openwebstacks/table/commit/fb9887f217380b2cabfb5eb42eaca7e3e48ef0e4))
+
+
+
 ## [0.0.8](https://github.com/openwebstacks/table/compare/v0.0.7...v0.0.8) (2022-05-25)
 
 
