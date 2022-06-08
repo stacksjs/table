@@ -22,7 +22,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.2
         with:
-          version: 7.1.8
+          version: 7.1.9
 
       - name: Set node
         uses: actions/setup-node@v3
