@@ -2,6 +2,15 @@
   "name": "@ow3/table-vue",
   "version": "0.0.10",
   "description": "The easy & modern way to work with tables. Facet filtering, searching, pagination, ...",
+  "author": "Open Web Labs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openwebstacks/table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openwebstacks/table/issues"
+  },
   "keywords": [
     "tables",
     "filters",
@@ -14,22 +23,13 @@
     "typescript",
     "javascript"
   ],
-  "bugs": {
-    "url": "https://github.com/openwebstacks/table/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/openwebstacks/table.git"
-  },
-  "license": "MIT",
-  "author": "Open Web Labs",
   "contributors": [
     "Chris Breuer <chris@ow3.org>"
   ],
   "exports": {
     ".": {
-      "import": "./dist/table-vue.es.js",
-      "require": "./dist/table-vue.umd.js"
+      "require": "./dist/table-vue.umd.js",
+      "import": "./dist/table-vue.es.js"
     }
   },
   "main": "./dist/table-vue.umd.js",
@@ -72,6 +72,14 @@
     "meilisearch": "^0.25.1",
     "vue-demi": "^0.13.1"
   },
+  "engines": {
+    "node": ">=v16.15.1",
+    "pnpm": ">=7.1.9"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.6.2",
+    "vue": "^2.0.0 || >=3.0.0"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",
     "@babel/types": "^7.18.4",
@@ -109,17 +117,9 @@
     "vue": "^3.2.37",
     "vue-tsc": "^0.37.3"
   },
-  "peerDependencies": {
-    "@vue/composition-api": "^1.6.2",
-    "vue": "^2.0.0 || >=3.0.0"
-  },
   "peerDependenciesMeta": {
     "@vue/composition-api": {
       "optional": true
     }
-  },
-  "engines": {
-    "node": ">=v16.15.1",
-    "pnpm": ">=7.1.9"
   }
 }
