@@ -28,9 +28,31 @@ const searchParams = computed(() => {
     sort: isString(table.sort) ? [table.sort] : undefined,
   }
 })
-const totalPages = computed(() => Math.ceil(table.results?.nbHits ?? 1 / table.perPage))
-const pages = computed(() => [...Array(totalPages).keys()].map(i => i + 1))
 
+const totalHits = table.results ? table.results.nbHits : 1
+
+const totalPages = computed(() => Math.floor(totalHits / table.perPage))
+
+const pages = computed(() => {
+  const hitPages = [...Array(totalPages.value).keys()].map(i => i + 1)
+  const offset = 2
+  const currentPage = table.currentPage
+  const lastPage = hitPages[hitPages.length - 1]
+
+  let from = currentPage - offset
+  if (from < 1)
+    from = 1
+
+  let to = from + offset * 2
+  if (to >= lastPage)
+    to = lastPage
+
+  const allPages = []
+  for (let page = from; page <= to; page++)
+    allPages.push(page)
+
+  return allPages
+})
 const indeterminate = computed(() => (table?.selectedRows?.length ?? 0) > 0 && (table?.selectedRows?.length ?? 0) < hits.value.length)
 const lastColumn = computed(() => {
   return table.columns[table.columns.length - 1]
@@ -40,8 +62,7 @@ const lastPageNumber = computed(() => Math.ceil((table.results?.nbHits ?? 1) / t
 
 // this watchEffect picks up any reactivity changes from `query` and `searchParams` and it will then trigger a search
 watchEffect(async () => {
-  // eslint-disable-next-line no-console
-  console.log('watchEffect', query, searchParams)
+  // console.log('watchEffect', query, searchParams)
 
   const results = await search(query.value, searchParams.value)
 
@@ -105,9 +126,6 @@ function isColumnSortable(col: string): Boolean {
 
 // search methods
 function client(): MeiliSearch {
-  // eslint-disable-next-line no-console
-  console.log('table', table)
-
   if (!table.source)
     table.source = ''
 
@@ -126,8 +144,7 @@ function hasTableLoaded(state?: any): Boolean {
 
 // we have to accept `query` and `searchParams` because those params are watched from within a watchEffect
 async function search(q?: string, options?: SearchParams): Promise<void | SearchResponse<Record<string, any>>> {
-  // eslint-disable-next-line no-console
-  console.log('searching', q, searchParams)
+  // console.log('searching', q, searchParams)
 
   if (!hasTableLoaded(table))
     return
@@ -137,7 +154,6 @@ async function search(q?: string, options?: SearchParams): Promise<void | Search
     const query = isString(q) ? q : (isString(table.query) ? table.query : '')
 
     if (!table.type) {
-      // eslint-disable-next-line no-console
       console.error('no type provided')
       return
     }
@@ -177,9 +193,6 @@ function goToNextPage() {
 }
 
 function goToPage(page: number) {
-  // eslint-disable-next-line no-console
-  console.log('currentPage', currentPage)
-
   if (table.currentPage === page || currentPage === undefined || table === undefined)
     return
 

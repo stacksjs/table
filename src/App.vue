@@ -39,7 +39,7 @@ import { Table as TableV2 } from './main'
           stage_name: multi-select,
           vendor_name: multi-select"
         actions="Info"
-        per-page="10"
+        per-page="50"
         selectable="true"
       >
         <template #part_name="partNameProps">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // eslint-disable-next-line no-console
-console.log('TableBody.vue')
+// console.log('TableBody.vue')
 
 const { table, columnName } = await useTable()
 </script>

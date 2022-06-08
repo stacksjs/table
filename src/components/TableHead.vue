@@ -28,7 +28,7 @@ const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, 
         v-for="(col, index) in table.columns"
         :key="index"
         scope="col"
-        class="font-semibold text-left text-sm py-3.5 text-gray-900"
+        class="font-semibold text-left text-sm py-3.5 pr-3 pl-4 sm:pl-6 text-gray-900"
         :class="index === 0 ? `pr-3 pl-4 sm:pl-6` : `px-3`"
         @click="toggleSort(col)"
       >

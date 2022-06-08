@@ -3,8 +3,7 @@ const emit = defineEmits(['paginateToNextPage', 'paginateToPreviousPage', 'pagin
 
 const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber, totalPages, pages } = await useTable()
 
-// eslint-disable-next-line no-console
-console.log('totalPages', totalPages.value)
+// console.log('totalPages', totalPages.value)
 
 watch(totalPages, (oldValue, newValue) => {
   // eslint-disable-next-line no-console
@@ -31,8 +30,7 @@ watch(totalPages, (oldValue, newValue) => {
 //   return false
 // })
 
-// eslint-disable-next-line no-console
-console.log('pages', pages.value)
+// console.log('pages', pages.value)
 
 function next() {
   goToNextPage()
@@ -106,7 +104,9 @@ function paginateTo(page: number) {
             :key="page"
             href="#"
             aria-current="page"
-            class="border font-medium text-sm py-2 px-4 z-10 relative inline-flex items-center underline-transparent"
+            :class="[table.currentPage === page && 'border bg-indigo-50 border-indigo-500 text-indigo-600 z-10']"
+            class="border border-gray-300 text-gray-500 font-medium text-sm py-2 px-4 relative inline-flex items-center underline-transparent"
+            @click.prevent="paginateTo(page)"
           >
             {{ page }}
           </a>
