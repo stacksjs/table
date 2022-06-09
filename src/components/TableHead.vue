@@ -7,17 +7,17 @@ const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, 
 <template>
   <thead class="bg-gray-50">
     <tr>
-      <th scope="col" class="px-6 w-12 relative sm:px-8 sm:w-16">
+      <th scope="col" class="relative w-12 px-6 sm:px-8 sm:w-16">
         <input
           type="checkbox"
-          class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500"
+          class="absolute w-4 h-4 -mt-2 text-indigo-600 border-gray-300 rounded top-1/2 left-4 sm:left-6 focus:ring-indigo-500"
           :checked="indeterminate || table.selectedRows?.length === hits.length"
           :indeterminate="indeterminate"
           @change="table.selectedRows = ($event?.target as any).checked ? hits.map((h) => h.id) : []"
         >
         <!-- <input
           type="checkbox"
-          class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500"
+          class="absolute w-4 h-4 -mt-2 text-indigo-600 border-gray-300 rounded top-1/2 left-4 sm:left-6 focus:ring-indigo-500"
           :checked="indeterminate || selectedRows?.length === hits?.length"
           :indeterminate="indeterminate"
           @change="selectedRows = []"
@@ -33,28 +33,31 @@ const { table, isColumnSortable, isColumnUsedAsSort, toggleSort, indeterminate, 
         @click="toggleSort(col)"
       >
         <!-- the last column is oftentimes styled slightly different -->
-        <a v-if="(index === table.columns.length - 1)" href="#" class="group inline-flex">
+
+        <a href="#" class="inline-flex group">
+          {{ col.includes(':') ? col.split(':')[1].trim() : col }}
+          <span
+            v-if="isColumnSortable(col)"
+            class="flex-none ml-2 rounded"
+            :class="isColumnUsedAsSort(col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
+            @click="toggleSort(col)"
+          >
+            <div v-if="table.sort?.includes('desc')" class="w-5 h-5 i-heroicons-solid-chevron-down" />
+            <div v-if="table.sort?.includes('asc')" class="w-5 h-5 i-heroicons-solid-chevron-up" />
+          </span>
+        </a>
+      </th>
+
+      <th class="font-semibold text-left text-sm py-3.5 pr-3 pl-4 sm:pl-6 text-gray-900">
+        <a href="#" class="inline-flex group">
           {{ readableLastColumn }}
           <span
             v-if="isColumnSortable(lastColumn[0])"
             :class="isColumnUsedAsSort(lastColumn) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
             @click="toggleSort(lastColumn[0])"
           >
-            <div v-if="table.sort?.includes('desc')" class="h-5 w-5 i-heroicons-solid-chevron-down" />
-            <div v-if="table.sort?.includes('asc')" class="h-5 w-5 i-heroicons-solid-chevron-up" />
-          </span>
-        </a>
-
-        <a v-else href="#" class="group inline-flex">
-          {{ col.includes(':') ? col.split(':')[1].trim() : col }}
-          <span
-            v-if="isColumnSortable(col)"
-            class="rounded flex-none ml-2"
-            :class="isColumnUsedAsSort(col) ? `bg-gray-200 text-gray-900 group-hover:bg-gray-300` : `text-gray-400 invisible group-hover:visible group-focus:visible`"
-            @click="toggleSort(col)"
-          >
-            <div v-if="table.sort?.includes('desc')" class="h-5 w-5 i-heroicons-solid-chevron-down" />
-            <div v-if="table.sort?.includes('asc')" class="h-5 w-5 i-heroicons-solid-chevron-up" />
+            <div v-if="table.sort?.includes('desc')" class="w-5 h-5 i-heroicons-solid-chevron-down" />
+            <div v-if="table.sort?.includes('asc')" class="w-5 h-5 i-heroicons-solid-chevron-up" />
           </span>
         </a>
       </th>

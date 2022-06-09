@@ -16,30 +16,41 @@ function generateValue(hit: any, col: any) {
 
 <template>
   <tr scope="row" :class="[table.selectedRows?.includes(hit.id) && 'bg-gray-50']">
-    <td class="px-6 w-12 relative sm:px-8 sm:w-16">
+    <td class="relative w-12 px-6 sm:px-8 sm:w-16">
       <div v-if="table.selectedRows?.includes(hit.id)" class="bg-indigo-600 inset-y-0 left-0 w-0.5 absolute" />
       <input
         v-model="table.selectedRows"
         :value="hit.id"
         type="checkbox"
-        class="rounded border-gray-300 h-4 -mt-2 top-1/2 left-4 text-indigo-600 w-4 absolute sm:left-6 focus:ring-indigo-500"
+        class="absolute w-4 h-4 -mt-2 text-indigo-600 border-gray-300 rounded top-1/2 left-4 sm:left-6 focus:ring-indigo-500"
       >
     </td>
 
     <td
       v-for="(col, x) in table.columns"
       :key="x"
-      class="font-medium text-sm py-4 text-gray-900 whitespace-nowrap "
+      class="py-4 text-sm font-medium text-gray-900 whitespace-nowrap "
       :class="table.columns.length === x - 1 ? 'table-last-column pr-4 text-right sm:pr-6' : 'pr-3 pl-4 sm:pl-6'"
     >
       <!-- last columns oftentimes are styled slightly different -->
-      <span v-if="(table.columns.length === x + 1) && (table.actionable || table.actions)">
-        <TableCellActionItems />
-      </span>
+      <!-- <span v-if="(table.columns.length === x + 1) && (table.actionable || table.actions)">
+        <slot name="action_column" :row-data="hit">
+          <TableCellActionItems />
+        </slot>
+      </span> -->
 
-      <span v-else>
+      <span>
         <slot :name="columnName(col)" :col-data="generateValue(hit, col)">
           {{ generateValue(hit, col) }}
+        </slot>
+      </span>
+    </td>
+
+    <td v-if="(table.actionable || table.actions)">
+      <!-- last columns oftentimes are styled slightly different -->
+      <span>
+        <slot name="action_column" :row-data="hit">
+          <TableCellActionItems />
         </slot>
       </span>
     </td>

@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     TablePagination: typeof import('./components/TablePagination.vue')['default']
     TableRow: typeof import('./components/TableRow.vue')['default']
     TableSearch: typeof import('./components/TableSearch.vue')['default']
+    Tooltip: typeof import('./components/Tooltip.vue')['default']
   }
 }
 

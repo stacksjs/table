@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Table as TableV2 } from './main'
+import { Table as TableV2, Tooltip } from './main'
 </script>
 
 <template>
@@ -46,6 +46,9 @@ import { Table as TableV2 } from './main'
           <div v-for="(part, x) in partNameProps.value" :key="x" class="text-yellow-600">
             {{ part }}
           </div>
+        </template>
+        <template #action_column="rowData">
+          <Tooltip />
         </template>
       </TableV2>
     </Suspense>

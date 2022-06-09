@@ -59,6 +59,15 @@
     "pre-commit": "npx lint-staged",
     "commit-msg": "npx commitlint --config ./commitlint.config.ts --edit $1"
   },
+  "engines": {
+    "node": ">=v16.15.1",
+    "pnpm": ">=7.1.9"
+  },
+  "dependencies": {
+    "element-plus": "^2.2.5",
+    "meilisearch": "^0.25.1",
+    "vue-demi": "^0.13.1"
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix",
     "package.json": "sort-package-json"
@@ -68,17 +77,14 @@
       "path": "@commitlint/cz-commitlint"
     }
   },
-  "dependencies": {
-    "meilisearch": "^0.25.1",
-    "vue-demi": "^0.13.1"
-  },
-  "engines": {
-    "node": ">=v16.15.1",
-    "pnpm": ">=7.1.9"
-  },
   "peerDependencies": {
     "@vue/composition-api": "^1.6.2",
     "vue": "^2.0.0 || >=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",
@@ -116,10 +122,5 @@
     "vitest": "^0.14.1",
     "vue": "^3.2.37",
     "vue-tsc": "^0.37.3"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
   }
 }

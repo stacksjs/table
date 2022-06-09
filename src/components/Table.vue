@@ -54,6 +54,7 @@ const parsedColumns = computed((): string[] => {
 
   return columns
 })
+
 const parsedSorts = computed((): string[] => {
   if (isString(sorts))
     return sorts.split(',').map(col => col.trim())
@@ -96,7 +97,7 @@ const { table, search, columnName } = await useTable({
 })
 
 // let's run the initial search upon page view/load
-// eslint-disable-next-line no-console
+
 // console.log('running initial search')
 const results = await search()
 // eslint-disable-next-line no-console
@@ -127,14 +128,16 @@ table.results = results as SearchResponse
 <template>
   <div class="px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col mt-8">
-      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="min-w-full py-2 inline-block align-middle md:px-6 lg:px-8">
-          <div class="shadow ring-black ring-1 ring-opacity-5 overflow-hidden md:rounded-lg">
-            <table class="divide-y min-w-full divide-gray-300">
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-black ring-1 ring-opacity-5 md:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
               <TableHead />
               <TableBody>
+                <template #action_column="rowData">
+                  <slot name="action_column" :value="rowData.rowData" />
+                </template>
                 <template v-for="(col, x) in parsedColumns" :key="x" #[columnName(col)]="tableBodyData">
-                  <!-- {{ tableBodyData }} -->
                   <slot :name="columnName(col)" :value="tableBodyData.tableRowData" />
                 </template>
               </TableBody>
