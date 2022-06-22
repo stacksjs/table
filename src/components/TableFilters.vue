@@ -1,208 +1,128 @@
 <script setup lang="ts">
 import { ref } from 'vue-demi'
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  TransitionChild,
-  TransitionRoot,
-} from '@headlessui/vue'
+import Multiselect from '@vueform/multiselect'
 
-const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
+const activeFilters = [
+  { value: [{ value: 'Scott Brothers Dairy', label: 'Scott Brothers Dairy' }, { value: 'Southwest Traders', label: 'Southwest Traders' }], name: 'Customer Name' },
+  {
+    value: [
+      { value: 'General Data', label: 'General Data' },
+      { value: 'Liberty Glove & Safety', label: 'Liberty Glove & Safety' },
+      { value: 'Paragon Films', label: 'Paragon Films' },
+      { value: 'Smurfit Kappa', label: 'Smurfit Kappa' },
+      { value: 'Wardkraft', label: 'Wardkraft' },
+      { value: 'WestRock', label: 'WestRock' },
+    ],
+    name: 'Vendor Name',
+  },
+  {
+    value: [
+      { value: '1000', label: '1000' },
+      { value: '1001', label: '1001' },
+      { value: '1002', label: '1002' },
+      { value: '1003', label: '1003' },
+      { value: '1004', label: '1004' },
+      { value: '1005', label: '1005' },
+    ],
+    name: 'Invoice Number',
+  },
+  {
+    value: [
+      { value: '1000', label: '1000' },
+      { value: '1001', label: '1001' },
+      { value: '1002', label: '1002' },
+      { value: '1003', label: '1003' },
+      { value: '1004', label: '1004' },
+      { value: '1005', label: '1005' },
+    ],
+    name: 'Order',
+  },
+  {
+    value: [
+      { value: '1000', label: '1000' },
+      { value: '1001', label: '1001' },
+      { value: '1002', label: '1002' },
+      { value: '1003', label: '1003' },
+      { value: '1004', label: '1004' },
+      { value: '1005', label: '1005' },
+    ],
+    name: 'Purchase Order',
+  },
+  { value: [], name: 'Part Name' },
+  { value: [], name: 'Stage' },
+  { value: [], name: 'Has Document Type' },
+  { value: [], name: 'Has No Document Type' },
 ]
-const filters = [
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'new-arrivals', label: 'All New Arrivals', checked: false },
-      { value: 'tees', label: 'Tees', checked: false },
-      { value: 'objects', label: 'Objects', checked: true },
-    ],
-  },
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: false },
-    ],
-  },
-  {
-    id: 'sizes',
-    name: 'Sizes',
-    options: [
-      { value: 's', label: 'S', checked: false },
-      { value: 'm', label: 'M', checked: false },
-      { value: 'l', label: 'L', checked: false },
-    ],
-  },
-]
-const activeFilters = [{ value: 'objects', label: 'Objects' }]
 
 const open = ref(false)
 </script>
 
 <template>
-  <div class="bg-white">
-    <!-- Mobile filter dialog -->
-    <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="z-40 relative sm:hidden" @close="open = false">
-        <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
-          <div class="bg-black bg-opacity-25 inset-0 fixed" />
-        </TransitionChild>
+  <!--
+  This example requires Tailwind CSS v2.0+
 
-        <div class="flex inset-0 z-40 fixed">
-          <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="translate-x-full">
-            <DialogPanel class="bg-white flex flex-col h-full ml-auto max-w-xs shadow-xl w-full py-4 pb-12 relative overflow-y-auto">
-              <div class="flex px-4 items-center justify-between">
-                <h2 class="font-medium text-lg text-gray-900">
-                  Filters
-                </h2>
-                <button type="button" class="bg-white rounded-md flex h-10 -mr-2 p-2 text-gray-400 w-10 items-center justify-center" @click="open = false">
-                  <span class="sr-only">Close menu</span>
-                  <div class="h-6 w-6 i-heroicons-x" aria-hidden="true" />
-                </button>
-              </div>
+  This example requires some changes to your config:
 
-              <!-- Filters -->
-              <form class="mt-4">
-                <Disclosure v-for="section in filters" :key="section.name" v-slot="{ open }" as="div" class="border-t border-gray-200 py-6 px-4">
-                  <h3 class="-my-3 -mx-2 flow-root">
-                    <DisclosureButton class="bg-white flex text-sm w-full py-3 px-2 text-gray-400 items-center justify-between">
-                      <span class="font-medium text-gray-900">
-                        {{ section.name }}
-                      </span>
-                      <span class="flex ml-6 items-center">
-                        <div
-                          class="h-5 transform w-5 i-heroicons-chevron-down"
-                          aria-hidden="true"
-                          :class="[open ? '-rotate-180' : 'rotate-0']"
-                        />
-                      </span>
-                    </DisclosureButton>
-                  </h3>
-                  <DisclosurePanel class="pt-6">
-                    <div class="space-y-6">
-                      <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                        <input :id="`filter-mobile-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value" type="checkbox" :checked="option.checked" class="rounded border-gray-300 h-4 text-indigo-600 w-4 form-checkbox focus:ring-indigo-500">
-                        <label :for="`filter-mobile-${section.id}-${optionIdx}`" class="text-sm ml-3 text-gray-500">
-                          {{ option.label }}
-                        </label>
-                      </div>
-                    </div>
-                  </DisclosurePanel>
-                </Disclosure>
-              </form>
-            </DialogPanel>
-          </TransitionChild>
-        </div>
-      </Dialog>
-    </TransitionRoot>
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+  <div class="bg-white max-w-7xl mx-auto">
     <!-- Filters -->
-    <section aria-labelledby="filter-heading">
+    <section v-if="true" aria-labelledby="filter-heading" class="relative z-10 border-t border-b border-gray-200 grid items-center">
       <h2 id="filter-heading" class="sr-only">
         Filters
       </h2>
-
-      <div class="bg-white border-b border-gray-200 pb-4 z-10 relative">
-        <div class="flex mx-auto max-w-7xl px-4 items-center justify-between sm:px-6 lg:px-8">
-          <Menu as="div" class="text-left relative inline-block">
-            <div>
-              <MenuButton class="font-medium text-sm text-gray-700 group inline-flex justify-center hover:text-gray-900">
-                Sort
-                <div
-                  class="flex-shrink-0 h-5 -mr-1 ml-1 text-gray-400 w-5 i-heroicons-chevron-down group-hover:text-gray-500"
-                  aria-hidden="true"
-                />
-              </MenuButton>
-            </div>
-
-            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-              <MenuItems class="bg-white rounded-md ring-black mt-2 origin-top-left left-0 shadow-2xl ring-1 ring-opacity-5 w-40 absolute focus:outline-none">
-                <div class="py-1">
-                  <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }" class="">
-                    <a :href="option.href" class="text-sm py-2 px-4 block" :class="[option.current ? 'font-medium text-gray-900' : 'text-gray-500', active ? 'bg-gray-100' : '']">
-                      {{ option.name }}
-                    </a>
-                  </MenuItem>
-                </div>
-              </MenuItems>
-            </transition>
-          </Menu>
-
-          <button type="button" class="font-medium text-sm text-gray-700 inline-block sm:hidden hover:text-gray-900" @click="open = true">
-            Filters
-          </button>
-
-          <div class="hidden sm:block">
-            <div class="flow-root">
-              <PopoverGroup class="divide-x flex divide-gray-200 -mx-4 items-center">
-                <Popover v-for="(section, sectionIdx) in filters" :key="section.name" class="text-left px-4 relative inline-block">
-                  <PopoverButton class="font-medium text-sm text-gray-700 group inline-flex justify-center hover:text-gray-900">
-                    <span>{{ section.name }}</span>
-                    <span v-if="sectionIdx === 0" class="rounded font-semibold bg-gray-200 text-xs ml-1.5 py-0.5 px-1.5 text-gray-700 tabular-nums">1</span>
-                    <div
-                      class="flex-shrink-0 h-5 -mr-1 ml-1 text-gray-400 w-5 i-heroicons-chevron-down group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                  </PopoverButton>
-
-                  <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                    <PopoverPanel class="bg-white rounded-md ring-black mt-2 p-4 origin-top-right right-0 shadow-2xl ring-1 ring-opacity-5 absolute focus:outline-none">
-                      <form class="space-y-4">
-                        <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                          <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value" type="checkbox" :checked="option.checked" class="rounded border-gray-300 h-4 text-indigo-600 w-4 form-checkbox focus:ring-indigo-500 ">
-                          <label :for="`filter-${section.id}-${optionIdx}`" class="font-medium text-sm ml-3 pr-6 text-gray-900 whitespace-nowrap">
-                            {{ option.label }}
-                          </label>
-                        </div>
-                      </form>
-                    </PopoverPanel>
-                  </transition>
-                </Popover>
-              </PopoverGroup>
-            </div>
+      <div class="relative col-start-1 row-start-1 py-4">
+        <div class="max-w-7xl mx-auto flex space-x-6 divide-x divide-gray-200 text-sm px-4 sm:px-6 lg:px-8">
+          <div>
+            <button type="button" class="group text-gray-700 font-medium flex items-center" aria-controls="disclosure-1" aria-expanded="false">
+              <!-- Heroicon name: solid/filter -->
+              <svg class="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+              </svg>
+              0 Filters
+            </button>
+          </div>
+          <div class="pl-6">
+            <button type="button" class="text-gray-500">
+              Clear all
+            </button>
           </div>
         </div>
       </div>
+      <div id="disclosure-1" class="border-t border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto  px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+          <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-4 md:gap-x-6">
+            <fieldset v-for="(filter, index) in activeFilters" :key="index">
+              <legend class="block font-medium">
+                {{ filter.name }}
+              </legend>
+              <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
+                <div class="flex items-center text-base sm:text-sm">
+                  <Multiselect
+                    :options="filter.value"
+                    mode="tags"
+                    :close-on-select="false"
+                    :searchable="true"
+                    :create-option="true"
+                  />
+                </div>
+              </div>
+            </fieldset>
+          </div>
 
-      <!-- Active filters -->
-      <div class="bg-gray-100">
-        <div class="mx-auto max-w-7xl py-3 px-4 sm:flex sm:px-6 sm:items-center lg:px-8">
-          <h3 class="font-semibold text-xs tracking-wide text-gray-500 uppercase">
-            Filters
-            <span class="sr-only">, active</span>
-          </h3>
-
-          <div aria-hidden="true" class="bg-gray-300 h-5 w-px hidden sm:ml-4 sm:block" />
-
-          <div class="mt-2 sm:mt-0 sm:ml-4">
-            <div class="flex flex-wrap -m-1 items-center">
-              <span v-for="activeFilter in activeFilters" :key="activeFilter.value" class="bg-white border rounded-full font-medium border-gray-200 m-1 text-sm py-1.5 pr-2 pl-3 text-gray-900 inline-flex items-center">
-                <span>{{ activeFilter.label }}</span>
-                <button type="button" class="rounded-full flex-shrink-0 h-4 ml-1 p-1 text-gray-400 w-4 inline-flex hover:bg-gray-200 hover:text-gray-500">
-                  <span class="sr-only">Remove filter for {{ activeFilter.label }}</span>
-                  <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
-                    <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
-                  </svg>
-                </button>
-              </span>
-            </div>
+          <div class="flex justify-end">
+            <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Apply filters
+            </button>
           </div>
         </div>
       </div>
@@ -733,3 +653,5 @@ Ensure the default browser behavior of the `hidden` attribute.
   }
 }
 </style>
+
+<style src="@vueform/multiselect/themes/default.css"></style>

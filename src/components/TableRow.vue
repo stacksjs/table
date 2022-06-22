@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Hit } from 'meilisearch'
 
-const { hit } = defineProps<{ hit: Hit }>()
+const { hit, index } = defineProps<{ hit: Hit; index: number }>()
 
 const { table, columnName } = await useTable()
 
@@ -12,10 +12,17 @@ function generateValue(hit: any, col: any) {
 
   return JSON.parse(hit[col])
 }
+
+function getClass(index: number) {
+  if (index % 2 !== 0)
+    return 'bg-gray-200'
+
+  return 'bg-gray-50'
+}
 </script>
 
 <template>
-  <tr scope="row" :class="[table.selectedRows?.includes(hit.id) && 'bg-gray-50']">
+  <tr scope="row" :class="getClass(index)" :data-index="index">
     <td class="relative w-12 px-6 sm:px-8 sm:w-16">
       <div v-if="table.selectedRows?.includes(hit.id)" class="bg-indigo-600 inset-y-0 left-0 w-0.5 absolute" />
       <input

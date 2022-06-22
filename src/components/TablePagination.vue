@@ -104,7 +104,7 @@ function paginateTo(page: number) {
             :key="page"
             href="#"
             aria-current="page"
-            :class="[table.currentPage === page && 'border bg-indigo-50 border-indigo-500 text-indigo-600 z-10']"
+            :class="[table.currentPage === page && 'border bg-yellow-500 border-yellow-500 text-gray-900 z-10']"
             class="border border-gray-300 text-gray-500 font-medium text-sm py-2 px-4 relative inline-flex items-center underline-transparent"
             @click.prevent="paginateTo(page)"
           >

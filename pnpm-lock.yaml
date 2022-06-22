@@ -15,6 +15,7 @@ specifiers:
   '@unocss/preset-wind': ^0.38.1
   '@vitejs/plugin-vue': ^2.3.3
   '@vue/compiler-sfc': ^3.2.37
+  '@vueform/multiselect': ^2.4.2
   '@vueuse/core': ^8.6.0
   bumpp: ^7.1.1
   commitizen: ^4.2.4
@@ -23,6 +24,7 @@ specifiers:
   eslint: ^8.17.0
   eslint-plugin-cypress: ^2.12.1
   inquirer: ^8.2.4
+  install: ^0.13.0
   lint-staged: ^13.0.1
   meilisearch: ^0.25.1
   minimist: ^1.2.6
@@ -41,7 +43,9 @@ specifiers:
   vue-tsc: ^0.37.3
 
 dependencies:
+  '@vueform/multiselect': 2.4.2
   element-plus: 2.2.5_vue@3.2.37
+  install: 0.13.0
   meilisearch: 0.25.1
   vue-demi: 0.13.1_vue@3.2.37
 
@@ -1039,6 +1043,10 @@ packages:
 
   /@vue/shared/3.2.37:
     resolution: {integrity: sha512-4rSJemR2NQIo9Klm1vabqWjD8rs/ZaJSzMxkMNeJS6lHiUjjUeYFbooN19NgFjztubEKh3WlZUeOLVdbbUWHsw==}
+
+  /@vueform/multiselect/2.4.2:
+    resolution: {integrity: sha512-5VVk4Mwn4cva+MbBjAXaEunmGWLAp98PcI4okaT95qYCfBckn2N/9ws18O0OStVe8WskFFUj/kF0goH/Xc2aTw==}
+    dev: false
 
   /@vueuse/core/8.6.0_vue@3.2.37:
     resolution: {integrity: sha512-VirzExCm/N+QdrEWT7J4uSrvJ5hquKIAU9alQ37kUvIJk9XxCLxmfRnmekYc1kz2+6BnoyuKYXVmrMV351CB4w==}
@@ -3317,6 +3325,11 @@ packages:
       through: 2.3.8
       wrap-ansi: 7.0.0
     dev: true
+
+  /install/0.13.0:
+    resolution: {integrity: sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA==}
+    engines: {node: '>= 0.10'}
+    dev: false
 
   /internal-slot/1.0.3:
     resolution: {integrity: sha512-O0DB1JC/sPyZl7cIo78n5dR7eUSwwpYPiXRhTzNxZVAMUuB8vlnRFyLxdrVToks6XPLVnFfbzaVd5WLjhgg+vA==}

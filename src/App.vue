@@ -8,10 +8,9 @@ import { Table as TableV2 } from './main'
       <TableSearch />
     </Suspense>
 
-    <!-- <Suspense>
+    <Suspense>
       <TableFilters />
-    </Suspense> -->
-
+    </Suspense>
     <Suspense>
       <TableV2
         source="http://3.85.80.143:7700"
