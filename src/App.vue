@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Table as TableV2, Tooltip } from './main'
+import { Table as TableV2 } from './main'
 </script>
 
 <template>
@@ -42,13 +42,21 @@ import { Table as TableV2, Tooltip } from './main'
         per-page="50"
         selectable="true"
       >
-        <template #part_name="partNameProps">
-          <div v-for="(part, x) in partNameProps.value" :key="x" class="text-yellow-600">
-            {{ part }}
-          </div>
+        <template #id="id">
+          <a href="#" class="flex font-medium text-yellow-600">
+            {{ id.value }}
+          </a>
         </template>
-        <template #action_column="rowData">
-          <Tooltip />
+
+        <template #customer_name="customerName">
+          <a href="#" class="flex font-medium text-yellow-600">
+            {{ customerName.value }}
+          </a>
+        </template>
+        <template #part_name="parts">
+          <a v-for="(part, index) in parts.value" :key="index" href="#" class="flex font-medium text-yellow-600">
+            {{ part }}
+          </a>
         </template>
       </TableV2>
     </Suspense>
