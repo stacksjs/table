@@ -131,7 +131,7 @@ function client(): MeiliSearch {
 
   return new MeiliSearch({
     host: table.source,
-    apiKey: table.password,
+    apiKey: import.meta.env.VITE_MEILISEARCH_KEY,
   })
 }
 
@@ -167,6 +167,10 @@ async function search(q?: string, options?: SearchParams): Promise<void | Search
   catch (error) {
     console.error('error when performing search', error)
   }
+}
+
+async function searchFilters(index: string): Promise<any> {
+  return await client().index(index).getFilterableAttributes()
 }
 
 function goToPrevPage() {
@@ -251,6 +255,10 @@ function columnName(col: string) {
   return col.split(':')[0].trim()
 }
 
+function filterName(filter: string) {
+  return filter.split(':')[0].trim()
+}
+
 export async function useTable(store?: TableStore) {
   return {
     store,
@@ -270,6 +278,7 @@ export async function useTable(store?: TableStore) {
     goToNextPage,
     goToPage,
     search,
+    searchFilters,
     searchParams,
     toggleSort,
     isColumnUsedAsSort,
@@ -284,5 +293,6 @@ export async function useTable(store?: TableStore) {
     selectedAll,
     totalPages,
     pages,
+    filterName,
   }
 }

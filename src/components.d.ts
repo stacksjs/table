@@ -8,7 +8,6 @@ declare module '@vue/runtime-core' {
     Table: typeof import('./components/Table.vue')['default']
     TableBody: typeof import('./components/TableBody.vue')['default']
     TableCellActionItems: typeof import('./components/TableCellActionItems.vue')['default']
-    TableFilter: typeof import('./components/TableFilter.vue')['default']
     TableFilters: typeof import('./components/TableFilters.vue')['default']
     TableHead: typeof import('./components/TableHead.vue')['default']
     TablePagination: typeof import('./components/TablePagination.vue')['default']

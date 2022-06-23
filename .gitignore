@@ -6,7 +6,7 @@ dist-ssr
 .DS_STORE
 .cache
 .temp
-
+.env
 # Cypress
 cypress/downloads
 cypress/fixtures

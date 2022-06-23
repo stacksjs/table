@@ -2,59 +2,77 @@
 import { ref } from 'vue-demi'
 import Multiselect from '@vueform/multiselect'
 
-const activeFilters = [
-  { value: [{ value: 'Scott Brothers Dairy', label: 'Scott Brothers Dairy' }, { value: 'Southwest Traders', label: 'Southwest Traders' }], name: 'Customer Name' },
-  {
-    value: [
-      { value: 'General Data', label: 'General Data' },
-      { value: 'Liberty Glove & Safety', label: 'Liberty Glove & Safety' },
-      { value: 'Paragon Films', label: 'Paragon Films' },
-      { value: 'Smurfit Kappa', label: 'Smurfit Kappa' },
-      { value: 'Wardkraft', label: 'Wardkraft' },
-      { value: 'WestRock', label: 'WestRock' },
-    ],
-    name: 'Vendor Name',
-  },
-  {
-    value: [
-      { value: '1000', label: '1000' },
-      { value: '1001', label: '1001' },
-      { value: '1002', label: '1002' },
-      { value: '1003', label: '1003' },
-      { value: '1004', label: '1004' },
-      { value: '1005', label: '1005' },
-    ],
-    name: 'Invoice Number',
-  },
-  {
-    value: [
-      { value: '1000', label: '1000' },
-      { value: '1001', label: '1001' },
-      { value: '1002', label: '1002' },
-      { value: '1003', label: '1003' },
-      { value: '1004', label: '1004' },
-      { value: '1005', label: '1005' },
-    ],
-    name: 'Order',
-  },
-  {
-    value: [
-      { value: '1000', label: '1000' },
-      { value: '1001', label: '1001' },
-      { value: '1002', label: '1002' },
-      { value: '1003', label: '1003' },
-      { value: '1004', label: '1004' },
-      { value: '1005', label: '1005' },
-    ],
-    name: 'Purchase Order',
-  },
-  { value: [], name: 'Part Name' },
-  { value: [], name: 'Stage' },
-  { value: [], name: 'Has Document Type' },
-  { value: [], name: 'Has No Document Type' },
-]
+// const activeFilters = [
+//   { value: [{ value: 'Scott Brothers Dairy', label: 'Scott Brothers Dairy' }, { value: 'Southwest Traders', label: 'Southwest Traders' }], name: 'Customer Name' },
+//   {
+//     value: [
+//       { value: 'General Data', label: 'General Data' },
+//       { value: 'Liberty Glove & Safety', label: 'Liberty Glove & Safety' },
+//       { value: 'Paragon Films', label: 'Paragon Films' },
+//       { value: 'Smurfit Kappa', label: 'Smurfit Kappa' },
+//       { value: 'Wardkraft', label: 'Wardkraft' },
+//       { value: 'WestRock', label: 'WestRock' },
+//     ],
+//     name: 'Vendor Name',
+//   },
+//   {
+//     value: [
+//       { value: '1000', label: '1000' },
+//       { value: '1001', label: '1001' },
+//       { value: '1002', label: '1002' },
+//       { value: '1003', label: '1003' },
+//       { value: '1004', label: '1004' },
+//       { value: '1005', label: '1005' },
+//     ],
+//     name: 'Invoice Number',
+//   },
+//   {
+//     value: [
+//       { value: '1000', label: '1000' },
+//       { value: '1001', label: '1001' },
+//       { value: '1002', label: '1002' },
+//       { value: '1003', label: '1003' },
+//       { value: '1004', label: '1004' },
+//       { value: '1005', label: '1005' },
+//     ],
+//     name: 'Order',
+//   },
+//   {
+//     value: [
+//       { value: '1000', label: '1000' },
+//       { value: '1001', label: '1001' },
+//       { value: '1002', label: '1002' },
+//       { value: '1003', label: '1003' },
+//       { value: '1004', label: '1004' },
+//       { value: '1005', label: '1005' },
+//     ],
+//     name: 'Purchase Order',
+//   },
+//   { value: [], name: 'Part Name' },
+//   { value: [], name: 'Stage' },
+//   { value: [], name: 'Has Document Type' },
+//   { value: [], name: 'Has No Document Type' },
+// ]
 
 const open = ref(false)
+
+const { searchFilters, type } = await useTable()
+
+const activeFilters = await searchFilters(type.value)
+
+const allFilters = activeFilters.map((filter: string) => {
+  const filterName = filter.split('_')
+  const name = []
+
+  for (let i = 0; i < filterName.length; i++)
+    name[i] = filterName[i].charAt(0).toUpperCase() + filterName[i].substring(1)
+
+  // Directly return the joined string
+
+  return { name: name.join(' ') }
+})
+
+console.log(allFilters)
 </script>
 
 <template>
@@ -101,19 +119,19 @@ const open = ref(false)
       <div id="disclosure-1" class="border-t border-gray-200 py-10">
         <div class="max-w-7xl mx-auto  px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
           <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-4 md:gap-x-6">
-            <fieldset v-for="(filter, index) in activeFilters" :key="index">
+            <fieldset v-for="(filter, index) in allFilters" :key="index">
               <legend class="block font-medium">
                 {{ filter.name }}
               </legend>
               <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
                 <div class="flex items-center text-base sm:text-sm">
-                  <Multiselect
+                  <!-- <Multiselect
                     :options="filter.value"
                     mode="tags"
                     :close-on-select="false"
                     :searchable="true"
                     :create-option="true"
-                  />
+                  /> -->
                 </div>
               </div>
             </fieldset>
