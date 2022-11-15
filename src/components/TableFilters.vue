@@ -2,63 +2,19 @@
 import { ref } from 'vue-demi'
 import Multiselect from '@vueform/multiselect'
 
-// const activeFilters = [
-//   { value: [{ value: 'Scott Brothers Dairy', label: 'Scott Brothers Dairy' }, { value: 'Southwest Traders', label: 'Southwest Traders' }], name: 'Customer Name' },
-//   {
-//     value: [
-//       { value: 'General Data', label: 'General Data' },
-//       { value: 'Liberty Glove & Safety', label: 'Liberty Glove & Safety' },
-//       { value: 'Paragon Films', label: 'Paragon Films' },
-//       { value: 'Smurfit Kappa', label: 'Smurfit Kappa' },
-//       { value: 'Wardkraft', label: 'Wardkraft' },
-//       { value: 'WestRock', label: 'WestRock' },
-//     ],
-//     name: 'Vendor Name',
-//   },
-//   {
-//     value: [
-//       { value: '1000', label: '1000' },
-//       { value: '1001', label: '1001' },
-//       { value: '1002', label: '1002' },
-//       { value: '1003', label: '1003' },
-//       { value: '1004', label: '1004' },
-//       { value: '1005', label: '1005' },
-//     ],
-//     name: 'Invoice Number',
-//   },
-//   {
-//     value: [
-//       { value: '1000', label: '1000' },
-//       { value: '1001', label: '1001' },
-//       { value: '1002', label: '1002' },
-//       { value: '1003', label: '1003' },
-//       { value: '1004', label: '1004' },
-//       { value: '1005', label: '1005' },
-//     ],
-//     name: 'Order',
-//   },
-//   {
-//     value: [
-//       { value: '1000', label: '1000' },
-//       { value: '1001', label: '1001' },
-//       { value: '1002', label: '1002' },
-//       { value: '1003', label: '1003' },
-//       { value: '1004', label: '1004' },
-//       { value: '1005', label: '1005' },
-//     ],
-//     name: 'Purchase Order',
-//   },
-//   { value: [], name: 'Part Name' },
-//   { value: [], name: 'Stage' },
-//   { value: [], name: 'Has Document Type' },
-//   { value: [], name: 'Has No Document Type' },
-// ]
+interface Props {
+  filterValues: object | any // the Meilisearch index you would like to use for this table
+}
 
-const open = ref(false)
+const {
+  filterValues,
+} = defineProps<Props>()
 
-const { searchFilters, type } = await useTable()
+const { searchFilters, search, type } = await useTable()
 
 const activeFilters = await searchFilters(type.value)
+
+const filterValue = ref([''])
 
 const allFilters = activeFilters.map((filter: string) => {
   const filterName = filter.split('_')
@@ -68,30 +24,38 @@ const allFilters = activeFilters.map((filter: string) => {
     name[i] = filterName[i].charAt(0).toUpperCase() + filterName[i].substring(1)
 
   // Directly return the joined string
-
-  return { name: name.join(' ') }
+  return { name: name.join(' '), column: snakeCase(name.join(' ')) }
 })
 
-console.log(allFilters)
+function getFilters(filterKey: string): any {
+  return filterValues[filterKey]
+}
+
+function snakeCase(char: string) {
+  return char.replace(/\W+/g, ' ')
+    .split(/ |\B(?=[A-Z])/)
+    .map(word => word.toLowerCase())
+    .join('_')
+}
+
+async function applyFilters() {
+  const results = await search('', { filter: [['disposition = released']] })
+  console.log(filterValue)
+  console.log(results)
+}
+
+function modifyFilters(name: string, value: any, id: number) {
+  const filter = value.map((item: any) => {
+    return { filterName: name, filterValue: item }
+  })
+
+  filterValue.value = filter
+
+  console.log(filterValue.value)
+}
 </script>
 
 <template>
-  <!--
-  This example requires Tailwind CSS v2.0+
-
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
   <div class="bg-white max-w-7xl mx-auto">
     <!-- Filters -->
     <section v-if="true" aria-labelledby="filter-heading" class="relative z-10 border-t border-b border-gray-200 grid items-center">
@@ -125,20 +89,21 @@ console.log(allFilters)
               </legend>
               <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
                 <div class="flex items-center text-base sm:text-sm">
-                  <!-- <Multiselect
-                    :options="filter.value"
+                  <Multiselect
+                    :options="getFilters(filter.column)"
                     mode="tags"
                     :close-on-select="false"
                     :searchable="true"
                     :create-option="true"
-                  /> -->
+                    @input="modifyFilters(filter.column, $event, index)"
+                  />
                 </div>
               </div>
             </fieldset>
           </div>
 
           <div class="flex justify-end">
-            <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="applyFilters">
               Apply filters
             </button>
           </div>

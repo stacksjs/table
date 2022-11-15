@@ -1,5 +1,26 @@
 <script setup lang="ts">
 import { Table as TableV2 } from './main'
+
+const filterValues = {
+  website_access: [{
+    label: 'Yes',
+    value: 'yes',
+  }, {
+    label: 'No',
+    value: 'no',
+  }],
+  disposition: [{
+    label: 'Active',
+    value: 'Active',
+  }, {
+    label: 'Released',
+    value: 'Released',
+  },
+  {
+    label: 'Terminated',
+    value: 'Terminated',
+  }],
+}
 </script>
 
 <template>
@@ -9,34 +30,22 @@ import { Table as TableV2 } from './main'
     </Suspense>
 
     <Suspense>
-      <TableFilters />
+      <TableFilters :filter-values="filterValues" />
     </Suspense>
     <Suspense>
       <TableV2
-        source="http://3.85.80.143:7700"
-        password="NtUvZv5Q87e355b807622149c350ac38679645b4e2603a1d3eb48cda080f977e76329aeb"
-        type="orders"
+        source="http://127.0.0.1:7700/"
+        password=""
+        type="users"
         columns="
-          id: Order,
-          customer_name: Customer,
-          customer_po: PO#,
-          part_name: Parts,
-          created_at: Ordered,
-          due_at: Due,
-          stage_name: Status"
+          id: ID,
+          first_name: First Name,
+          last_name: Last Name,
+          npn: NPN,
+          email: Email"
         sort="id:desc"
-        sorts="created_at, customer_name, customer_po, due_at, id, part_name, stage_name"
-        filters="
-          created_at: date-range,
-          customer_name: multi-select,
-          customer_po: multi-select,
-          document_types: multi-select,
-          due_at: date-range,
-          id: multi-select,
-          invoice_number: multi-select,
-          part_name: multi-select,
-          stage_name: multi-select,
-          vendor_name: multi-select"
+        sorts="id, email, npn"
+        filters=""
         actions="Info"
         per-page="50"
         selectable="true"
