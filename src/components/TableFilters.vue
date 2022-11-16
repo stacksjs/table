@@ -85,7 +85,7 @@ function modifyFilters(name: string, value: any, id: number) {
 <template>
   <div class="bg-white max-w-7xl mx-auto">
     <!-- Filters -->
-    <section v-if="true" aria-labelledby="filter-heading" class="relative z-10 border-t border-b border-gray-200 grid items-center">
+    <section aria-labelledby="filter-heading" class="relative z-10 border-t border-b border-gray-200 grid items-center">
       <h2 id="filter-heading" class="sr-only">
         Filters
       </h2>
