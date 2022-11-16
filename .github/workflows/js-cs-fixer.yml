@@ -31,6 +31,8 @@ jobs:
 
       - name: Install pnpm
         uses: npm install -g pnpm
+        with:
+          version: 7.1.9
 
       - name: Install project dependencies
         run: pnpm install
