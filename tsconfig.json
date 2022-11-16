@@ -7,7 +7,7 @@
     "jsx": "preserve",
     "composite": false,
     "incremental": false,
-    "declaration": false, // temporary disabled until this is merged: https://github.com/vuejs/core/pull/5831
+    "declaration": true, // temporary disabled until this is merged: https://github.com/vuejs/core/pull/5831
     "sourceMap": true,
     "resolveJsonModule": true,
     "importHelpers": true,
