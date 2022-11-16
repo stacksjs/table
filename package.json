@@ -110,7 +110,7 @@
     "vite": "^2.9.10",
     "vitest": "^0.14.1",
     "vue": "^3.2.37",
-    "vue-tsc": "^0.37.3"
+    "vue-tsc": "^1.0.9"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
