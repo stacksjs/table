@@ -3,18 +3,16 @@ const emit = defineEmits(['paginateToNextPage', 'paginateToPreviousPage', 'pagin
 
 const { goToNextPage, goToPrevPage, goToPage, table, lastPageNumber, totalPages, pages } = await useTable()
 
-// console.log('totalPages', totalPages.value)
+// watch(totalPages, (newValue, oldValue) => {
+//   // eslint-disable-next-line no-console
+//   console.log('totalPages', totalPages.value)
 
-watch(totalPages, (oldValue, newValue) => {
-  // eslint-disable-next-line no-console
-  console.log('totalPages', totalPages.value)
+//   // eslint-disable-next-line no-console
+//   console.log('oldValue', oldValue)
 
-  // eslint-disable-next-line no-console
-  console.log('oldValue', oldValue)
-
-  // eslint-disable-next-line no-console
-  console.log('newValue', newValue)
-})
+//   // eslint-disable-next-line no-console
+//   console.log('newValue', newValue)
+// })
 
 // const isFirstPage = computed(() => {
 //   if (table.currentPage === 1)
@@ -46,6 +44,13 @@ function paginateTo(page: number) {
   goToPage(page)
   emit('paginateToPage', page)
 }
+
+const currentCount = computed(() => {
+  const count = table.perPage * table.currentPage
+  const nbHits = table.results?.nbHits || 1
+
+  return count > nbHits ? table.results?.nbHits : count
+})
 </script>
 
 <template>
@@ -72,7 +77,7 @@ function paginateTo(page: number) {
           Showing {{ ((table.perPage * table.currentPage) - table.perPage) + 1 }}
           <span class="font-medium" />
           to
-          <span class="font-medium"> {{ table.perPage * table.currentPage }} </span>
+          <span class="font-medium"> {{ currentCount }} </span>
           of
           <span class="font-medium"> {{ table.results?.nbHits ?? 0 }} </span>
           results

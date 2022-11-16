@@ -26,14 +26,17 @@ const searchParams = computed(() => {
     offset: (table.currentPage - 1) * table.perPage,
     limit: table.perPage,
     sort: isString(table.sort) ? [table.sort] : undefined,
+    filter: table.filterValue,
   }
 })
 
-const totalHits = table.results ? table.results.nbHits : 1
+let totalHits = table.results ? table.results.nbHits : 1
+const totalPages: Ref<number> = ref(0)
+const pages: Ref<number[]> = ref([])
 
-const totalPages = computed(() => Math.floor(totalHits / table.perPage))
+function calculatePagination() {
+  totalPages.value = Math.ceil(totalHits / table.perPage)
 
-const pages = computed(() => {
   const hitPages = [...Array(totalPages.value).keys()].map(i => i + 1)
   const offset = 2
   const currentPage = table.currentPage
@@ -51,8 +54,9 @@ const pages = computed(() => {
   for (let page = from; page <= to; page++)
     allPages.push(page)
 
-  return allPages
-})
+  pages.value = allPages
+}
+
 const indeterminate = computed(() => (table?.selectedRows?.length ?? 0) > 0 && (table?.selectedRows?.length ?? 0) < hits.value.length)
 const lastColumn = computed(() => {
   return table.columns[table.columns.length - 1]
@@ -70,6 +74,10 @@ watchEffect(async () => {
     table.results = results
     table.hits = results.hits
   }
+
+  totalHits = table.results?.nbHits ?? 1
+
+  calculatePagination()
 })
 
 watchDebounced(
@@ -144,8 +152,6 @@ function hasTableLoaded(state?: any): Boolean {
 
 // we have to accept `query` and `searchParams` because those params are watched from within a watchEffect
 async function search(q?: string, options?: SearchParams): Promise<void | SearchResponse<Record<string, any>>> {
-  // console.log('searching', q, searchParams)
-
   if (!hasTableLoaded(table))
     return
 

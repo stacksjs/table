@@ -10,11 +10,19 @@ const {
   filterValues,
 } = defineProps<Props>()
 
-const { searchFilters, search, type } = await useTable()
+const multiselect = ref(null)
+
+const multiselectComputed: any = computed(() => {
+  if (multiselect.value)
+    return multiselect.value
+})
+
+const { searchFilters, type, table } = await useTable()
 
 const activeFilters = await searchFilters(type.value)
 
-const filterValue = ref([''])
+const filterValue = ref({})
+const filterLength = ref(0)
 
 const allFilters = activeFilters.map((filter: string) => {
   const filterName = filter.split('_')
@@ -39,19 +47,38 @@ function snakeCase(char: string) {
 }
 
 async function applyFilters() {
-  const results = await search('', { filter: [['disposition = released']] })
-  console.log(filterValue)
-  console.log(results)
+  let length = 0
+  const mappedFilters = Object.keys(filterValue.value).map((key) => {
+    length = length += 1
+
+    filterLength.value = length
+
+    return filterValue.value[key].map((filter: any) => {
+      return `${key} = ${filter}`
+    })
+  })
+
+  table.filterValue = mappedFilters
+  table.currentPage = 1
+}
+
+async function clearAllFilters() {
+  table.filterValue = []
+  table.currentPage = 1
+
+  filterValue.value = {}
+  filterLength.value = 0
+
+  if (multiselectComputed.value) {
+    for (let index = 0; index < multiselectComputed.value.length; index++) {
+      if (multiselectComputed.value[index])
+        multiselectComputed.value[index].clear()
+    }
+  }
 }
 
 function modifyFilters(name: string, value: any, id: number) {
-  const filter = value.map((item: any) => {
-    return { filterName: name, filterValue: item }
-  })
-
-  filterValue.value = filter
-
-  console.log(filterValue.value)
+  filterValue.value[name] = [...value]
 }
 </script>
 
@@ -70,11 +97,11 @@ function modifyFilters(name: string, value: any, id: number) {
               <svg class="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
               </svg>
-              0 Filters
+              {{ filterLength }} Filters
             </button>
           </div>
           <div class="pl-6">
-            <button type="button" class="text-gray-500">
+            <button type="button" class="text-gray-500" @click="clearAllFilters">
               Clear all
             </button>
           </div>
@@ -90,6 +117,7 @@ function modifyFilters(name: string, value: any, id: number) {
               <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
                 <div class="flex items-center text-base sm:text-sm">
                   <Multiselect
+                    ref="multiselect"
                     :options="getFilters(filter.column)"
                     mode="tags"
                     :close-on-select="false"

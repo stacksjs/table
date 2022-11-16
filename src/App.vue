@@ -4,10 +4,10 @@ import { Table as TableV2 } from './main'
 const filterValues = {
   website_access: [{
     label: 'Yes',
-    value: 'yes',
+    value: 1,
   }, {
     label: 'No',
-    value: 'no',
+    value: 0,
   }],
   disposition: [{
     label: 'Active',
@@ -42,7 +42,9 @@ const filterValues = {
           first_name: First Name,
           last_name: Last Name,
           npn: NPN,
-          email: Email"
+          email: Email,
+          website_access: Website Access,
+          disposition: Disposition"
         sort="id:desc"
         sorts="id, email, npn"
         filters=""
