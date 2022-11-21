@@ -6,10 +6,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openwebstacks/table.git"
+    "url": "https://github.com/stacksjs/table.git"
   },
   "bugs": {
-    "url": "https://github.com/openwebstacks/table/issues"
+    "url": "https://github.com/stacksjs/table/issues"
   },
   "keywords": [
     "tables",
@@ -26,47 +26,76 @@
   "contributors": [
     "Chris Breuer <chris@ow3.org>"
   ],
-  "exports": {
-    ".": {
-      "require": "./dist/table-vue.umd.js",
-      "import": "./dist/table-vue.es.js"
-    }
-  },
-  "main": "./dist/table-vue.umd.js",
-  "module": "./dist/table-vue.es.js",
-  "typings": "./dist/index.d.ts",
-  "style": "dist/style.css",
-  "files": [
-    "dist",
-    "src"
-  ],
   "engines": {
-    "node": ">=v16.15.1",
-    "pnpm": ">=7.1.9"
+    "node": ">=v18.12.1",
+    "pnpm": ">=7.17.0"
   },
   "scripts": {
-    "build": "vite build && vue-tsc --emitDeclarationOnly",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "commit": "git-cz",
-    "coverage": "vitest run --coverage",
-    "dev": "vite dev --open --port 3333",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "preview": "vite preview",
-    "release": "npx bumpp package.json --execute 'pnpm run changelog' --commit 'chore(release): %s' --tag --push --all && npm publish",
-    "test": "vitest",
-    "test:e2e": "cypress open",
-    "test:unit": "vitest",
-    "typecheck": "vue-tsc --emitDeclarationOnly"
-  },
-  "peerDependencies": {
-    "@vue/composition-api": "^1.6.2",
-    "vue": "^2.0.0 || >=3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
+    "buddy": "esno .stacks/buddy/src/cli.ts",
+    "bud": "pnpm buddy",
+    "stx": "pnpm buddy",
+    "stacks": "pnpm buddy",
+    "fresh": "pnpm buddy fresh",
+    "clean": "pnpm buddy clean",
+    "update": "pnpm buddy update",
+    "update:dependencies": "pnpm buddy update:dependencies",
+    "update:framework": "pnpm buddy update:framework",
+    "update:package-manager": "pnpm buddy update:package-manager",
+    "update:node": "pnpm buddy update:node",
+    "dev": "pnpm buddy dev",
+    "dev:components": "pnpm buddy dev:components",
+    "dev:docs": "pnpm buddy dev:docs",
+    "dev:functions": "pnpm buddy dev:functions // todo: opens the auto-generated web server of functions",
+    "development": "pnpm buddy dev",
+    "build": "pnpm buddy build",
+    "build:components": "pnpm buddy build:components",
+    "build:vue-components": "pnpm buddy build:web-components",
+    "build:web-components": "pnpm buddy build:web-components",
+    "build:functions": "pnpm buddy build:functions // needs to have option to ",
+    "build:docs": "pnpm buddy build:docs",
+    "prod": "pnpm buddy build",
+    "prod:components": "pnpm buddy build:components",
+    "prod:vue-components": "pnpm buddy build:web-components",
+    "prod:web-components": "pnpm buddy build:web-components",
+    "prod:functions": "pnpm buddy build:functions // needs to have option to ",
+    "prod:docs": "pnpm buddy build:docs",
+    "production": "pnpm buddy build",
+    "deploy": "pnpm buddy deploy",
+    "deploy:functions": "pnpm buddy deploy:functions",
+    "deploy:pages": "pnpm buddy deploy:functions",
+    "deploy:docs": "pnpm buddy deploy:docs",
+    "deploy:all": "pnpm buddy deploy:all",
+    "example": "pnpm buddy example",
+    "example:vue": "pnpm buddy example:vue",
+    "example:web-components": "pnpm buddy example:web-components",
+    "lint": "pnpm buddy lint",
+    "lint:fix": "pnpm buddy lint:fix",
+    "serve": "pnpm buddy serve",
+    "serve:pages": "pnpm buddy serve:pages",
+    "serve:functions": "pnpm buddy serve:functions",
+    "make": "pnpm buddy make",
+    "make:component": "pnpm buddy make:component",
+    "make:function": "pnpm buddy make:function",
+    "make:database": "pnpm buddy make:migration",
+    "make:migration": "pnpm buddy make:migration",
+    "make:notification": "pnpm buddy make:notification",
+    "make:factory": "pnpm buddy make:factory",
+    "make:lang": "pnpm buddy make:lang",
+    "make:stack": "pnpm buddy make:stack",
+    "key": "pnpm buddy key",
+    "key:generate": "pnpm buddy key:generate",
+    "commit": "pnpm buddy commit",
+    "release": "pnpm buddy release",
+    "changelog": "pnpm buddy changelog",
+    "generate": "pnpm buddy generate",
+    "generate:entries": "pnpm buddy generate:entries",
+    "generate:vue-compat": "pnpm buddy generate:vue-compat",
+    "generate:vscode-custom-data": "pnpm buddy generate:vscode-custom-data",
+    "generate:web-types": "pnpm buddy generate:web-types",
+    "generate:component-meta": "pnpm buddy generate:component-meta",
+    "test": "pnpm buddy test",
+    "test:coverage": "pnpm buddy test:coverage",
+    "test:types": "pnpm buddy test:types"
   },
   "dependencies": {
     "@vueform/multiselect": "^2.4.2",
@@ -76,53 +105,14 @@
     "vue-demi": "^0.13.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.25.1",
-    "@babel/types": "^7.18.4",
-    "@commitlint/cli": "^17.0.2",
-    "@commitlint/config-conventional": "^17.0.2",
-    "@commitlint/cz-commitlint": "^17.0.0",
-    "@commitlint/types": "^17.0.0",
-    "@headlessui/vue": "^1.6.4",
-    "@iconify-json/heroicons-outline": "^1.1.1",
-    "@iconify-json/heroicons-solid": "^1.1.1",
-    "@types/node": "^17.0.31",
-    "@unocss/preset-icons": "^0.38.1",
-    "@unocss/preset-wind": "^0.38.1",
-    "@vitejs/plugin-vue": "^2.3.3",
-    "@vue/compiler-sfc": "^3.2.37",
-    "@vueuse/core": "^8.6.0",
-    "bumpp": "^7.1.1",
-    "commitizen": "^4.2.4",
-    "conventional-changelog-cli": "^2.2.2",
-    "eslint": "^8.17.0",
-    "eslint-plugin-cypress": "^2.12.1",
-    "inquirer": "^8.2.4",
-    "lint-staged": "^13.0.1",
-    "minimist": "^1.2.6",
-    "prompts": "^2.4.2",
-    "simple-git-hooks": "^2.8.0",
-    "sort-package-json": "^1.57.0",
-    "typescript": "^4.7.3",
-    "unocss": "^0.38.1",
-    "unplugin-auto-import": "^0.8.7",
-    "unplugin-vue-components": "^0.19.6",
-    "upath": "^2.0.1",
-    "vite": "^2.9.10",
-    "vitest": "^0.14.1",
-    "vue": "^3.2.37",
-    "vue-tsc": "^0.37.3"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged",
-    "commit-msg": "npx commitlint --config ./commitlint.config.ts --edit $1"
+    "stacks": "workspace:*"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": "eslint --fix",
-    "package.json": "sort-package-json"
+    "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
   },
   "config": {
     "commitizen": {
-      "path": "@commitlint/cz-commitlint"
+      "path": ".stacks/node_modules/cz-git"
     }
   }
 }

@@ -86,7 +86,7 @@ yarn test
 
 ## 📈 Changelog
 
-Please see our [releases](https://github.com/openwebstacks/table/releases) page for more information on what has changed recently.
+Please see our [releases](https://github.com/stacksjs/table/releases) page for more information on what has changed recently.
 
 ## 💪🏼 Contributing
 
@@ -96,7 +96,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-[Table Elements on GitHub](https://github.com/openwebstacks/table/discussions)
+[Table Elements on GitHub](https://github.com/stacksjs/table/discussions)
 
 For casual chit-chat with others using this package:
 

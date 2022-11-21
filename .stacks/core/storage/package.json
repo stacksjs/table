@@ -1,0 +1,61 @@
+{
+  "name": "@stacksjs/storage",
+  "version": "0.41.1",
+  "description": "The Stacks file system.",
+  "keywords": [
+    "storage",
+    "fs",
+    "file system",
+    "api",
+    "collections",
+    "utilities",
+    "functions",
+    "stacks"
+  ],
+  "homepage": "https://github.com/stacksjs/stacks/tree/main/.stacks/core/storage#readme",
+  "bugs": {
+    "url": "https://github.com/stacksjs/stacks/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stacksjs/stacks.git",
+    "directory": "./.stacks/core/storage"
+  },
+  "funding": "https://github.com/sponsors/chrisbbreuer",
+  "license": "MIT",
+  "author": "Chris Breuer",
+  "contributors": [
+    "Chris Breuer <chris@ow3.org>"
+  ],
+  "type": "module",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "mkdist -d",
+    "dev": "mkdist -d",
+    "prepublishOnly": "pnpm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@stacksjs/path": "workspace:*",
+    "mkdist": "^1.0.0",
+    "typescript": "^4.9.3",
+    "unstorage": "^1.0.1"
+  },
+  "peerDependencies": {
+    "@stacksjs/arrays": "workspace:*",
+    "@stacksjs/types": "workspace:*",
+    "@stacksjs/utils": "workspace:*",
+    "fs-extra": "^10.1.0"
+  },
+  "packageManager": "pnpm@7.17.0",
+  "engines": {
+    "node": ">=v18.12.1",
+    "pnpm": ">=7.17.0"
+  }
+}

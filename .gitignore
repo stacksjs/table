@@ -1,14 +1,10 @@
 node_modules
 .DS_Store
-dist
-dist-ssr
-*.local
 .DS_STORE
 .cache
 .temp
+.pnpm-debug.log
 .env
-# Cypress
-cypress/downloads
-cypress/fixtures
-cypress/plugins
-cypress/support
+.env.local
+.env.production
+updates

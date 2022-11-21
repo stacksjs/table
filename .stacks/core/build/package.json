@@ -1,0 +1,74 @@
+{
+  "name": "@stacksjs/build",
+  "type": "module",
+  "version": "0.41.1",
+  "packageManager": "pnpm@7.17.0",
+  "description": "The Stacks framework build tools and configurations.",
+  "author": "Chris Breuer",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/chrisbbreuer",
+  "homepage": "https://github.com/stacksjs/stacks/tree/main/.stacks/core/build#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stacksjs/stacks.git",
+    "directory": "./.stacks/core/build"
+  },
+  "bugs": {
+    "url": "https://github.com/stacksjs/stacks/issues"
+  },
+  "keywords": [
+    "build",
+    "stacks",
+    "framework",
+    "typescript",
+    "javascript",
+    "vite",
+    "nitro",
+    "vue"
+  ],
+  "contributors": [
+    "Chris Breuer <chris@ow3.org>"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=v18.12.1",
+    "pnpm": ">=7.17.0"
+  },
+  "scripts": {
+    "build": "mkdist -d",
+    "dev": "mkdist -d",
+    "prepublishOnly": "pnpm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@intlify/vite-plugin-vue-i18n": "^6.0.3",
+    "@stacksjs/config": "workspace:*",
+    "@stacksjs/server": "workspace:*",
+    "@stacksjs/types": "workspace:*",
+    "@stacksjs/utils": "workspace:*",
+    "@vitejs/plugin-vue": "^3.2.0",
+    "markdown-it-link-attributes": "^4.0.1",
+    "markdown-it-shiki": "^0.6.1",
+    "unbuild": "^1.0.1",
+    "unplugin-auto-import": "^0.11.4",
+    "unplugin-vue-components": "^0.22.9",
+    "vite": "^3.2.4",
+    "vite-plugin-inspect": "^0.7.8",
+    "vite-plugin-pages": "^0.27.1",
+    "vite-plugin-pwa": "^0.13.3",
+    "vite-plugin-vue-component-preview": "^0.3.3",
+    "vite-plugin-vue-layouts": "^0.7.0",
+    "vite-plugin-vue-markdown": "^0.22.1",
+    "vite-ssg": "^0.22.0",
+    "vite-ssg-sitemap": "^0.4.3",
+    "vue-docgen-web-types": "^0.1.8",
+    "vue-i18n": "^9.2.2"
+  },
+  "devDependencies": {
+    "mkdist": "^1.0.0",
+    "typescript": "^4.9.3"
+  }
+}

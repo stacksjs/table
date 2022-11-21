@@ -1,0 +1,67 @@
+{
+  "name": "@stacksjs/cli",
+  "type": "module",
+  "version": "0.41.1",
+  "packageManager": "pnpm@7.17.0",
+  "description": "The simple way to create beautiful CLIs.",
+  "author": "Chris Breuer",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/chrisbbreuer",
+  "homepage": "https://github.com/stacksjs/stacks/tree/main/.stacks/core/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stacksjs/stacks.git",
+    "directory": "./.stacks/core/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/stacksjs/stacks/issues"
+  },
+  "keywords": [
+    "cli",
+    "commands",
+    "command line interface",
+    "spinners",
+    "utilities",
+    "helpers",
+    "cac",
+    "ora",
+    "consola",
+    "ez-spawn",
+    "stacks"
+  ],
+  "contributors": [
+    "Chris Breuer <chris@ow3.org>"
+  ],
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=v18.12.1",
+    "pnpm": ">=7.17.0"
+  },
+  "scripts": {
+    "build": "mkdist -d",
+    "dev": "mkdist -d",
+    "prepublishOnly": "pnpm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@antfu/install-pkg": "^0.1.1",
+    "@stacksjs/config": "workspace:*",
+    "@stacksjs/path": "workspace:*",
+    "@stacksjs/types": "workspace:*",
+    "@stacksjs/x-ray": "workspace:*",
+    "cac": "^6.7.14",
+    "execa": "^6.1.0",
+    "ora": "^6.1.2",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "esno": "^0.16.3",
+    "mkdist": "^1.0.0"
+  }
+}

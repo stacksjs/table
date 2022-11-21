@@ -1,0 +1,12 @@
+.nitro
+.output
+components/vue/.vite-inspect
+core/build/entries/*.ts
+**/dist/*.cjs
+**/dist/*.mjs
+**/dist/**/*.mjs
+**/dist/*.css
+**/dist/*.d.ts
+**/dist/**/*.d.ts
+**/dist/**/*.d.cts
+**/dist/**/*.d.mts

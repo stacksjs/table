@@ -1,0 +1,50 @@
+{
+  "name": "hello-world-elements",
+  "type": "module",
+  "version": "",
+  "packageManager": "pnpm@7.17.0",
+  "description": "Your framework agnostic web component library description.",
+  "author": "Chris Breuer",
+  "license": "MIT",
+  "homepage": "https://github.com/stacksjs/stacks/tree/main/components#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stacksjs/stacks.git",
+    "directory": "components"
+  },
+  "bugs": {
+    "url": "https://github.com/stacksjs/stacks/issues"
+  },
+  "keywords": [
+    "custom-elements",
+    "web-components",
+    "library",
+    "framework-agnostic",
+    "typescript",
+    "javascript"
+  ],
+  "contributors": [
+    "Chris Breuer <chris@ow3.org>"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build -c ../build/web-components.ts",
+    "prepublishOnly": "pnpm run build"
+  },
+  "devDependencies": {
+    "stacks": "workspace:*"
+  }
+}
