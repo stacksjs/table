@@ -99,7 +99,6 @@
   },
   "dependencies": {
     "@vueform/multiselect": "^2.4.2",
-    "element-plus": "^2.2.5",
     "install": "^0.13.0",
     "meilisearch": "^0.25.1",
     "vue-demi": "^0.13.1"
