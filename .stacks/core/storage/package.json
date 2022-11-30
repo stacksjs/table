@@ -51,7 +51,7 @@
     "@stacksjs/arrays": "workspace:*",
     "@stacksjs/types": "workspace:*",
     "@stacksjs/utils": "workspace:*",
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^11.1.0"
   },
   "packageManager": "pnpm@7.17.0",
   "engines": {
