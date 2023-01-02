@@ -2,7 +2,7 @@ import { calculatePagination, currentPage, filterName, filters, goToNextPage, go
 import { isObject, isString, useStorage } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { computed } from 'vue-demi'
-import type { TableStore } from '~/types'
+import type { TableStore } from './types'
 
 const table = (useStorage('table', determineState()).value as TableStore)
 
