@@ -349,11 +349,11 @@ importers:
     specifiers:
       '@ow3/eslint-config': ^0.33.11
       mkdist: ^1.0.0
-      neverthrow: ^5.1.0
+      neverthrow: ^6.0.0
       typescript: ^4.9.3
     dependencies:
       '@ow3/eslint-config': 0.33.11_hsf322ms6xhhd4b5ne6lb74y4a
-      neverthrow: 5.1.0
+      neverthrow: 6.0.0
     devDependencies:
       mkdist: 1.0.0_typescript@4.9.3
       typescript: 4.9.3
@@ -8651,8 +8651,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: false
 
-  /neverthrow/5.1.0:
-    resolution: {integrity: sha512-tgoYQZjAG+30dcUM35FL8FSQA52WQ6QPnk9laHUZBZ7CliB2vdR1aU7Svr10kyHJ3gwTzMTAajKT5xbdi0QS+Q==}
+  /neverthrow/6.0.0:
+    resolution: {integrity: sha512-kPZKRs4VkdloCGQXPoP84q4sT/1Z+lYM61AXyV8wWa2hnuo5KpPBF2S3crSFnMrOgUISmEBP8Vo/ngGZX60NhA==}
     dev: false
 
   /nitropack/1.0.0:
