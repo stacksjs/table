@@ -2,7 +2,7 @@
   "name": "@stacksjs/search-engine",
   "type": "module",
   "version": "0.41.1",
-  "packageManager": "pnpm@7.17.0",
+  "packageManager": "pnpm@7.21.0",
   "description": "The Stacks search engine integrations.",
   "author": "Chris Breuer",
   "license": "MIT",
@@ -36,7 +36,7 @@
   ],
   "engines": {
     "node": ">=v18.12.1",
-    "pnpm": ">=7.17.0"
+    "pnpm": ">=7.21.0"
   },
   "scripts": {
     "build": "mkdist -d",
@@ -45,11 +45,11 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "meilisearch": "^0.29.1",
-    "vitest": "^0.25.2"
+    "meilisearch": "^0.30.0",
+    "vitest": "^0.26.3"
   },
   "devDependencies": {
     "mkdist": "^1.0.0",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.4"
   }
 }
