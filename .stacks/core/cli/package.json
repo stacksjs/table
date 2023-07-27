@@ -56,7 +56,7 @@
     "@stacksjs/types": "workspace:*",
     "@stacksjs/x-ray": "workspace:*",
     "cac": "^6.7.14",
-    "execa": "^6.1.0",
+    "execa": "^7.2.0",
     "ora": "^6.1.2",
     "prompts": "^2.4.2"
   },
