@@ -2,7 +2,7 @@
   "name": "@stacksjs/cli",
   "type": "module",
   "version": "0.41.1",
-  "packageManager": "pnpm@7.21.0",
+  "packageManager": "pnpm@8.15.7",
   "description": "The simple way to create beautiful CLIs.",
   "author": "Chris Breuer",
   "license": "MIT",
@@ -41,7 +41,7 @@
   ],
   "engines": {
     "node": ">=v18.12.1",
-    "pnpm": ">=7.21.0"
+    "pnpm": ">=8.15.7"
   },
   "scripts": {
     "build": "mkdist -d",
