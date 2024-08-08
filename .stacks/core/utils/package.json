@@ -55,7 +55,7 @@
     "@stacksjs/types": "workspace:*",
     "@vueuse/core": "^9.9.0",
     "@vueuse/head": "^1.0.22",
-    "@vueuse/math": "^9.9.0",
+    "@vueuse/math": "^10.11.1",
     "@vueuse/shared": "^9.9.0",
     "defu": "^6.1.1",
     "detect-indent": "^7.0.1",
