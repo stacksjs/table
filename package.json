@@ -93,8 +93,8 @@
     "generate:vscode-custom-data": "pnpm buddy generate:vscode-custom-data",
     "generate:web-types": "pnpm buddy generate:web-types",
     "generate:component-meta": "pnpm buddy generate:component-meta",
-    "test": "pnpm buddy test",
-    "test:coverage": "pnpm buddy test:coverage",
+    "test": "vitest run --config vitest.config.ts",
+    "test:coverage": "vitest run --coverage --config vitest.config.ts",
     "test:types": "pnpm buddy test:types",
     "format": "bunx --bun pickier format .",
     "format:fix": "bunx --bun pickier format . --write"
