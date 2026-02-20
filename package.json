@@ -27,8 +27,7 @@
     "Chris Breuer <chris@ow3.org>"
   ],
   "engines": {
-    "node": ">=v18.12.1",
-    "pnpm": ">=7.21.0"
+    "node": ">=v18.12.1"
   },
   "scripts": {
     "buddy": "esno .stacks/buddy/src/cli.ts",
@@ -106,7 +105,7 @@
     "vue-demi": "^0.13.11"
   },
   "devDependencies": {
-    "stacks": "workspace:*"
+    "better-dx": "^0.2.5"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
