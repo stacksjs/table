@@ -14,6 +14,7 @@ const config: PickierConfig = {
     '**/benchmarks/**',
     '**/.claude/**',
     '**/.zed/**',
+    '**/.stacks/**',
   ],
 
   lint: {
