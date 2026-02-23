@@ -108,7 +108,7 @@
     "better-dx": "^0.2.5"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
+    "*.{js,jsx,ts,tsx,vue}": "bunx --bun pickier lint --fix"
   },
   "config": {
     "commitizen": {
