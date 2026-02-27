@@ -1,3 +1,31 @@
 {
-  "extends": "./.stacks/tsconfig.json"
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "strict": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "strictNullChecks": true,
+    "noEmit": true,
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "types": [
+      "bun-types"
+    ]
+  },
+  "include": [
+    "tests/**/*"
+  ],
+  "exclude": [
+    ".stacks/**",
+    "node_modules/**",
+    "dist/**"
+  ]
 }

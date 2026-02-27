@@ -1,7 +1,7 @@
-import { assert, describe, test } from 'vitest'
+import { describe, expect, test } from 'bun:test'
 
 describe('example test', () => {
   test('assert', () => {
-    assert.equal(1, 1)
+    expect(1).toBe(1)
   })
 })
