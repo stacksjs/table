@@ -27,7 +27,7 @@
     "Chris Breuer <chris@ow3.org>"
   ],
   "engines": {
-    "node": ">=v18.12.1"
+    "node": ">=18.20.8"
   },
   "scripts": {
     "buddy": "esno .stacks/buddy/src/cli.ts",
@@ -99,13 +99,13 @@
     "format:fix": "bunx --bun pickier format . --write"
   },
   "dependencies": {
-    "@vueform/multiselect": "^2.5.8",
+    "@vueform/multiselect": "^2.6.11",
     "install": "^0.13.0",
-    "meilisearch": "^0.30.0",
-    "vue-demi": "^0.13.11"
+    "meilisearch": "^0.55.0",
+    "vue-demi": "^0.14.10"
   },
   "devDependencies": {
-    "better-dx": "^0.2.5"
+    "better-dx": "^0.2.6"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "bunx --bun pickier lint --fix"
