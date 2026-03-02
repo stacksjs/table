@@ -1,4 +1,0 @@
-{
-  "extends": "@ow3",
-  "ignorePatterns": [".stacks/core/cli/README.md"]
-}
