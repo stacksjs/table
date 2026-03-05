@@ -67,8 +67,8 @@
     "example": "pnpm buddy example",
     "example:vue": "pnpm buddy example:vue",
     "example:web-components": "pnpm buddy example:web-components",
-    "lint": "bunx --bun pickier lint .",
-    "lint:fix": "bunx --bun pickier lint . --fix",
+    "lint": "bunx --bun pickier .",
+    "lint:fix": "bunx --bun pickier . --fix",
     "serve": "pnpm buddy serve",
     "serve:pages": "pnpm buddy serve:pages",
     "serve:functions": "pnpm buddy serve:functions",
@@ -95,8 +95,8 @@
     "test": "bun test",
     "test:coverage": "bun test --coverage",
     "test:types": "bunx --bun tsc --noEmit",
-    "format": "bunx --bun pickier format .",
-    "format:fix": "bunx --bun pickier format . --write"
+    "format": "bunx --bun pickier . --format",
+    "format:fix": "bunx --bun pickier . --format --write"
   },
   "dependencies": {
     "@vueform/multiselect": "^2.5.8",
