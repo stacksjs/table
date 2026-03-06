@@ -47,6 +47,6 @@
   },
   "peerDependencies": {},
   "devDependencies": {
-    "mkdist": "^1.0.0"
+    "mkdist": "^2.4.1"
   }
 }
