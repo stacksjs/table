@@ -52,7 +52,7 @@
     "@types/eslint": "^8.4.10",
     "@types/fs-extra": "^9.0.13",
     "@types/markdown-it-link-attributes": "^3.0.1",
-    "@types/minimatch": "^5.1.2",
+    "@types/minimatch": "^6.0.0",
     "@types/node": "^18.11.18",
     "@types/nprogress": "^0.2.0",
     "@types/pluralize": "^0.0.29",
