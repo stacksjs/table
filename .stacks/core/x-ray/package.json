@@ -53,6 +53,6 @@
     "vue-ray": "^1.17.3"
   },
   "devDependencies": {
-    "mkdist": "^1.0.0"
+    "mkdist": "^2.4.1"
   }
 }
