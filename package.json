@@ -105,7 +105,7 @@
     "vue-demi": "^0.13.11"
   },
   "devDependencies": {
-    "better-dx": "^0.2.5"
+    "better-dx": "^0.2.7"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "bunx --bun pickier lint --fix"
