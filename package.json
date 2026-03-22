@@ -107,12 +107,17 @@
   "devDependencies": {
     "better-dx": "^0.2.7"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": "bunx --bun pickier lint --fix"
-  },
   "config": {
     "commitizen": {
       "path": ".stacks/node_modules/cz-git"
     }
+  },
+  "git-hooks": {
+    "pre-commit": {
+      "staged-lint": {
+        "*.{js,ts,json,yaml,yml,md}": "bunx --bun pickier lint --fix"
+      }
+    },
+    "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
   }
 }
