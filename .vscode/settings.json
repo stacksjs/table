@@ -6,6 +6,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+
+  "[stx]": {
+    "editor.defaultFormatter": "pickier.pickier-vscode"
+  },
   "eslint.codeAction.showDocumentation": {
     "enable": true
   },
