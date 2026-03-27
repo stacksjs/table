@@ -46,7 +46,7 @@
     "vitepress": "1.0.0-alpha.34"
   },
   "devDependencies": {
-    "mkdist": "^1.0.0",
+    "mkdist": "^2.4.1",
     "typescript": "^4.9.4"
   }
 }
