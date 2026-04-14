@@ -24,7 +24,7 @@
 # pnpm buddy deploy:functions # zero-config: Netlify, Vercel, AWS, Cloudflare (and more)
 # pnpm buddy deploy:docs # zero-config: Netlify & Vercel
 
-# pnpm buddy commit # Be a good commitizen. GUI for git commits.
+# pnpm buddy commit # Be a good commitizen. GUI for git commits
 # pnpm buddy release # GUI for releasing the libraries & triggers npm releases
 # pnpm buddy changelog # automatically generates changelog
 

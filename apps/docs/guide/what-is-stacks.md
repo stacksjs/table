@@ -1,1 +1,1 @@
-# What is Stacks?
+# What is Stacks

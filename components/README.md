@@ -10,7 +10,7 @@ This is where you create your components.
 It's easy to get started. The only prerequisite is a basic understanding HTML, sprinkled with *minimal* JavaScript. In other words, there is virtually no learning curve.
 
 ```bash
-# you may use this GitHub template or the following command:
+# you may use this GitHub template or the following command
 npx stacks new hello-world
 cd hello-world
 
@@ -41,7 +41,7 @@ import HelloWorld from 'hello-world-stack'
 This project also includes a simple way to handle your versioning. Through semantic commit names, it will also generate the two changelogs: one as part of the GitHub releases & the one markdown file that's stored within the root of the project.
 
 ```bash
-# how to create a git commit?
+# how to create a git commit
 git add . # select the changes you want to commit
 pnpm run commit # then simply follow the prompts
 
