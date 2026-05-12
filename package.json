@@ -27,7 +27,7 @@
     "Chris Breuer <chris@ow3.org>"
   ],
   "engines": {
-    "node": ">=v18.12.1"
+    "node": ">=24.15.0"
   },
   "scripts": {
     "buddy": "esno .stacks/buddy/src/cli.ts",
