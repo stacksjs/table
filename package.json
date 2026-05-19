@@ -105,7 +105,7 @@
     "vue-demi": "^0.13.11"
   },
   "devDependencies": {
-    "better-dx": "^0.2.7"
+    "better-dx": "^0.2.15"
   },
   "config": {
     "commitizen": {
