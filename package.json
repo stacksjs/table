@@ -1,6 +1,6 @@
 {
   "name": "@stacksjs/table",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Typed, driver-based searching, filtering, sorting, and pagination for data tables",
   "type": "module",
   "sideEffects": false,
