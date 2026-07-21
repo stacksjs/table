@@ -1,0 +1,61 @@
+<script server>
+interface DataTableColumn {
+  key: string
+  label: string
+  align?: 'left' | 'center' | 'right'
+}
+
+interface DataTableProps {
+  columns: DataTableColumn[]
+  rows?: Record<string, unknown>[]
+  caption?: string
+  emptyMessage?: string
+}
+
+const {
+  columns,
+  rows = [],
+  caption = '',
+  emptyMessage = 'No results found.',
+} = defineProps<DataTableProps>()
+
+function alignmentClass(align: DataTableColumn['align']): string {
+  if (align === 'center')
+    return 'text-center'
+
+  if (align === 'right')
+    return 'text-right'
+
+  return 'text-left'
+}
+</script>
+
+<div class="overflow-x-auto border border-slate-200 rounded-xl">
+  <table class="min-w-full border-collapse">
+    @if (caption)
+      <caption class="px-4 py-3 font-medium text-left text-slate-900 bg-slate-50">{{ caption }}</caption>
+    @endif
+    <thead class="bg-slate-50">
+      <tr>
+        @foreach (columns as column)
+          <th scope="col" class="px-4 py-3 font-semibold text-xs text-slate-600 tracking-wide uppercase {{ alignmentClass(column.align) }}">{{ column.label }}</th>
+        @endforeach
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200 bg-white">
+      @if (rows.length > 0)
+        @foreach (rows as row)
+          <tr class="hover:bg-slate-50 transition-colors">
+            @foreach (columns as column)
+              <td class="px-4 py-3 text-sm text-slate-700 {{ alignmentClass(column.align) }}">{{ row[column.key] }}</td>
+            @endforeach
+          </tr>
+        @endforeach
+      @else
+        <tr>
+          <td colspan="{{ columns.length }}" class="px-4 py-8 text-center text-sm text-slate-500">{{ emptyMessage }}</td>
+        </tr>
+      @endif
+    </tbody>
+  </table>
+</div>

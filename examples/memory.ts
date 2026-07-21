@@ -1,4 +1,4 @@
-import { createTable, MemoryTableDriver } from '../src'
+import { createTable, MemoryTableDriver } from '../resources/functions/table'
 
 const driver = new MemoryTableDriver({
   products: [

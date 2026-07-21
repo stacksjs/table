@@ -1,7 +1,7 @@
 import { dts } from 'bun-plugin-dtsx'
 
 const result = await Bun.build({
-  entrypoints: ['src/index.ts'],
+  entrypoints: ['resources/functions/table/index.ts'],
   outdir: 'dist',
   format: 'esm',
   target: 'browser',

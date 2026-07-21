@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
-import { AlgoliaTableDriver, createTable, MeilisearchTableDriver, TypesenseTableDriver } from '../../src'
-import type { TableFetch } from '../../src'
+import { AlgoliaTableDriver, createTable, MeilisearchTableDriver, TypesenseTableDriver } from '../../resources/functions/table'
+import type { TableFetch } from '../../resources/functions/table'
 
 interface Call {
   url: string

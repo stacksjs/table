@@ -1,5 +1,0 @@
-function migrations() {
-
-}
-
-export { migrations }

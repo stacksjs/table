@@ -1,5 +1,15 @@
 # @stacksjs/table
 
+## Add to a Stacks project
+
+The registry version installs project-shaped source files directly into your application:
+
+```bash
+buddy add table
+```
+
+This adds `resources/components/DataTable.stx` and the table functions under `resources/functions/table/`. The installed STX and TypeScript source remains fully owned and editable by the application.
+
 Typed searching, filtering, sorting, faceting, ranking, and pagination for data tables. The core has no runtime dependencies and works with an in-memory dataset, Meilisearch, Algolia, or Typesense.
 
 ## Install
@@ -37,7 +47,7 @@ const result = await products.search({
 })
 ```
 
-Run the included dummy database example with `bun run demo:memory`. It is also declared in `terminals.json` for development environments that expose project terminals.
+Run the included dummy database example with `bun run demo:memory`.
 
 ## Meilisearch
 

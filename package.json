@@ -18,9 +18,17 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
+    "resources",
     "README.md",
     "LICENSE.md"
   ],
+  "stacks": {
+    "name": "table",
+    "description": "Typed table drivers and an STX data table component",
+    "directories": [
+      "resources"
+    ]
+  },
   "scripts": {
     "build": "bun --bun build.ts",
     "demo:memory": "bun examples/memory.ts",

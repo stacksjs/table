@@ -1,9 +1,0 @@
-{
-  "terminals": [
-    {
-      "name": "table:memory",
-      "command": "bun run demo:memory",
-      "description": "Run the zero-service in-memory search database example"
-    }
-  ]
-}

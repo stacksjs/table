@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { createTable, MemoryTableDriver } from '../../src'
+import { createTable, MemoryTableDriver } from '../../resources/functions/table'
 
 interface Product extends Record<string, unknown> {
   id: number
