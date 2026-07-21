@@ -1,122 +1,69 @@
 {
-  "name": "@ow3/table-vue",
+  "name": "@stacksjs/table",
   "version": "0.0.11",
-  "description": "The easy & modern way to work with tables. Facet filtering, searching, pagination, ...",
-  "author": "Open Web Labs",
-  "license": "MIT",
+  "description": "Typed, driver-based searching, filtering, sorting, and pagination for data tables",
+  "type": "module",
+  "sideEffects": false,
+  "packageManager": "bun@1.3.14",
+  "engines": {
+    "bun": ">=1.3.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "scripts": {
+    "build": "bun --bun build.ts",
+    "demo:memory": "bun examples/memory.ts",
+    "prepublishOnly": "bun run build",
+    "test": "bun test",
+    "test:types": "bunx --bun tsc --noEmit",
+    "lint": "bunx --bun pickier .",
+    "lint:fix": "bunx --bun pickier . --fix",
+    "release:patch": "bunx --bun bumpx patch --commit --tag --push --yes"
+  },
+  "devDependencies": {
+    "better-dx": "^0.2.19"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stacksjs/table.git"
+    "url": "git+https://github.com/stacksjs/table.git"
   },
   "bugs": {
     "url": "https://github.com/stacksjs/table/issues"
   },
+  "homepage": "https://github.com/stacksjs/table#readme",
   "keywords": [
-    "tables",
-    "filters",
+    "table",
+    "search",
     "pagination",
     "sorting",
-    "search",
-    "component",
-    "library",
-    "vue",
-    "typescript",
-    "javascript"
+    "filters",
+    "algolia",
+    "meilisearch",
+    "typesense"
   ],
-  "contributors": [
-    "Chris Breuer <chris@ow3.org>"
-  ],
-  "engines": {
-    "node": ">=v18.12.1"
-  },
-  "scripts": {
-    "buddy": "esno .stacks/buddy/src/cli.ts",
-    "bud": "pnpm buddy",
-    "stx": "pnpm buddy",
-    "stacks": "pnpm buddy",
-    "fresh": "pnpm buddy fresh",
-    "clean": "pnpm buddy clean",
-    "update": "pnpm buddy update",
-    "update:dependencies": "pnpm buddy update:dependencies",
-    "update:framework": "pnpm buddy update:framework",
-    "update:package-manager": "pnpm buddy update:package-manager",
-    "update:node": "pnpm buddy update:node",
-    "dev": "pnpm buddy dev",
-    "dev:components": "pnpm buddy dev:components",
-    "dev:docs": "pnpm buddy dev:docs",
-    "dev:functions": "pnpm buddy dev:functions // todo: opens the auto-generated web server of functions",
-    "development": "pnpm buddy dev",
-    "build": "pnpm buddy build",
-    "build:components": "pnpm buddy build:components",
-    "build:vue-components": "pnpm buddy build:web-components",
-    "build:web-components": "pnpm buddy build:web-components",
-    "build:functions": "pnpm buddy build:functions // needs to have option to ",
-    "build:docs": "pnpm buddy build:docs",
-    "prod": "pnpm buddy build",
-    "prod:components": "pnpm buddy build:components",
-    "prod:vue-components": "pnpm buddy build:web-components",
-    "prod:web-components": "pnpm buddy build:web-components",
-    "prod:functions": "pnpm buddy build:functions // needs to have option to ",
-    "prod:docs": "pnpm buddy build:docs",
-    "production": "pnpm buddy build",
-    "deploy": "pnpm buddy deploy",
-    "deploy:functions": "pnpm buddy deploy:functions",
-    "deploy:pages": "pnpm buddy deploy:functions",
-    "deploy:docs": "pnpm buddy deploy:docs",
-    "deploy:all": "pnpm buddy deploy:all",
-    "example": "pnpm buddy example",
-    "example:vue": "pnpm buddy example:vue",
-    "example:web-components": "pnpm buddy example:web-components",
-    "lint": "bunx --bun pickier .",
-    "lint:fix": "bunx --bun pickier . --fix",
-    "serve": "pnpm buddy serve",
-    "serve:pages": "pnpm buddy serve:pages",
-    "serve:functions": "pnpm buddy serve:functions",
-    "make": "pnpm buddy make",
-    "make:component": "pnpm buddy make:component",
-    "make:function": "pnpm buddy make:function",
-    "make:database": "pnpm buddy make:migration",
-    "make:migration": "pnpm buddy make:migration",
-    "make:notification": "pnpm buddy make:notification",
-    "make:factory": "pnpm buddy make:factory",
-    "make:lang": "pnpm buddy make:lang",
-    "make:stack": "pnpm buddy make:stack",
-    "key": "pnpm buddy key",
-    "key:generate": "pnpm buddy key:generate",
-    "commit": "pnpm buddy commit",
-    "release": "pnpm buddy release",
-    "changelog": "pnpm buddy changelog",
-    "generate": "pnpm buddy generate",
-    "generate:entries": "pnpm buddy generate:entries",
-    "generate:vue-compat": "pnpm buddy generate:vue-compat",
-    "generate:vscode-custom-data": "pnpm buddy generate:vscode-custom-data",
-    "generate:web-types": "pnpm buddy generate:web-types",
-    "generate:component-meta": "pnpm buddy generate:component-meta",
-    "test": "bun test",
-    "test:coverage": "bun test --coverage",
-    "test:types": "bunx --bun tsc --noEmit",
-    "format": "bunx --bun pickier . --format",
-    "format:fix": "bunx --bun pickier . --format --write"
-  },
-  "dependencies": {
-    "@vueform/multiselect": "^2.5.8",
-    "install": "^0.13.0",
-    "meilisearch": "^0.30.0",
-    "vue-demi": "^0.13.11"
-  },
-  "devDependencies": {
-    "better-dx": "^0.2.15"
-  },
-  "config": {
-    "commitizen": {
-      "path": ".stacks/node_modules/cz-git"
-    }
-  },
+  "author": "Chris Breuer <chris@stacksjs.org>",
+  "license": "MIT",
   "git-hooks": {
     "pre-commit": {
       "staged-lint": {
-        "*.{js,ts,json,yaml,yml,md}": "bunx --bun pickier lint --fix"
-      }
+        "*.{js,ts,json,yaml,yml,md}": "bunx --bun pickier --fix"
+      },
+      "autoRestage": true
     },
     "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
   }

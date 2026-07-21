@@ -3,29 +3,28 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "strict": true,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "strictNullChecks": true,
-    "noEmit": true,
     "lib": [
       "ESNext",
       "DOM"
     ],
     "types": [
       "bun-types"
-    ]
+    ],
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true
   },
   "include": [
-    "tests/**/*"
+    "build.ts",
+    "examples/**/*.ts",
+    "src/**/*.ts",
+    "tests/**/*.ts"
   ],
   "exclude": [
-    ".stacks/**",
-    "node_modules/**",
-    "dist/**"
+    ".stacks",
+    "dist",
+    "node_modules"
   ]
 }
