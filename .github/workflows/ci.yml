@@ -4,81 +4,24 @@ on:
   push:
     branches:
       - main
-
   pull_request:
     branches:
       - main
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint:
+  quality:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v6.0.2
-
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2.1.2
-
-      - name: Use cached node_modules
-        uses: actions/cache@v5.0.3
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
         with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            node-modules-
-
-      - name: Install Dependencies
-        run: bun install
-
-      - name: Lint
-        run: bun run lint
-
-  typecheck:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6.0.2
-
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2.1.2
-
-      - name: Use cached node_modules
-        uses: actions/cache@v5.0.3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            node-modules-
-
-      - name: Install Dependencies
-        run: bun install
-
-      - name: Typecheck
-        run: bun run test:types
-
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6.0.2
-
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2.1.2
-
-      - name: Use cached node_modules
-        uses: actions/cache@v5.0.3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            node-modules-
-
-      - name: Install Dependencies
-        run: bun install
-
-      - name: Test Suite
-        run: bun run test
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - run: bun run test:types
+      - run: bun test
+      - run: bun run build
